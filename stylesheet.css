@@ -10,6 +10,12 @@ h1 {
     animation: moveUpDown 3s ease-in-out infinite;
 }
 
+nav {
+    color: white;
+    text-align: center;
+    padding: 10px;
+}
+
 body {
     background-color: orange;
 }
