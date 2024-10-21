@@ -5,6 +5,7 @@
 }
 
 h1 {
+    margin-top: 50px;
     font-size: 500px;
     text-align: center;
     animation: moveUpDown 3s ease-in-out infinite;
