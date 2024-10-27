@@ -1,31 +1,68 @@
+/* General */
+
 * {
     margin: 0;
     padding: 0;
     font-family: Helvetica, sans-serif;
-}
-
-h1 {
-    margin-top: 50px;
-    font-size: 500px;
-    text-align: center;
-    animation: moveUpDown 3s ease-in-out infinite;
-}
-
-nav {
-    color: white;
-    text-align: center;
-    padding: 10px;
+    text-transform: uppercase;
 }
 
 body {
-    background-color: orange;
+    background-color: rgb(255, 145, 0);
 }
 
-@keyframes moveUpDown {
+p {
+    font-size: 20px;
+    font-weight: 300;
+}
+
+h1 {
+    margin-top: 20px;
+    font-size: 300px;
+    text-align: center;
+    
+    /* animation: moveUpDown 3s ease-in-out infinite; */
+}
+
+/* ---------------------------------------------- */
+/* Navigation bar */
+
+nav {
+    color: black;
+    text-align: center;
+    padding-top: 10px;
+    position: sticky;
+    top: 0;
+    height: 0px;
+}
+
+nav li {
+    display: inline;
+    margin: 0 10px;
+}
+
+nav a {
+    color: inherit;
+    text-decoration: none;
+}
+
+/* ---------------------------------------------- */
+/* Context */
+
+.image-container {
+    text-align: center;
+}
+
+.description-container {
+    text-align: center;
+    margin: 20px 50px 40px;
+}
+
+/* @keyframes moveUpDown {
     0%, 100% {
         transform: translateY(0);
     }
     50% {
         transform: translateY(-50px);
     }
-}
+} */
