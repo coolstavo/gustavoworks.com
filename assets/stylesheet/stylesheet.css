@@ -1,0 +1,121 @@
+/* General */
+
+* {
+    margin: 0;
+    padding: 0;
+    font-family: Helvetica, sans-serif;
+    text-transform: uppercase;
+}
+
+body {
+    background-color: rgb(255, 145, 0);
+}
+
+p {
+    font-size: 20px;
+    font-weight: 300;
+}
+
+h1 {
+    margin-top: 20px;
+    font-size: 300px;
+    font-weight: bold;
+}
+
+.title-container {
+    text-align: center;
+    margin: 20px 50px;
+}
+
+div .image-container .description-container {
+    margin: 20px 50px;
+    text-align: center;
+}
+
+
+/* ---------------------------------------------- */
+/* Navigation bar */
+
+nav {
+    color: black;
+    text-align: center;
+    padding-top: 10px;
+    position: sticky;
+    top: 0;
+    height: 0px;
+}
+
+nav li {
+    display: inline;
+    margin: 0 10px;
+}
+
+nav a {
+    color: inherit;
+    text-decoration: none;
+}
+
+/* ---------------------------------------------- */
+/* Context */
+
+.image-container {
+    text-align: center;
+}
+
+.description-container {
+    text-align: center;
+    margin: 20px 50px 40px;
+}
+
+
+/* ---------------------------------------------- */
+/* Base grid container */
+.grid-container {
+    display: grid;
+    grid-template-columns: repeat(12, 1fr); /* 12-column grid */
+    grid-gap: 10px; /* Gap between grid items */
+    margin: 20px;
+}
+
+/* Example grid items */
+.grid-item {
+    background-color: #f0f0f0;
+    padding: 20px;
+    border: 1px solid #ccc;
+}
+
+/* Full-width item */
+.grid-item-full {
+    grid-column: span 12;
+}
+
+/* Half-width item */
+.grid-item-half {
+    grid-column: span 6;
+}
+
+/* Quarter-width item */
+.grid-item-quarter {
+    grid-column: span 3;
+}
+
+
+/* ---------------------------------------------- */
+/* Responsive design for different viewports */
+
+/* Phone view (max-width: 600px) */
+@media (max-width: 600px) {
+
+}
+
+/* Tablet view (min-width: 601px) and (max-width: 1024px) */
+@media (min-width: 601px) and (max-width: 1024px) {
+
+}
+
+/* Desktop view (min-width: 1025px) */
+@media (min-width: 1025px) {
+
+}
+
+/* ---------------------------------------------- */
