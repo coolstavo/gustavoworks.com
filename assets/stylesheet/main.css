@@ -1,0 +1,106 @@
+/* ---------------------------------------------- */
+/* Global Variables */
+
+:root {
+    --ultramarine: #0437F2;
+    --gus-orange:#f55600;
+    --off-white: #F5F5F5;
+    --off-black: #222222;
+}
+
+/* ---------------------------------------------- */
+/* Main body */
+
+body, html {
+    height: 100%;
+    margin: 0;
+    background: var(--ultramarine);
+    font-family: Helvetica Neue, sans-serif;
+    scroll-behavior: smooth;
+}
+
+.container {
+    width: 100%;
+    height: 100%;
+    position: relative;
+}
+
+/* ---------------------------------------------- */
+/* Navigatiob bar */
+
+.nav-bar {
+    text-align: center;
+    color: var(--off-black);
+    font-size: 23px;
+    font-style: italic;
+    font-weight: 200;
+    word-wrap: break-word;
+    position: absolute;
+    top: 20px;
+    right: 20px;
+    z-index: 10; /* Ensure the navbar is in front of the title */
+}
+
+.nav-bar a {
+    color: inherit;
+    text-decoration: none;
+}
+
+/* ---------------------------------------------- */
+
+/* Title */
+.title {
+    text-align: center;
+    color: var(--off-black);
+    font-size: 409px;
+    font-style: italic;
+    font-weight: 300;
+    position: absolute;
+    left: 20px;
+    top: -70px;
+    z-index: 1; /* Ensure the title has a lower z-index */
+    user-select: none; /* Prevent text selection */
+    -webkit-user-select: none; /* Safari */
+    -moz-user-select: none; /* Firefox */
+    -ms-user-select: none; /* Internet Explorer/Edge */
+    line-height: normal;
+    transition: all 1s ease-in-out; /* Add this line for smooth transitions */
+}
+
+/* ---------------------------------------------- */
+/* Footer */
+
+.footer {
+    width: 100%;
+    height: 40px;
+    text-align: center;
+    color: var(--off-black);
+    font-size: 15px;
+    font-style: italic;
+    font-weight: 300;
+    position: absolute;
+    bottom: 1px;
+    z-index: 10; /* Ensure the footer is in front of the title */
+    /* background-color: #f55600; */
+}
+
+
+/* ---------------------------------------------- */
+/* Responsive design for different viewports */
+
+/* Phone view (max-width: 600px) */
+@media (max-width: 600px) {
+
+}
+
+/* Tablet view (min-width: 601px) and (max-width: 1024px) */
+@media (min-width: 601px) and (max-width: 1024px) {
+
+}
+
+/* Desktop view (min-width: 1025px) */
+@media (min-width: 1025px) {
+
+}
+
+/* ---------------------------------------------- */

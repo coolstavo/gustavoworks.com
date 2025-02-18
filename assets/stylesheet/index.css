@@ -1,0 +1,46 @@
+
+
+.description {
+    text-align: center;
+    color: var(--off-black);
+    font-size: 20px;
+    font-style: italic;
+    font-weight: 300;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%); /* Center the description */
+    z-index: 1; /* Ensure the description has a lower z-index */
+}
+
+/* ---------------------------------------------- */
+/* Responsive design for different viewports */
+
+/* Phone view (max-width: 600px) */
+@media (max-width: 600px) {
+
+    .title {
+        height: 500px;
+        text-align: left;
+        font-size: 250px;
+        left: 10px;
+        top: -40px;
+    }
+
+    body, html {
+        overflow-x: hidden;
+    }
+
+}
+
+/* Tablet view (min-width: 601px) and (max-width: 1024px) */
+@media (min-width: 601px) and (max-width: 1024px) {
+
+}
+
+/* Desktop view (min-width: 1025px) */
+@media (min-width: 1025px) {
+
+}
+
+/* ---------------------------------------------- */
