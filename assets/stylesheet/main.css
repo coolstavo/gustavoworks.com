@@ -36,7 +36,7 @@ body, html {
     font-weight: 200;
     word-wrap: break-word;
     position: absolute;
-    top: 20px;
+    top: 10px;
     right: 20px;
     z-index: 10; /* Ensure the navbar is in front of the title */
 }
@@ -65,9 +65,6 @@ body, html {
     -moz-user-select: none; /* Firefox */
     -ms-user-select: none; /* Internet Explorer/Edge */
     line-height: normal;
-    transition: none; /* Remove smooth transitions */
-    animation: none; /* Remove title animation */
-    /* background-color: #f55600; */
 }
 
 /* ---------------------------------------------- */
