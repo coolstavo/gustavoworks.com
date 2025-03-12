@@ -1,5 +1,4 @@
-
-.description {
+.content {
     text-align: center;
     color: black;
     font-size: 20px;
@@ -8,8 +7,8 @@
     position: absolute;
     top: 50%;
     left: 50%;
-    transform: translate(-50%, -50%); /* Center the description */
-    z-index: 1; /* Ensure the description has a lower z-index */
+    transform: translate(-50%, -50%); /* Center the content */
+    z-index: 1; /* Ensure the content has a lower z-index */
 }
 
 /* ---------------------------------------------- */
