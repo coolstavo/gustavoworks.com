@@ -1,3 +1,5 @@
+
+/*
 .content {
     text-align: center;
     color: black;
@@ -10,6 +12,7 @@
     transform: translate(-50%, -50%); /* Center the content */
     z-index: 1; /* Ensure the content has a lower z-index */
 }
+*/
 
 /* ---------------------------------------------- */
 /* Responsive design for different viewports */
