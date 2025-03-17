@@ -132,7 +132,7 @@
         width: 95%;
         padding: 0 20px;
         position: relative;
-        top: 270px;
+        top: 250px;
         transform: none;
         left: 0;
         margin: 0 auto;
@@ -140,6 +140,8 @@
 
     .contact-form {
         padding: 20px;
+        width: 100%;
+        margin-top: 20px;
     }
 
     .contact-input, .contact-textarea {
@@ -151,7 +153,7 @@
         text-align: left;
         font-size: 250px;
         left: 10px;
-        top: -30px;
+        top: -20px;
     }
 
     body, html {
@@ -164,9 +166,5 @@
 
 }
 
-/* Desktop view (min-width: 1025px) */
-@media (min-width: 1025px) {
-
-}
 
 /* ---------------------------------------------- */
