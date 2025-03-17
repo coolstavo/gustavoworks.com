@@ -4,10 +4,8 @@
     font-size: 20px;
     font-style: italic;
     font-weight: 300;
-    position: absolute;
-    top: 50%;
-    left: 50%;
-    transform: translate(-50%, -50%);
+    position: relative;
+    margin: 200px auto 0;
     z-index: 1;
     width: 90%;
     max-width: 600px;
@@ -130,22 +128,15 @@
 @media (max-width: 600px) {
     .content {
         width: 95%;
-        padding: 0 20px;
-        position: relative;
-        top: 250px;
-        transform: none;
-        left: 0;
-        margin: 0 auto;
+        padding: 0 15px;
+        margin-top: 180px;
+        box-sizing: border-box;
     }
 
     .contact-form {
         padding: 20px;
         width: 100%;
-        margin-top: 20px;
-    }
-
-    .contact-input, .contact-textarea {
-        padding: 12px 15px;
+        box-sizing: border-box;
     }
 
     .title {
