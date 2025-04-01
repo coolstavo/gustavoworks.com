@@ -130,16 +130,17 @@
         padding: 15px;
         padding-top: 20px;
         box-sizing: border-box;
+        margin-top: 20px; /* Add spacing between the title and the content */
     }
 
     .title {
         height: auto;
         text-align: center;
-        font-size: 200px;
+        font-size: 150px; /* Reduce font size for better fit */
         left: 0;
         top: 0;
         position: relative;
-        margin-bottom: 20px;
+        margin-bottom: 20px; /* Add spacing below the title */
     }
 
     .contact-form {
@@ -147,10 +148,22 @@
         padding: 20px;
         margin-top: 20px;
         position: relative;
+        box-sizing: border-box;
+    }
+
+    .contact-input,
+    .contact-textarea {
+        font-size: 14px; /* Adjust font size for smaller screens */
+        padding: 10px 15px; /* Adjust padding for better fit */
+    }
+
+    .contact-button {
+        font-size: 14px; /* Adjust button font size */
+        padding: 10px 20px; /* Adjust button padding */
     }
 
     body, html {
-        overflow-x: hidden;
+        overflow-x: hidden; /* Prevent horizontal scrolling */
     }
 }
 
