@@ -48,7 +48,7 @@ body {
 .footer {
     grid-row: 3; /* Place in the third row */
     text-align: center;
-    padding: 10px;
+    padding: 3px;
     font-size: 15px;
     font-style: italic;
     font-weight: 300;
@@ -184,7 +184,7 @@ body {
     .content {
         width: 80%;
         padding: 15px;
-        padding-top: 150px;
+        /* padding-top: 150px; */
         box-sizing: border-box;
     }
 
@@ -200,7 +200,7 @@ body {
     }
 
     .contact-form {
-        margin-top: 100px;
+        margin-top: 80px;
         position: relative;
         box-sizing: border-box;
         }
