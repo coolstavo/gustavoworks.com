@@ -96,7 +96,6 @@ html {
   }
 
   .content {
-    width: 1vw;
     padding: 0 20px;
     box-sizing: border-box;
     text-align: center;
@@ -107,9 +106,49 @@ html {
 
   .footer {
     font-size: 12px; /* Slightly smaller footer text */
-    bottom: 5px; /* Small adjustment to bottom spacing */
+    bottom: 20px; /* Small adjustment to bottom spacing */
   }
 
+  .social-links {
+    display: block;
+    margin-top: 10px;
+  }
+  
+  .social-icon {
+    font-size: 18px;
+  }
+}
+
+/* ---------------------------------------------- */
+
+/* Social Links */
+.social-links {
+    display: inline-block;
+    margin-left: 20px;
+    margin-bottom: 10px;
+    text-decoration: none;
+    
+}
+
+.social-icon {
+    color: var(--off-black);
+    font-size: 20px;
+    margin: 0 10px;
+    transition: color 0.3s ease;
+}
+
+.social-icon:hover {
+    color: var(--off-white);
+}
+
+.footer .social-icon {
+  border: none;
+  text-decoration: none;
+}
+
+.footer .social-links a:after,
+.footer .social-links a:before {
+  content: none;
 }
 
 /* ---------------------------------------------- */

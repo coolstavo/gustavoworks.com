@@ -19,6 +19,8 @@
         <link rel="icon" type="image/png" href="/logo.png">
         <link rel = "stylesheet" type = "text/css" href = "/assets/stylesheet/about.css">
         <link rel="stylesheet" href="/assets/stylesheet/main.css">
+        <!-- Add Font Awesome -->
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
     </head>
 
     <body class="container">
@@ -35,14 +37,15 @@
         <div class="content">
             <form class="contact-form" action="https://formsubmit.co/info@gustavoworks.com" method="POST">
                 <div class="form-group">
-                    <input class="contact-input" type="text" name="_captcha" name="name" placeholder="Your name" required>
+                    <input class="contact-input" type="text" name="name" placeholder="Your name" required>
                 </div>
                 <div class="form-group">
-                    <input class="contact-input" type="email"name="_captcha" name="email" placeholder="Your email" required>
+                    <input class="contact-input" type="email" name="email" placeholder="Your email" required>
                 </div>
                 <div class="form-group">
-                    <textarea class="contact-textarea" name="_captcha" name="message" placeholder="Message" required></textarea>
+                    <textarea class="contact-textarea" name="message" placeholder="Message" required></textarea>
                 </div>
+                <input type="hidden" name="_captcha" value="false">
                 <button class="contact-button" type="submit">
                     <span class="button-text">Send Message</span>
                     <span class="button-arrow">→</span>
@@ -52,6 +55,14 @@
 
         <footer class="footer">
             <div class="footer-content">
+                <div class="social-links">
+                    <a href="https://www.instagram.com/____gusworks____" target="_blank" class="social-icon">
+                        <i class="fab fa-instagram"></i>
+                    </a>
+                    <a href="mailto:info@gustavoworks.com" class="social-icon">
+                        <i class="far fa-envelope"></i>
+                    </a>
+                </div>
                 <p>© 2025, Gustavo Henrique Costa Araújo</p>
             </div>
         </footer>
