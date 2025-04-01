@@ -1,5 +1,3 @@
-
-
 .content {
     text-align: center;
     color: black;
@@ -13,6 +11,27 @@
     z-index: 1; /* Ensure the content has a lower z-index */
 }
 
+.title {
+    width: 680px;
+    height: 500px;
+    text-align: center;
+    color: var(--off-black);
+    font-size: 409px;
+    font-style: italic;
+    font-weight: 300;
+    position: absolute;
+    left: 20px;
+    top: -140px;
+    z-index: 1; /* Ensure the title has a lower z-index */
+    user-select: none; /* Prevent text selection */
+    -webkit-user-select: none; /* Safari */
+    -moz-user-select: none; /* Firefox */
+    -ms-user-select: none; /* Internet Explorer/Edge */
+    line-height: normal;
+    /* background-color: blue; */
+    transition: all 0.5s ease; /* Add this line for smooth transitions */
+}
+
 /* ---------------------------------------------- */
 /* Responsive design for different viewports */
 
@@ -22,9 +41,9 @@
     .title {
         height: 500px;
         text-align: left;
-        font-size: 250px;
+        font-size: 300px;
         left: 10px;
-        top: -40px;
+        top: -50px;
     }
 
     body, html {
@@ -39,7 +58,21 @@
 }
 
 /* Desktop view (min-width: 1025px) */
+
 @media (min-width: 1025px) {
+
+    .title {
+        width: 680px;
+        height: 500px;
+        text-align: center;
+        color: var(--off-black);
+        font-size: 409px;
+        font-style: italic;
+        font-weight: 300;
+        position: absolute;
+        left: 20px;
+        top: -100px;
+    }
 
 }
 
