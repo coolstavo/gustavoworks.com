@@ -17,6 +17,7 @@ html {
   background: var(--ultramarine);
   font-family: Helvetica Neue, sans-serif;
   scroll-behavior: smooth;
+  color: var(--off-black); /* Set default text color */
 }
 
 
@@ -50,7 +51,7 @@ html {
   color: var(--off-white); /* Change color on hover to match the social links */
 }
 
-/* Active link styling */
+
 .nav-bar a.active {
   color: var(--off-white); /* Keep the active link off-white */
   font-size: 23px; /* Ensure consistent font size */
@@ -63,6 +64,7 @@ html {
 
 /* Title */
 .title {
+  display: block;
   width: 700px;
   text-align: center;
   color: var(--off-black);
@@ -110,6 +112,40 @@ html {
 }
 
 /* ---------------------------------------------- */
+
+/* Social Links */
+.social-links {
+  display: inline-block;
+  margin-left: 20px;
+  margin-bottom: 10px;
+  text-decoration: none;
+  
+}
+
+.social-icon {
+  color: var(--off-black);
+  font-size: 20px;
+  margin: 0 10px;
+  transition: color 0.3s ease;
+}
+
+.social-icon:hover {
+  color: var(--off-white);
+}
+
+.footer .social-icon {
+border: none;
+text-decoration: none;
+}
+
+.footer .social-links a:after,
+.footer .social-links a:before {
+content: none;
+}
+
+/* ---------------------------------------------- */
+
+/* ---------------------------------------------- */
 /* Responsive design for different viewports */
 
 /* Phone view (max-width: 600px) */
@@ -121,21 +157,25 @@ html {
     top: 0px;
   }
 
-  .nav-bar {
-    font-size: 18px;
-  }
-
   .content {
     padding: 0 20px;
     box-sizing: border-box;
     text-align: center;
     font-size: 16px;
     left: 0;
-    transform: translateY(-50%);
+    transform: translate(-50%, -50%);
+    left: 50%;
+    top: 50%;
+    position: absolute;
+  }
+
+  .nav-bar {
+    font-size: 18px;
   }
 
   .footer {
-    font-size: 12px; /* Slightly smaller footer text for mobile */
+    font-size: 14px; /* Slightly smaller footer text for mobile */
+    font-weight: 350; /* Ensure consistent font weight */
     bottom: 5px; /* Ensure consistent spacing on mobile */
   }
 
@@ -143,48 +183,4 @@ html {
     display: block;
     margin-top: 10px;
   }
-  
-  .social-icon {
-    font-size: 18px;
-  }
 }
-
-/* ---------------------------------------------- */
-
-/* Social Links */
-.social-links {
-    display: inline-block;
-    margin-left: 20px;
-    margin-bottom: 10px;
-    text-decoration: none;
-    
-}
-
-.social-icon {
-    color: var(--off-black);
-    font-size: 20px;
-    margin: 0 10px;
-    transition: color 0.3s ease;
-}
-
-.social-icon:hover {
-    color: var(--off-white);
-}
-
-.footer .social-icon {
-  border: none;
-  text-decoration: none;
-}
-
-.footer .social-links a:after,
-.footer .social-links a:before {
-  content: none;
-}
-
-/* Specific styling for the email icon */
-.social-icon.fa-envelope {
-  font-size: 18px; /* Slightly smaller size for a thinner appearance */
-  font-weight: 300; /* Use a lighter font weight if supported */
-}
-
-/* ---------------------------------------------- */

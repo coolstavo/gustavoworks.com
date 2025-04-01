@@ -1,14 +1,57 @@
-.content {
+body {
+    display: grid;
+    grid-template-rows: auto 1fr auto;
+    grid-template-columns: 1fr;
+    min-height: 100vh;
+    margin: 0;
+}
+
+.nav-bar {
+    grid-row: 1;
     text-align: center;
-    color: black;
-    font-size: 20px;
+    padding: 10px;
+}
+
+.title {
+    grid-row: 2;
+    text-align: center;
+    font-size: 409px;
     font-style: italic;
     font-weight: 300;
-    position: absolute;
-    top: 50%;
-    left: 50%;
-    transform: translate(-50%, -50%); /* Center the content */
-    z-index: 1; /* Ensure the content has a lower z-index */
+    margin: 20px 0;
+}
+
+.content {
+    grid-row: 2; /* Place in the second row */
+    text-align: center;
+    padding: 20px;
+    margin: 0 auto;
+    max-width: 600px;
+    box-sizing: border-box;
+
+    /* Center the content */
+    align-self: center; /* Vertically center */
+    justify-self: center; /* Horizontally center */
+}
+
+.footer {
+    grid-row: 3;
+    text-align: center;
+    padding: 10px;
+    font-size: 15px;
+    font-style: italic;
+    font-weight: 300;
+}
+
+/* Responsive adjustments */
+@media (max-width: 600px) {
+    .title {
+        font-size: 150px;
+    }
+
+    .content {
+        padding: 15px;
+    }
 }
 
 /* ---------------------------------------------- */

@@ -1,35 +1,46 @@
-.content {
+body {
+    display: grid;
+    grid-template-rows: auto 1fr auto; /* Header, main content, footer */
+    grid-template-columns: 1fr; /* Single column layout */
+    min-height: 100vh; /* Full viewport height */
+    margin: 0;
+}
+
+.nav-bar {
+    grid-row: 1;
     text-align: center;
-    color: black;
-    font-size: 20px;
-    font-style: italic;
-    font-weight: 300;
-    position: absolute;
-    top: 50%;
-    left: 50%;
-    transform: translate(-50%, -50%); /* Center the content */
-    z-index: 1; /* Ensure the content has a lower z-index */
+    padding: 10px;
 }
 
 .title {
-    width: 680px;
-    height: 500px;
+    grid-row: 2;
     text-align: center;
-    color: var(--off-black);
     font-size: 409px;
     font-style: italic;
     font-weight: 300;
-    position: absolute;
-    left: 20px;
-    top: -140px;
-    z-index: 1; /* Ensure the title has a lower z-index */
-    user-select: none; /* Prevent text selection */
-    -webkit-user-select: none; /* Safari */
-    -moz-user-select: none; /* Firefox */
-    -ms-user-select: none; /* Internet Explorer/Edge */
-    line-height: normal;
-    /* background-color: blue; */
-    transition: all 0.5s ease; /* Add this line for smooth transitions */
+    margin: 20px 0;
+}
+
+.content {
+    grid-row: 2; /* Place in the second row */
+    text-align: center;
+    padding: 20px;
+    margin: 0 auto;
+    max-width: 600px;
+    box-sizing: border-box;
+
+    /* Center the content */
+    align-self: center; /* Vertically center */
+    justify-self: center; /* Horizontally center */
+}
+
+.footer {
+    grid-row: 3;
+    text-align: center;
+    padding: 10px;
+    font-size: 15px;
+    font-style: italic;
+    font-weight: 300;
 }
 
 /* ---------------------------------------------- */
@@ -39,11 +50,11 @@
 @media (max-width: 600px) {
 
     .title {
-        height: 500px;
-        text-align: left;
-        font-size: 300px;
-        left: 10px;
-        top: -50px;
+        font-size: 150px;
+    }
+
+    .content {
+        padding: 15px;
     }
 
     body, html {

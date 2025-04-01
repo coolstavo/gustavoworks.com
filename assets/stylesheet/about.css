@@ -1,28 +1,69 @@
-.content {
+/* Apply a grid layout to the body */
+body {
+    display: grid;
+    grid-template-rows: auto 1fr auto; /* Header, main content, footer */
+    grid-template-columns: 1fr; /* Single column layout */
+    min-height: 100vh; /* Ensure the body takes up the full viewport height */
+    margin: 0;
+    color: var(--off-black); /* Set default text color */
+}
+
+/* Navigation bar */
+.nav-bar {
+    grid-row: 1; /* Place in the first row */
     text-align: center;
-    color: var(--off-black);
-    font-size: 20px;
+    padding: 10px;
+    color: var(--off-black); /* Ensure text is off-black */
+}
+
+/* Title */
+.title {
+    grid-row: 2; /* Place in the second row */
+    text-align: center;
+    font-size: 409px;
     font-style: italic;
     font-weight: 300;
-    position: relative;
-    padding-top: 280px;
-    margin: 0 auto 40px;
-    z-index: 1;
-    width: 100%;
-    max-width: 600px;
+    margin: 20px 0; /* Add spacing around the title */
+    color: var(--off-black); /* Ensure text is off-black */
+}
+
+.content {
+    grid-row: 2; /* Place in the second row */
+    text-align: center;
     padding: 20px;
+    margin: 0 auto;
+    max-width: 700px; /* Increase max-width for larger screens */
+    width: 100%; /* Ensure it takes full width */
     box-sizing: border-box;
-    margin-top: 20px; /* Ensure spacing between title and content */
+    text-transform: uppercase; /* Ensure text is uppercase */
+
+    /* Center the content */
+    align-self: center; /* Vertically center */
+    justify-self: center; /* Horizontally center */
+    color: var(--off-black); /* Ensure text is off-black */
+}
+
+/* Footer */
+.footer {
+    grid-row: 3; /* Place in the third row */
+    text-align: center;
+    padding: 10px;
+    font-size: 15px;
+    font-style: italic;
+    font-weight: 300;
+    color: var(--off-black); /* Ensure text is off-black */
 }
 
 /* General styles */
 .title {
+    display: flex;
     text-align: center;
     font-size: 409px;
     font-style: italic;
     font-weight: 300;
     position: relative; /* Change to relative for proper stacking */
     margin-bottom: 20px; /* Add spacing below the title */
+    color: var(--off-black); /* Ensure text is off-black */
 }
 
 /* ---------------------------------------------- */
@@ -34,15 +75,16 @@
     align-items: center;
     gap: 20px;
     text-transform: uppercase;
-    max-width: 500px;
+    max-width: 700px; /* Increase max-width for larger screens */
     margin: 0 auto;
-    padding: 20px;
+    padding: 40px; /* Add more padding for a spacious look */
     background: rgba(255, 255, 255, 0.95);
     backdrop-filter: blur(10px);
     border-radius: 20px;
     box-shadow: 0 8px 32px rgba(0, 0, 0, 0.1);
     border: 1px solid rgba(255, 255, 255, 0.2);
     transition: transform 0.3s ease, box-shadow 0.3s ease;
+    color: var(--off-black); /* Ensure text is off-black */
 }
 
 .contact-form:hover {
@@ -66,7 +108,7 @@
     font-size: 16px;
     transition: all 0.3s ease;
     background: rgba(255, 255, 255, 0.9);
-    color: var(--off-black);
+    color: var(--off-black); /* Ensure input text is off-black */
 }
 
 .contact-input:focus {
@@ -90,7 +132,7 @@
     font-size: 16px;
     transition: all 0.3s ease;
     background: rgba(255, 255, 255, 0.9);
-    color: var(--off-black);
+    color: var(--off-black); /* Ensure textarea text is off-black */
 }
 
 .contact-textarea:focus {
@@ -102,7 +144,7 @@
 
 .contact-button {
     background-color: var(--off-black);
-    color: var(--off-white);
+    color: var(--off-white); /* Button text remains off-white */
     border: none;
     padding: 15px 40px;
     border-radius: 12px;
@@ -144,6 +186,7 @@
         padding-top: 20px;
         box-sizing: border-box;
         margin-top: 0; /* Remove extra margin if unnecessary */
+        color: var(--off-black); /* Ensure text is off-black */
     }
 
     .title {
@@ -154,6 +197,7 @@
         top: 0;
         position: relative;
         margin-bottom: 30px; /* Add spacing below the title */
+        color: var(--off-black); /* Ensure text is off-black */
     }
 
     .contact-form {
@@ -162,6 +206,7 @@
         margin-top: 20px;
         position: relative;
         box-sizing: border-box;
+        color: var(--off-black); /* Ensure text is off-black */
     }
 
     .contact-input,
@@ -178,12 +223,20 @@
     body, html {
         overflow-x: hidden; /* Prevent horizontal scrolling */
     }
+
+    .title {
+        font-size: 150px; /* Reduce font size for smaller screens */
+        color: var(--off-black); /* Ensure text is off-black */
+    }
+
+    .content {
+        padding: 15px;
+        color: var(--off-black); /* Ensure text is off-black */
+    }
+
+    .contact-form {
+        padding: 15px;
+        color: var(--off-black); /* Ensure text is off-black */
+    }
 }
 
-/* Tablet view (min-width: 601px) and (max-width: 1024px) */
-@media (min-width: 601px) and (max-width: 1024px) {
-
-}
-
-
-/* ---------------------------------------------- */
