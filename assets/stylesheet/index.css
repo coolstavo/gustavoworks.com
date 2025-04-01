@@ -12,6 +12,7 @@ body {
     padding: 10px;
 }
 
+/* Title */
 .title {
     grid-row: 2;
     text-align: center;
@@ -21,6 +22,7 @@ body {
     margin: 20px 0;
 }
 
+/* Content */
 .content {
     grid-row: 2; /* Place in the second row */
     text-align: center;
@@ -32,15 +34,6 @@ body {
     /* Center the content */
     align-self: center; /* Vertically center */
     justify-self: center; /* Horizontally center */
-}
-
-.footer {
-    grid-row: 3;
-    text-align: center;
-    padding: 10px;
-    font-size: 15px;
-    font-style: italic;
-    font-weight: 300;
 }
 
 /* ---------------------------------------------- */
