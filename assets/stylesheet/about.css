@@ -67,6 +67,10 @@ body {
     color: var(--off-black); /* Ensure text is off-black */
 }
 
+/* Content styles */
+/* ----------------------------------------------- *
+
+
 /* ---------------------------------------------- */
 /* Contact form */
 
@@ -181,10 +185,15 @@ body {
 
 /* Phone view (max-width: 600px) */
 @media (max-width: 600px) {
+
+    .content p {
+        font-size: 13px;
+        line-height: 1.5;
+    }
+    
     .content {
         width: 80%;
         padding: 15px;
-        /* padding-top: 150px; */
         box-sizing: border-box;
     }
 
