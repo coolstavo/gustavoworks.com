@@ -168,7 +168,8 @@ content: none;
 
   .footer {
     font-size: 14px; /* Slightly smaller footer text for mobile */
-    font-weight: 350; /* Ensure consistent font weight */
+    font-weight: 300; /* Ensure consistent font weight */
+
     bottom: 5px; /* Ensure consistent spacing on mobile */
   }
 
