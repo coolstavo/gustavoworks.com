@@ -181,7 +181,7 @@ body {
     }
 
     .content {
-        width: 70%;
+        width: 96%;
         padding: 15px;
         box-sizing: border-box;
     }
@@ -193,12 +193,11 @@ body {
         left: 0;
         top: 0;
         position: relative;
-        margin-bottom: 50px; /* Add spacing below the title */
         color: var(--off-black); /* Ensure text is off-black */
     }
 
     .contact-form {
-        margin-top: 80px;
+        margin-top: 200px;
         position: relative;
         box-sizing: border-box;
         }
