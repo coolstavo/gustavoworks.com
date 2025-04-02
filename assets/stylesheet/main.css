@@ -178,3 +178,89 @@ content: none;
     margin-top: 10px;
   }
 }
+
+/* iPad/Tablet view (max-width: 1024px) */
+@media screen and (max-width: 1024px) {
+  .nav-bar {
+    font-size: 20px;
+    position: absolute;
+    top: 15px;
+    right: 25px;
+    z-index: 10; /* Ensure the navbar is in front of the title */
+  }
+
+  .title {
+    font-size: 300px;
+    width: 500px;
+    left: 10px;
+    top: -30px;
+  }
+
+  .content {
+    padding: 0 30px;
+    box-sizing: border-box;
+    text-align: center;
+    font-size: 18px;
+    position: relative;
+    margin-top: 50px;
+  }
+
+  .footer {
+    font-size: 16px; /* Slightly smaller footer text for tablets */
+    font-weight: 300; /* Ensure consistent font weight */
+    padding: 10px 20px; /* Adjust padding for better spacing */
+  }
+
+  .social-links {
+    display: flex;
+    justify-content: center;
+    margin-top: 15px;
+  }
+
+  .social-icon {
+    font-size: 22px; /* Adjust icon size for tablets */
+    margin: 0 12px;
+  }
+
+  .contact-button {
+    font-size: 16px; /* Adjust button font size */
+    padding: 12px 25px; /* Adjust button padding */
+  }
+
+  .contact-input,
+  .contact-textarea {
+    font-size: 16px; /* Adjust font size for tablets */
+    padding: 12px 20px; /* Adjust padding for better fit */
+  }
+
+  .contact-form {
+    margin-top: 150px;
+    position: relative;
+    box-sizing: border-box;
+  }
+
+  .contact-button:hover {
+    background-color: var(--gus-orange);
+    transform: translateY(-2px);
+    box-shadow: 0 5px 15px rgba(245, 86, 0, 0.3);
+  }
+
+  .button-arrow {
+    transition: transform 0.3s ease;
+  }
+
+  .contact-button:hover .button-arrow {
+    transform: translateX(5px);
+  }
+
+  .content p {
+    font-size: 15px;
+    line-height: 1.6;
+  }
+
+  .content {
+    width: 90%;
+    padding: 20px;
+    box-sizing: border-box;
+  }
+}
