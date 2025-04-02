@@ -30,10 +30,16 @@ body {
     margin: 0 auto;
     max-width: 600px;
     box-sizing: border-box;
+    text-transform: uppercase;
 
     /* Center the content */
     align-self: center; /* Vertically center */
     justify-self: center; /* Horizontally center */
+}
+
+.content a {
+    text-decoration: none;
+    color: var(--off-white);
 }
 
 /* ---------------------------------------------- */
