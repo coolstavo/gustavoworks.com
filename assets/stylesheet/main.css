@@ -113,7 +113,9 @@ html {
   margin-left: 20px;
   margin-bottom: 10px;
   text-decoration: none;
-  
+  position: sticky; /* Make the social links sticky */
+  bottom: 10px; /* Position it 10px from the bottom of the viewport */
+  z-index: 100; /* Ensure it stays above other elements */
 }
 
 .social-icon {
