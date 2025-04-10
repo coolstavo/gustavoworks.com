@@ -129,6 +129,7 @@ p {
     left: 50%;
     top: 50%;
     transform: translate(-50%, -50%);
+    padding-bottom: 50px;
   }
 }
 
@@ -186,6 +187,11 @@ p {
 @media (max-width: 600px) {
   .footer {
     font-size: 12px;
+    position: fixed;
+    bottom: 0;
+    left: 0;
+    width: 96%;
+    z-index: 10;
   }
 
   .footer-content {
