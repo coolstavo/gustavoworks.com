@@ -9,21 +9,69 @@
 }
 
 /* ---------------------------------------------- */
+/* ---------------------------------------------- */
 /* Main body */
 
 body,
 html {
   margin: 0;
+  padding: 0;
+  overflow-x: hidden;
   background: var(--ultramarine);
   font-family: Helvetica Neue, sans-serif;
   scroll-behavior: smooth;
-  color: var(--off-black); /* Set default text color */
+  color: var(--off-black);
+  
   display: grid;
-  grid-template-rows: auto minmax(50px, 1fr) auto; /* Reduce the height of the second row */
-  grid-template-columns: 1fr; /* Single column layout */
-  min-height: 100vh; /* Full viewport height */
+  grid-template-rows: auto 1fr auto;
+  grid-template-columns: 1fr;
+  min-height: 100vh;
 }
 
+a {
+  text-decoration: none;
+}
+
+p {
+  margin: 0;
+  color: var(--off-black);
+}
+
+@media (max-width: 600px) {
+  body, html {
+    overflow-x: hidden;
+  }
+}
+
+/* ---------------------------------------------- */
+/* ---------------------------------------------- */
+/* Title */
+
+.title {
+  grid-row: 1;
+  text-align: center;
+  color: var(--off-black);
+  font-size: 300px;
+  font-style: italic;
+  font-weight: 200;
+  position: absolute;
+  left: 20px;
+  top: -70px;
+  z-index: 1;
+  user-select: none;
+  line-height: normal;
+}
+
+@media (max-width: 600px) {
+  .title {
+    font-size: 200px;
+    width: 400px;
+    left: -30px;
+    top: 0;
+  }
+}
+
+/* ---------------------------------------------- */
 /* ---------------------------------------------- */
 /* Navigation bar */
 
@@ -31,97 +79,94 @@ html {
   grid-row: 1;
   text-align: center;
   color: var(--off-black);
-  font-size: 23px;
+  font-size: 19px;
   font-style: italic;
   font-weight: 200;
   position: absolute;
   top: 10px;
   right: 20px;
-  z-index: 10; /* Ensure the navbar is in front of the title */
+  z-index: 2;
 }
 
 .nav-bar a {
   color: var(--off-black);
   text-decoration: none;
-  font-size: 23px; /* Ensure consistent font size */
-  font-style: italic; /* Ensure consistent font style */
-  font-weight: 200; /* Ensure consistent font weight */
-  transition: color 0.3s ease; /* Add transition for smooth hover effect */
+  transition: color 0.3s ease;
 }
 
-.nav-bar a:hover {
-  color: var(--off-white); /* Change color on hover to match the social links */
+.nav-bar a:hover,
+.nav-bar a.active {
+  color: var(--off-white);
 }
 
 .nav-bar a.active {
-  color: var(--off-white); /* Keep the active link off-white */
-  pointer-events: none; /* Optional: Disable clicking on the active link */
+  pointer-events: none;
+}
+
+@media (max-width: 600px) {
+  .nav-bar {
+    font-size: 18px;
+  }
 }
 
 /* ---------------------------------------------- */
+/* ---------------------------------------------- */
+/* Content */
 
-/* Title */
-.title {
-  display: block;
-  width: 700px;
+.content {
+  grid-row: 2;
   text-align: center;
-  color: var(--off-black);
-  font-size: 409px;
-  font-style: italic;
-  font-weight: 200;
-  position: absolute;
-  left: 20px;
-  top: -70px;
-  z-index: 1; /* Ensure the title has a lower z-index */
-  user-select: none; /* Prevent text selection */
-  -webkit-user-select: none; /* Safari */
-  -moz-user-select: none; /* Firefox */
-  -ms-user-select: none; /* Internet Explorer/Edge */
-  line-height: normal;
+  font: italic 300 15px Helvetica, sans-serif;
+  text-transform: uppercase;
 }
 
+@media (max-width: 600px) {
+  .content {
+    padding: 0 20px;
+    box-sizing: border-box;
+    font-size: 12px;
+    position: absolute;
+    left: 50%;
+    top: 50%;
+    transform: translate(-50%, -50%);
+  }
+}
+
+/* ---------------------------------------------- */
 /* ---------------------------------------------- */
 /* Footer */
 
 .footer {
-  grid-row: 3; /* Place in the third row */
+  grid-row: 3;
   text-align: center;
-  padding: 3px;
-  font-size: 15px;
-  font-style: italic;
-  font-weight: 300;
-  color: var(--off-black); /* Ensure text is off-black */
+  font: italic 300 15px Helvetica, sans-serif;
+  color: var(--off-black);
+  padding: 10px 10px 10px;
 }
 
 .footer-content {
   display: flex;
   justify-content: space-between;
   align-items: center;
-  padding: 0 20px;
-  flex-direction: row-reverse; /* Switches the order of the social links and copyright */
+  flex-direction: row-reverse;
 }
 
-.footer-content p {
-  margin: 0;
+.footer-content {
+  justify-content: space-between;
+  flex-direction: row-reverse;
 }
 
-/* ---------------------------------------------- */
-
-/* Social Links */
 .social-links {
   display: inline-block;
-  margin-left: 20px;
-  margin-bottom: 10px;
-  text-decoration: none;
-  position: sticky; /* Make the social links sticky */
-  bottom: 10px; /* Position it 10px from the bottom of the viewport */
-  z-index: 100; /* Ensure it stays above other elements */
+  position: sticky;
+  bottom: 10px;
+  z-index: 100;
 }
 
 .social-icon {
   color: var(--off-black);
   font-size: 20px;
-  margin: 0 10px;
+  margin: 5px 5px;
   transition: color 0.3s ease;
 }
 
@@ -129,55 +174,37 @@ html {
   color: var(--off-white);
 }
 
-.footer .social-icon {
-border: none;
-text-decoration: none;
+.footer .social-links a[href*="instagram"] {
+  text-decoration: none; 
 }
 
-.footer .social-links a:after,
-.footer .social-links a:before {
-content: none;
+.footer .social-links a[href*="instagram"]::after {
+  content: none;
+  display: none;
 }
 
-/* ---------------------------------------------- */
-
-/* ---------------------------------------------- */
-/* Responsive design for different viewports */
-
-/* Phone view (max-width: 600px) */
 @media (max-width: 600px) {
-  .title {
-    font-size: 200px;
-    width: 400px;
-    left: -30px;
-    top: 0px;
-  }
-
-  .content {
-    padding: 0 20px;
-    box-sizing: border-box;
-    text-align: center;
-    font-size: 16px;
-    position: absolute;
-    left: 50%;
-    top: 50%;
-    transform: translate(-50%, -50%);
-  }
-
-  .nav-bar {
-    font-size: 18px;
-  }
-
   .footer {
-    font-size: 14px; /* Slightly smaller footer text for mobile */
-    font-weight: 300; /* Ensure consistent font weight */
+    font-size: 12px;
+  }
 
-    bottom: 5px; /* Ensure consistent spacing on mobile */
+  .footer-content {
+    flex-direction: row;
+    align-items: center;
+    justify-content: center;
+    gap: 10px;
+  }
+  
+  .footer-content {
+    flex-direction: row-reverse;
+    justify-content: space-between;
   }
 
   .social-links {
     display: block;
-    margin-top: 10px;
+  }
+
+  .social-icon {
+    font-size: 16px;
   }
 }
-

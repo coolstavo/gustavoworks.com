@@ -1,56 +1,14 @@
-body {
-    display: grid;
-    grid-template-rows: auto 1fr auto;
-    grid-template-columns: 1fr;
-    min-height: 100vh;
-    margin: 0;
-}
-
-.nav-bar {
-    grid-row: 1;
-    text-align: center;
-    padding: 10px;
-}
-
-/* Title */
-.title {
-    grid-row: 2;
-    text-align: center;
-    font-size: 409px;
-    font-style: italic;
-    font-weight: 300;
-    margin: 20px 0;
-}
-
 /* Content */
 .content {
-    grid-row: 2; /* Place in the second row */
-    text-align: center;
     padding: 20px;
-    margin: 0 auto;
     max-width: 600px;
     box-sizing: border-box;
-    text-transform: uppercase;
-
-    /* Center the content */
-    align-self: center; /* Vertically center */
-    justify-self: center; /* Horizontally center */
+    align-self: center;
+    justify-self: center;
 }
 
 .content a {
-    text-decoration: none;
     color: var(--off-white);
-}
-
-/* Responsive adjustments */
-@media (max-width: 600px) {
-    .title {
-        font-size: 150px;
-    }
-
-    .content {
-        padding: 15px;
-    }
 }
 
 /* ---------------------------------------------- */
@@ -59,28 +17,7 @@ body {
 /* Phone view (max-width: 600px) */
 @media (max-width: 600px) {
 
-    .title {
-        height: 500px;
-        text-align: left;
-        font-size: 250px;
-        left: 10px;
-        top: -40px;
+    .content {
+        padding: 15px;
     }
-
-    body, html {
-        overflow-x: hidden;
-    }
-
 }
-
-/* Tablet view (min-width: 601px) and (max-width: 1024px) */
-@media (min-width: 601px) and (max-width: 1024px) {
-
-}
-
-/* Desktop view (min-width: 1025px) */
-@media (min-width: 1025px) {
-
-}
-
-/* ---------------------------------------------- */

@@ -1,108 +1,64 @@
-/* Apply a grid layout to the body */
-body {
-    display: grid;
-    grid-template-rows: auto 1fr auto; /* Header, main content, footer */
-    grid-template-columns: 1fr; /* Single column layout */
-    min-height: 100vh; /* Full viewport height */
-    margin: 0;
-    color: var(--off-black); /* Set default text color */
-}
-
-/* Navigation bar */
-.nav-bar {
-    grid-row: 1; /* Place in the first row */
-    text-align: center;
-    padding: 10px;
-    color: var(--off-black); /* Ensure text is off-black */
-}
-
-/* Title */
-.title {
-    grid-row: 2; /* Place in the second row */
-    text-align: center;
-    font-size: 409px;
-    font-style: italic;
-    font-weight: 300;
-    margin: 20px 0; /* Add spacing around the title */
-    color: var(--off-black); /* Ensure text is off-black */
-}
-
-.content {
-    grid-row: 2; /* Place in the second row */
-    text-align: center;
-    padding: 20px;
-    margin: 0 auto;
-    max-width: 700px; /* Increase max-width for larger screens */
-    width: 100%; /* Ensure it takes full width */
-    box-sizing: border-box;
-    text-transform: uppercase; /* Ensure text is uppercase */
-    padding-top: 100px; /* Add bottom padding for spacing */
-
-    /* Center the content */
-    align-self: center; /* Vertically center */
-    justify-self: center; /* Horizontally center */
-    color: var(--off-black); /* Ensure text is off-black */
-}
-
-/* General styles */
-.title {
-    display: flex;
-    text-align: center;
-    font-size: 409px;
-    font-style: italic;
-    font-weight: 300;
-    position: relative; /* Change to relative for proper stacking */
-    margin-bottom: 20px; /* Add spacing below the title */
-    color: var(--off-black); /* Ensure text is off-black */
-}
-
-/* Content styles */
+/* Content */
 /* ----------------------------------------------- */
 
+.content {
+    padding: 20px;
+    max-width: 600px; /* Reduced max-width for desktop */
+    width: 100%;
+    box-sizing: border-box;
+    padding-top: 80px; /* Adjusted padding */
+    align-self: center;
+    justify-self: center;
+    color: var(--off-black);
+}
 
 /* ---------------------------------------------- */
-/* Contact form */
+/* Contact Form */
 
 .contact-form {
     display: flex;
     flex-direction: column;
-    align-items: center;
-    gap: 20px;
+    align-items: stretch; /* Ensure fields stretch properly */
+    gap: 20px; /* Add consistent spacing between fields */
     text-transform: uppercase;
-    max-width: 700px; /* Increase max-width for larger screens */
+    max-width: 600px; /* Reduced max-width for desktop */
     margin: 0 auto;
-    padding: 40px; /* Add more padding for a spacious look */
+    padding: 20px; /* Adjust padding */
     background: rgba(255, 255, 255, 0.95);
     backdrop-filter: blur(10px);
-    border-radius: 20px;
-    box-shadow: 0 8px 32px rgba(0, 0, 0, 0.1);
+    border-radius: 15px; /* Adjusted border radius */
+    box-shadow: 0 6px 24px rgba(0, 0, 0, 0.1);
     border: 1px solid rgba(255, 255, 255, 0.2);
     transition: transform 0.3s ease, box-shadow 0.3s ease;
-    color: var(--off-black); /* Ensure text is off-black */
+    color: var(--off-black);
 }
 
 .contact-form:hover {
-    transform: translateY(-5px);
-    box-shadow: 0 12px 40px rgba(0, 0, 0, 0.15);
+    transform: translateY(-3px);
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.15);
 }
+
+/* Form Group */
 
 .form-group {
     width: 100%;
     position: relative;
 }
 
+/* Input Fields */
+
 .contact-input {
     width: 100%;
-    padding: 15px 20px;
+    padding: 12px 18px; /* Adjusted padding */
     border: 2px solid transparent;
-    border-radius: 12px;
+    border-radius: 10px; /* Adjusted border radius */
     text-transform: uppercase;
-    max-width: 100%;
-    box-sizing: border-box;
-    font-size: 16px;
+    font-size: 14px; /* Reduced font size */
     transition: all 0.3s ease;
     background: rgba(255, 255, 255, 0.9);
-    color: var(--off-black); /* Ensure input text is off-black */
+    color: var(--off-black);
+    box-sizing: border-box; /* Ensure padding doesn't affect width */
+    margin: 0; /* Remove any default margins */
 }
 
 .contact-input:focus {
@@ -114,19 +70,19 @@ body {
 
 .contact-textarea {
     width: 100%;
-    padding: 15px 20px;
+    padding: 12px 18px; /* Adjusted padding */
     border: 2px solid transparent;
-    border-radius: 12px;
+    border-radius: 10px; /* Adjusted border radius */
     text-transform: uppercase;
-    max-width: 100%;
-    box-sizing: border-box;
     resize: vertical;
-    min-height: 150px;
-    max-height: 300px;
-    font-size: 16px;
+    min-height: 120px; /* Adjusted height */
+    max-height: 250px; /* Adjusted height */
+    font-size: 14px; /* Reduced font size */
     transition: all 0.3s ease;
     background: rgba(255, 255, 255, 0.9);
-    color: var(--off-black); /* Ensure textarea text is off-black */
+    color: var(--off-black);
+    box-sizing: border-box; /* Ensure padding doesn't affect width */
+    margin: 0; /* Remove any default margins */
 }
 
 .contact-textarea:focus {
@@ -136,23 +92,27 @@ body {
     background: white;
 }
 
+/* Button */
+
 .contact-button {
     background-color: var(--off-black);
-    color: var(--off-white); /* Button text remains off-white */
+    color: var(--off-white);
     border: none;
-    padding: 15px 40px;
-    border-radius: 12px;
+    padding: 12px 30px; /* Adjusted padding */
+    border-radius: 10px; /* Adjusted border radius */
     text-transform: uppercase;
     cursor: pointer;
-    font-size: 16px;
+    font-size: 14px; /* Reduced font size */
     font-weight: 500;
     transition: all 0.3s ease;
     letter-spacing: 1px;
     display: flex;
     align-items: center;
-    gap: 10px;
+    gap: 8px; /* Adjusted gap */
     position: relative;
     overflow: hidden;
+    align-self: center; /* Center the button without stretching */
+    width: auto; /* Ensure the button width is not stretched */
 }
 
 .contact-button:hover {
@@ -170,9 +130,8 @@ body {
 }
 
 /* ---------------------------------------------- */
-/* Responsive design for different viewports */
+/* Responsive Design */
 
-/* Phone view (max-width: 600px) */
 @media (max-width: 600px) {
 
     .content p {
@@ -186,34 +145,20 @@ body {
         box-sizing: border-box;
     }
 
-    .title {
-        height: auto;
-        text-align: center;
-        font-size: 150px; /* Reduce font size for better fit */
-        left: 0;
-        top: 0;
-        position: relative;
-        color: var(--off-black); /* Ensure text is off-black */
-    }
-
     .contact-form {
-        margin-top: 200px;
+        margin-top: 150px; /* Adjusted margin */
         position: relative;
         box-sizing: border-box;
-        }
+    }
 
     .contact-input,
     .contact-textarea {
-        font-size: 14px; /* Adjust font size for smaller screens */
-        padding: 10px 15px; /* Adjust padding for better fit */
+        font-size: 12px; /* Adjusted font size for smaller screens */
+        padding: 8px 12px; /* Adjusted padding */
     }
 
     .contact-button {
-        font-size: 14px; /* Adjust button font size */
-        padding: 10px 20px; /* Adjust button padding */
-    }
-
-    body, html {
-        overflow-x: hidden; /* Prevent horizontal scrolling */
+        font-size: 12px; /* Adjusted button font size */
+        padding: 8px 16px; /* Adjusted button padding */
     }
 }
