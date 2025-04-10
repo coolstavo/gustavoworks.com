@@ -5,7 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Page Not Found</title>
     <script>
-        // Redirect to the correct .html file
+        // Redirect clean URLs to their corresponding .html files
         const path = window.location.pathname;
         const newPath = path.endsWith('/') ? `${path}index.html` : `${path}.html`;
         window.location.replace(newPath);
