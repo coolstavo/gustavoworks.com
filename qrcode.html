@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>QR Code for Digital Card</title>
+    <script src="https://cdn.jsdelivr.net/npm/qrcode-generator@1.4.4/qrcode.min.js"></script>
+    <style>
+        body {
+            font-family: 'Helvetica Neue', sans-serif;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            height: 100vh;
+            margin: 0;
+            background-color: #f5f5f5;
+        }
+        
+        h1 {
+            margin-bottom: 20px;
+        }
+        
+        #qrcode {
+            margin: 20px;
+            padding: 20px;
+            background-color: white;
+            border-radius: 10px;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+        }
+    </style>
+</head>
+<body>
+    <div id="qrcode"></div>
+    
+    <script>
+        // Function to generate QR code
+        function generateQRCode() {
+            // Specific URL for the card
+            const cardUrl = "https://gustavoworks.com/card.html";
+            
+            // Generate QR code
+            const qr = qrcode(0, 'M');
+            qr.addData(cardUrl);
+            qr.make();
+            
+            // Display the QR code
+            document.getElementById('qrcode').innerHTML = qr.createImgTag(10);
+        }
+        
+        // Generate QR code when page loads
+        window.onload = generateQRCode;
+    </script>
+</body>
+</html>

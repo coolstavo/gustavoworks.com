@@ -17,7 +17,7 @@ html {
   margin: 0;
   padding: 0;
   overflow-x: hidden;
-  background: var(--ultramarine);
+  background: var(--off-white);
   font-family: Helvetica Neue, sans-serif;
   scroll-behavior: smooth;
   color: var(--off-black);
