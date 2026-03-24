@@ -2,40 +2,26 @@
 /* ----------------------------------------------- */
 
 .content {
-    padding: 20px;
-    max-width: 600px; /* Reduced max-width for desktop */
-    width: 100%;
+    padding: 20px 4px;
     box-sizing: border-box;
-    padding-top: 80px; /* Adjusted padding */
-    align-self: center;
-    justify-self: center;
-    color: var(--off-black);
+    color: var(--terminal-text);
 }
 
 /* ---------------------------------------------- */
-/* Contact Form */
+/* Contact Form – terminal CLI style */
 
 .contact-form {
     display: flex;
     flex-direction: column;
-    align-items: stretch; /* Ensure fields stretch properly */
-    gap: 20px; /* Add consistent spacing between fields */
+    align-items: stretch;
+    gap: 16px;
     text-transform: uppercase;
-    max-width: 600px; /* Reduced max-width for desktop */
-    margin: 0 auto;
-    padding: 20px; /* Adjust padding */
-    background: rgba(255, 255, 255, 0.95);
-    backdrop-filter: blur(10px);
-    border-radius: 15px; /* Adjusted border radius */
-    box-shadow: 0 6px 24px rgba(0, 0, 0, 0.1);
-    border: 1px solid rgba(255, 255, 255, 0.2);
-    transition: transform 0.3s ease, box-shadow 0.3s ease;
-    color: var(--off-black);
-}
-
-.contact-form:hover {
-    transform: translateY(-3px);
-    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.15);
+    background: transparent;
+    border: none;
+    box-shadow: none;
+    border-radius: 0;
+    padding: 0;
+    color: var(--terminal-text);
 }
 
 /* Form Group */
@@ -43,90 +29,112 @@
 .form-group {
     width: 100%;
     position: relative;
+    display: flex;
+    align-items: flex-start;
+    gap: 8px;
+}
+
+.form-group::before {
+    content: '$' / '';
+    color: var(--terminal-green);
+    font-family: 'Courier New', Courier, monospace;
+    font-size: 14px;
+    flex-shrink: 0;
+    padding-top: 10px;
 }
 
 /* Input Fields */
 
 .contact-input {
-    width: 100%;
-    padding: 12px 18px; /* Adjusted padding */
-    border: 2px solid transparent;
-    border-radius: 10px; /* Adjusted border radius */
+    flex: 1;
+    padding: 8px 4px;
+    border: none;
+    border-bottom: 1px solid var(--terminal-dim);
+    border-radius: 0;
     text-transform: uppercase;
-    font-size: 14px; /* Reduced font size */
-    transition: all 0.3s ease;
-    background: rgba(255, 255, 255, 0.9);
-    color: var(--off-black);
-    box-sizing: border-box; /* Ensure padding doesn't affect width */
-    margin: 0; /* Remove any default margins */
+    font-family: 'Courier New', Courier, monospace;
+    font-size: 14px;
+    background: transparent;
+    color: var(--terminal-text);
+    box-sizing: border-box;
+    outline: none;
+    transition: border-color 0.2s ease;
+}
+
+.contact-input::placeholder {
+    color: var(--terminal-dim);
 }
 
 .contact-input:focus {
-    border-color: var(--ultramarine);
-    outline: none;
-    box-shadow: 0 0 0 3px rgba(4, 55, 242, 0.1);
-    background: white;
+    border-bottom-color: var(--terminal-green);
+    box-shadow: 0 1px 0 var(--terminal-green);
 }
 
 .contact-textarea {
-    width: 100%;
-    padding: 12px 18px; /* Adjusted padding */
-    border: 2px solid transparent;
-    border-radius: 10px; /* Adjusted border radius */
+    flex: 1;
+    padding: 8px 4px;
+    border: none;
+    border-bottom: 1px solid var(--terminal-dim);
+    border-radius: 0;
     text-transform: uppercase;
     resize: vertical;
-    min-height: 120px; /* Adjusted height */
-    max-height: 250px; /* Adjusted height */
-    font-size: 14px; /* Reduced font size */
-    transition: all 0.3s ease;
-    background: rgba(255, 255, 255, 0.9);
-    color: var(--off-black);
-    box-sizing: border-box; /* Ensure padding doesn't affect width */
-    margin: 0; /* Remove any default margins */
+    min-height: 100px;
+    max-height: 220px;
+    font-family: 'Courier New', Courier, monospace;
+    font-size: 14px;
+    background: transparent;
+    color: var(--terminal-text);
+    box-sizing: border-box;
+    outline: none;
+    transition: border-color 0.2s ease;
+}
+
+.contact-textarea::placeholder {
+    color: var(--terminal-dim);
 }
 
 .contact-textarea:focus {
-    border-color: var(--ultramarine);
-    outline: none;
-    box-shadow: 0 0 0 3px rgba(4, 55, 242, 0.1);
-    background: white;
+    border-bottom-color: var(--terminal-green);
+    box-shadow: 0 1px 0 var(--terminal-green);
 }
 
 /* Button */
 
 .contact-button {
-    background-color: var(--off-black);
-    color: var(--off-white);
-    border: none;
-    padding: 12px 30px; /* Adjusted padding */
-    border-radius: 10px; /* Adjusted border radius */
+    background: transparent;
+    color: var(--terminal-green);
+    border: 1px solid var(--terminal-green);
+    padding: 10px 24px;
+    border-radius: 4px;
     text-transform: uppercase;
     cursor: pointer;
-    font-size: 14px; /* Reduced font size */
-    font-weight: 500;
-    transition: all 0.3s ease;
+    font-family: 'Courier New', Courier, monospace;
+    font-size: 14px;
+    font-weight: normal;
     letter-spacing: 1px;
     display: flex;
     align-items: center;
-    gap: 8px; /* Adjusted gap */
-    position: relative;
-    overflow: hidden;
-    align-self: center; /* Center the button without stretching */
-    width: auto; /* Ensure the button width is not stretched */
+    gap: 8px;
+    align-self: flex-start;
+    transition: background 0.2s ease, color 0.2s ease;
+}
+
+.contact-button::before {
+    content: '$' / '';
+    color: var(--terminal-green);
 }
 
 .contact-button:hover {
-    background-color: var(--ultramarine);
-    transform: translateY(-2px);
-    box-shadow: 0 5px 15px rgba(4, 55, 242, 0.3);
+    background: var(--terminal-green);
+    color: var(--terminal-bg);
 }
 
 .button-arrow {
-    transition: transform 0.3s ease;
+    transition: transform 0.2s ease;
 }
 
 .contact-button:hover .button-arrow {
-    transform: translateX(5px);
+    transform: translateX(4px);
 }
 
 /* ---------------------------------------------- */
@@ -134,31 +142,22 @@
 
 @media (max-width: 600px) {
 
-    .content p {
-        font-size: 13px;
-        line-height: 1.5;
-    }
-
     .content {
-        width: 96%;
-        padding: 15px;
+        padding: 15px 4px;
         box-sizing: border-box;
     }
 
-    .contact-form {
-        margin-top: 150px; /* Adjusted margin */
-        position: relative;
-        box-sizing: border-box;
+    .form-group::before {
+        font-size: 12px;
     }
 
     .contact-input,
     .contact-textarea {
-        font-size: 12px; /* Adjusted font size for smaller screens */
-        padding: 8px 12px; /* Adjusted padding */
+        font-size: 12px;
     }
 
     .contact-button {
-        font-size: 12px; /* Adjusted button font size */
-        padding: 8px 16px; /* Adjusted button padding */
+        font-size: 12px;
+        padding: 8px 16px;
     }
 }
