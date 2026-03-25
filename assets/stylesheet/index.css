@@ -45,10 +45,12 @@ body.home {
     );
 }
 
-/* Ensure enough visual height on large screens */
-@media (min-height: 600px) {
-    .mosaic-hero {
-        min-height: 85vh;
+/* On desktop/tablet: lock page to exactly the viewport so footer is always visible */
+@media (min-width: 601px) {
+    body.home {
+        height: 100svh;
+        height: 100dvh;
+        overflow: hidden;
     }
 }
 
