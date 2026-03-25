@@ -23,30 +23,83 @@
         wrk
     </div>
 
-    <div class="terminal-window">
-        <div class="terminal-header">
-            <span class="terminal-btn btn-red"></span>
-            <span class="terminal-btn btn-yellow"></span>
-            <span class="terminal-btn btn-green"></span>
-            <span class="terminal-title-bar">gustavoworks.com — bash</span>
-        </div>
-        <div class="terminal-body">
-            <div class="content">
-                <div class="prompt-line">
-                    <span class="prompt" aria-hidden="true">$</span>
-                    <span class="cmd">ls ./works</span>
+    <!-- Main content: terminal info + mosaic gallery -->
+    <div class="works-main">
+
+        <div class="terminal-window">
+            <div class="terminal-header">
+                <span class="terminal-btn btn-red"></span>
+                <span class="terminal-btn btn-yellow"></span>
+                <span class="terminal-btn btn-green"></span>
+                <span class="terminal-title-bar">gustavoworks.com — bash</span>
+            </div>
+            <div class="terminal-body">
+                <div class="content">
+                    <div class="prompt-line">
+                        <span class="prompt" aria-hidden="true">$</span>
+                        <span class="cmd">ls ./works</span>
+                    </div>
+                    <p class="output">THIS PAGE WILL BE AVAILABLE SOON! :))<span class="cursor" aria-hidden="true"></span></p>
+                    <br>
+                    <div class="prompt-line">
+                        <span class="prompt" aria-hidden="true">$</span>
+                        <span class="cmd">contact</span>
+                    </div>
+                    <p class="output">&gt; Go to the <a href="about.html">./about</a> page.</p>
+                    <p class="output">&gt; Or find me on Instagram <a href="https://www.instagram.com/____gusworks____" target="_blank">@____gusworks____</a></p>
                 </div>
-                <p class="output">THIS PAGE WILL BE AVAILABLE SOON! :))<span class="cursor" aria-hidden="true"></span></p>
-                <br>
-                <div class="prompt-line">
-                    <span class="prompt" aria-hidden="true">$</span>
-                    <span class="cmd">contact</span>
-                </div>
-                <p class="output">&gt; Go to the <a href="about.html">./about</a> page.</p>
-                <p class="output">&gt; Or find me on Instagram <a href="https://www.instagram.com/____gusworks____" target="_blank">@____gusworks____</a></p>
             </div>
         </div>
-    </div>
+
+        <!-- Auto-scrolling mosaic gallery -->
+        <!-- To use real artwork: set each .mosaic-tile background-image to your image URL -->
+        <section class="mosaic-gallery" aria-label="Artwork gallery">
+            <p class="mosaic-label" aria-hidden="true">$ ls --gallery</p>
+
+            <!-- Row 1 — scrolls left -->
+            <div class="mosaic-row mosaic-row--left">
+                <div class="mosaic-tile t1"></div>
+                <div class="mosaic-tile t2"></div>
+                <div class="mosaic-tile t3"></div>
+                <div class="mosaic-tile t4"></div>
+                <div class="mosaic-tile t5"></div>
+                <div class="mosaic-tile t6"></div>
+                <div class="mosaic-tile t7"></div>
+                <div class="mosaic-tile t8"></div>
+                <!-- duplicate set for seamless loop -->
+                <div class="mosaic-tile t1" aria-hidden="true"></div>
+                <div class="mosaic-tile t2" aria-hidden="true"></div>
+                <div class="mosaic-tile t3" aria-hidden="true"></div>
+                <div class="mosaic-tile t4" aria-hidden="true"></div>
+                <div class="mosaic-tile t5" aria-hidden="true"></div>
+                <div class="mosaic-tile t6" aria-hidden="true"></div>
+                <div class="mosaic-tile t7" aria-hidden="true"></div>
+                <div class="mosaic-tile t8" aria-hidden="true"></div>
+            </div>
+
+            <!-- Row 2 — scrolls right (reversed order for visual variety) -->
+            <div class="mosaic-row mosaic-row--right">
+                <div class="mosaic-tile t5"></div>
+                <div class="mosaic-tile t8"></div>
+                <div class="mosaic-tile t3"></div>
+                <div class="mosaic-tile t6"></div>
+                <div class="mosaic-tile t1"></div>
+                <div class="mosaic-tile t7"></div>
+                <div class="mosaic-tile t2"></div>
+                <div class="mosaic-tile t4"></div>
+                <!-- duplicate set -->
+                <div class="mosaic-tile t5" aria-hidden="true"></div>
+                <div class="mosaic-tile t8" aria-hidden="true"></div>
+                <div class="mosaic-tile t3" aria-hidden="true"></div>
+                <div class="mosaic-tile t6" aria-hidden="true"></div>
+                <div class="mosaic-tile t1" aria-hidden="true"></div>
+                <div class="mosaic-tile t7" aria-hidden="true"></div>
+                <div class="mosaic-tile t2" aria-hidden="true"></div>
+                <div class="mosaic-tile t4" aria-hidden="true"></div>
+            </div>
+        </section>
+
+    </div><!-- /.works-main -->
 
     <footer class="footer">
         <div class="footer-content">
