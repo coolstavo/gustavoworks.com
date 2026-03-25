@@ -526,8 +526,8 @@
         var front   = document.getElementById('front');
 
         // ── Rotation state ──────────────────────────────────────────────────
-        // Auto-spin matches the old 13 s CSS animation at ~60 fps
-        var AUTO_VEL = 360 / (13 * 60); // ≈ 0.462 deg / frame
+        // One full rotation every 26 s at 60 fps
+        var AUTO_VEL = 360 / (26 * 60); // ≈ 0.231 deg / frame
 
         var rotY = 0;      // current Y rotation (spin axis)
         var rotX = 0;      // current X rotation (tilt axis)
