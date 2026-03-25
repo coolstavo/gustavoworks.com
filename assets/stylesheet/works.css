@@ -76,11 +76,6 @@
     animation: mosaic-scroll-right 28s linear infinite;
 }
 
-/* Pause on hover so users can look at a tile */
-.mosaic-gallery:hover .mosaic-row {
-    animation-play-state: paused;
-}
-
 /* ---------------------------------------------- */
 /* Mosaic tiles */
 

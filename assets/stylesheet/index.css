@@ -1,20 +1,316 @@
-/* Content */
-.content {
-    padding: 20px 4px;
-    box-sizing: border-box;
-}
+/* ================================================ */
+/* index.css – Home page: full-screen mosaic hero   */
+/* ================================================ */
 
-.content a {
-    color: var(--terminal-green);
+/* ---------------------------------------------- */
+/* Body layout override for home page              */
+
+body.home {
+    display: flex;
+    flex-direction: column;
+    min-height: 100vh;
+    overflow-x: hidden;
 }
 
 /* ---------------------------------------------- */
-/* Responsive design for different viewports */
+/* Mosaic hero – fills the full viewport           */
 
-/* Phone view (max-width: 600px) */
+.mosaic-hero {
+    position: relative;
+    flex: 1;
+    min-height: 100vh;
+    width: 100%;
+    overflow: hidden;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    gap: 14px;
+    /* Subtle gradient fade at top and bottom edges */
+    -webkit-mask-image: linear-gradient(
+        to bottom,
+        transparent 0%,
+        black 8%,
+        black 92%,
+        transparent 100%
+    );
+    mask-image: linear-gradient(
+        to bottom,
+        transparent 0%,
+        black 8%,
+        black 92%,
+        transparent 100%
+    );
+}
+
+/* Title overlays the mosaic */
+.mosaic-hero .title {
+    position: absolute;
+    left: 20px;
+    top: -70px;
+    z-index: 5;
+    pointer-events: none;
+    /* Keep the large type from main.css but let it clip naturally */
+}
+
+/* ---------------------------------------------- */
+/* Scroll animations – GPU-accelerated            */
+
+@keyframes mosaic-scroll-left {
+    0%   { transform: translate3d(0, 0, 0); }
+    100% { transform: translate3d(-50%, 0, 0); }
+}
+
+@keyframes mosaic-scroll-right {
+    0%   { transform: translate3d(-50%, 0, 0); }
+    100% { transform: translate3d(0, 0, 0); }
+}
+
+/* ---------------------------------------------- */
+/* Rows                                            */
+
+.mosaic-row {
+    display: flex;
+    width: max-content;
+    gap: 14px;
+    will-change: transform;
+    /* Running state is always 'running' – never paused by CSS */
+}
+
+.mosaic-row--fast   { animation: mosaic-scroll-left  24s linear infinite; }
+.mosaic-row--medium { animation: mosaic-scroll-right 32s linear infinite; }
+.mosaic-row--slow   { animation: mosaic-scroll-left  42s linear infinite; }
+
+/* ---------------------------------------------- */
+/* Tiles                                           */
+
+.mosaic-tile {
+    position: relative;
+    width: 200px;
+    height: 240px;
+    flex-shrink: 0;
+    border-radius: 4px;
+    overflow: hidden;
+    border: 1px solid var(--terminal-border);
+    background-size: cover;
+    background-position: center;
+    cursor: pointer;
+    /* Smooth hover scale */
+    transition:
+        transform 0.5s cubic-bezier(0.25, 0.46, 0.45, 0.94),
+        filter 0.5s ease,
+        border-color 0.4s ease;
+}
+
+.mosaic-tile[role="button"]:hover,
+.mosaic-tile[role="button"]:focus-visible {
+    transform: scale(1.05);
+    filter: brightness(1.25);
+    border-color: var(--terminal-green);
+    outline: none;
+    z-index: 2;
+}
+
+/* Hover overlay with piece name */
+.mosaic-tile-overlay {
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    padding: 14px 12px 12px;
+    background: linear-gradient(transparent, rgba(0, 0, 0, 0.88));
+    opacity: 0;
+    transition: opacity 0.4s ease;
+    pointer-events: none;
+}
+
+.mosaic-tile[role="button"]:hover .mosaic-tile-overlay,
+.mosaic-tile[role="button"]:focus-visible .mosaic-tile-overlay {
+    opacity: 1;
+}
+
+.mosaic-tile-name {
+    font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
+    font-style: italic;
+    font-weight: 300;
+    font-size: 13px;
+    color: var(--terminal-text);
+    display: block;
+}
+
+/* ---------------------------------------------- */
+/* Placeholder tile colour schemes                 */
+/* Replace background-image with artwork URLs      */
+
+.mosaic-tile.t1 {
+    background-color: #0a2010;
+    background-image: linear-gradient(135deg, #0a2010 0%, #1a4a20 60%, #00ff88 100%);
+}
+.mosaic-tile.t2 {
+    background-color: #0c0c0c;
+    background-image: radial-gradient(circle at 25% 75%, rgba(0, 255, 136, 0.25) 0%, #0c0c0c 65%);
+}
+.mosaic-tile.t3 {
+    background-color: #111111;
+    background-image: repeating-linear-gradient(
+        0deg,
+        #111 0px, #111 7px,
+        #1c1c1c 7px, #1c1c1c 8px
+    );
+}
+.mosaic-tile.t4 {
+    background-color: #1a1a1a;
+    background-image: linear-gradient(225deg, #1a1a1a 0%, #0a2010 100%);
+}
+.mosaic-tile.t5 {
+    background-color: #0c0c0c;
+    background-image: radial-gradient(ellipse at 80% 20%, rgba(0, 255, 136, 0.3) 0%, #0c0c0c 60%);
+}
+.mosaic-tile.t6 {
+    background-color: #111111;
+    background-image: linear-gradient(45deg, #111 0%, #0a1f10 55%, rgba(0, 255, 136, 0.6) 100%);
+}
+.mosaic-tile.t7 {
+    background-color: #111111;
+    background-image: repeating-linear-gradient(
+        90deg,
+        #111 0px, #111 13px,
+        #1c1c1c 13px, #1c1c1c 14px
+    );
+}
+.mosaic-tile.t8 {
+    background-color: #0c0c0c;
+    background-image: radial-gradient(circle at 50% 50%, #1a2a1a 0%, #0c0c0c 70%);
+}
+
+/* ---------------------------------------------- */
+/* Modal overlay                                   */
+
+.modal-overlay {
+    position: fixed;
+    inset: 0;
+    background: rgba(0, 0, 0, 0.72);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    z-index: 200;
+    padding: 20px;
+    box-sizing: border-box;
+    animation: modal-fade-in 0.2s ease;
+}
+
+.modal-overlay[hidden] {
+    display: none;
+}
+
+@keyframes modal-fade-in {
+    from { opacity: 0; }
+    to   { opacity: 1; }
+}
+
+/* Terminal-window as modal */
+.modal-window {
+    width: 100%;
+    max-width: 520px;
+    /* Override grid placement from main.css */
+    grid-row: unset;
+    align-self: unset;
+    justify-self: unset;
+    animation: modal-slide-up 0.3s cubic-bezier(0.34, 1.4, 0.64, 1);
+}
+
+@keyframes modal-slide-up {
+    from { transform: translateY(24px) scale(0.96); opacity: 0; }
+    to   { transform: translateY(0)    scale(1);    opacity: 1; }
+}
+
+/* Red close button as an actual <button> */
+button.terminal-btn {
+    border: none;
+    padding: 0;
+    cursor: pointer;
+    display: inline-block;
+    width: 12px;
+    height: 12px;
+    border-radius: 50%;
+    flex-shrink: 0;
+    transition: filter 0.2s ease;
+}
+
+button.terminal-btn:hover {
+    filter: brightness(1.35);
+}
+
+/* ---------------------------------------------- */
+/* Footer sits below the hero                      */
+
+.home .footer {
+    grid-row: unset;
+}
+
+/* ---------------------------------------------- */
+/* Responsive – tablet                             */
+
+@media (max-width: 900px) {
+    .mosaic-tile {
+        width: 160px;
+        height: 190px;
+    }
+
+    .mosaic-row {
+        gap: 10px;
+    }
+
+    .mosaic-hero {
+        gap: 10px;
+    }
+}
+
+/* ---------------------------------------------- */
+/* Responsive – mobile                             */
+
 @media (max-width: 600px) {
 
-    .content {
-        padding: 15px 4px;
+    .mosaic-hero .title {
+        font-size: 160px;
+        left: -20px;
+        top: -50px;
+    }
+
+    .mosaic-tile {
+        width: 130px;
+        height: 158px;
+    }
+
+    .mosaic-tile-name {
+        font-size: 11px;
+    }
+
+    .mosaic-row {
+        gap: 8px;
+    }
+
+    .mosaic-hero {
+        gap: 8px;
+    }
+
+    /* Speed up slightly on mobile so it feels lively on small screens */
+    .mosaic-row--fast   { animation-duration: 18s; }
+    .mosaic-row--medium { animation-duration: 24s; }
+    .mosaic-row--slow   { animation-duration: 30s; }
+
+    /* Hide 3rd row on very short screens (portrait phone) */
+    @media (max-height: 600px) {
+        .mosaic-row--slow {
+            display: none;
+        }
+    }
+
+    /* Modal takes nearly full screen on mobile */
+    .modal-window {
+        max-width: calc(100% - 24px);
+    }
+
+    .modal-overlay {
+        padding: 12px;
     }
 }
