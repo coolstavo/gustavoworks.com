@@ -99,14 +99,21 @@
             transform: scaleY(0.6);
         }
 
+        /* ── Pulse wrapper — carries glow animation, no 3D context ── */
+        /* Keeping the animation here (not on the preserve-3d spinner) prevents
+           the browser from re-compositing GPU layers every frame, which was the
+           root cause of backface-visibility flickering on the card faces. */
+        .pulse-wrap {
+            border-radius: 14px;
+            animation: pulse 4s ease-in-out infinite alternate;
+        }
+
         /* ── Spin wrapper ── */
         .spinner {
             width: 760px;
             height: 212px;
             position: relative;
             transform-style: preserve-3d;
-            /* spin is driven by JS; only the glow pulse stays in CSS */
-            animation: pulse 4s ease-in-out infinite alternate;
             cursor: grab;
         }
 
@@ -443,20 +450,48 @@
         }
 
         @media (max-width: 580px) {
-            .spinner    { width: 340px; height: 95px; }
-            .front      { grid-template-columns: 70px 1fr 110px; }
-            .logo-col   { padding: 10px 8px; }
-            .logo-slot  { width: 40px; height: 40px; border-radius: 7px; }
-            .name-col   { padding: 10px 12px; gap: 4px; }
-            .full-name  { font-size: 7.5px; letter-spacing: 0.06em; }
-            .artist-tag { font-size: 5px; }
-            .sub-title  { font-size: 5.5px; }
-            .contact-col { padding: 10px 10px; gap: 5px; }
-            .contact-item a { font-size: 5.5px; }
-            .contact-label { font-size: 4.5px; }
-            .back-brand { font-size: 24px; }
-            .back-url   { font-size: 5.5px; letter-spacing: 0.18em; }
-            .card-glow  { width: 260px; }
+            /* Portrait card — taller than wide for proper mobile readability */
+            .spinner    { width: min(320px, calc(100vw - 32px)); height: 500px; }
+
+            /* Switch front face from 3-column grid to vertical stack */
+            .front {
+                display: flex;
+                flex-direction: column;
+                padding: 24px 20px;
+                gap: 0;
+            }
+
+            .logo-col {
+                border-right: none;
+                border-bottom: 1px solid rgba(61,90,254,0.07);
+                padding: 0 0 18px 0;
+                justify-content: flex-start;
+            }
+
+            .logo-slot  { width: 60px; height: 60px; border-radius: 10px; }
+
+            .name-col {
+                padding: 18px 0;
+                gap: 8px;
+                border-bottom: 1px solid rgba(61,90,254,0.07);
+            }
+
+            .artist-tag { font-size: 9px; }
+            .full-name  { font-size: 17px; letter-spacing: 0.07em; }
+            .sub-title  { font-size: 9px; }
+
+            .contact-col {
+                border-left: none;
+                padding: 18px 0 0 0;
+                gap: 12px;
+            }
+
+            .contact-item a { font-size: 12px; }
+            .contact-label  { font-size: 8px; }
+
+            .back-brand { font-size: 36px; }
+            .back-url   { font-size: 9px; letter-spacing: 0.22em; }
+            .card-glow  { width: min(320px, calc(100vw - 32px)); height: 18px; margin-top: 8px; }
         }
     </style>
 </head>
@@ -464,6 +499,7 @@
     <div class="scene">
         <div class="float">
 
+            <div class="pulse-wrap">
             <div class="spinner" id="spinner">
 
                 <!-- ── Front ── -->
@@ -516,6 +552,7 @@
                 </div>
 
             </div><!-- /.spinner -->
+            </div><!-- /.pulse-wrap -->
 
             <div class="card-glow"></div>
         </div><!-- /.float -->
