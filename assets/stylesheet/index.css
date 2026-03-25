@@ -263,6 +263,8 @@ body.home {
 .modal-window {
     width: 100%;
     max-width: 520px;
+    max-height: 90vh;
+    overflow-y: auto;
     grid-row: unset;
     align-self: unset;
     justify-self: unset;
@@ -291,11 +293,13 @@ button.terminal-btn:hover {
     filter: brightness(1.35);
 }
 
-/* Artwork preview strip in the piece modal */
+/* Artwork preview in the piece modal — show the full image */
 .modal-artwork {
-    height: 180px;
-    background-size: cover;
+    height: 55vh;
+    background-size: contain;
+    background-repeat: no-repeat;
     background-position: center;
+    background-color: #0a0a0a;
     border-bottom: 1px solid var(--terminal-border);
     flex-shrink: 0;
 }
@@ -492,7 +496,7 @@ button.terminal-btn:hover {
     .mosaic-row--fast2  { animation-duration: 21s; }
     .mosaic-row--slow2  { animation-duration: 38s; }
 
-    .modal-artwork { height: 130px; }
+    .modal-artwork { height: 45vh; }
 
     .modal-window { max-width: 100%; }
     .modal-overlay { padding: 10px; }
