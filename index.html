@@ -12,12 +12,6 @@
 
     <body class="home">
 
-        <nav class="nav-bar">
-            <a href="index.html" class="active">home</a> <span class="separator">|</span>
-            <a href="works.html">works</a> <span class="separator">|</span>
-            <a href="about.html">about</a>
-        </nav>
-
         <!-- Full-screen mosaic hero; title sits on top -->
         <section class="mosaic-hero" aria-label="Artwork gallery">
 
@@ -129,7 +123,7 @@
                 <div class="mosaic-tile t4" aria-hidden="true"><div class="mosaic-tile-overlay"><span class="mosaic-tile-name">Surface Study</span></div></div>
             </div>
 
-            <!-- Row 3 – slowest, scrolls left (hidden on small mobile) -->
+            <!-- Row 3 – slowest, scrolls left -->
             <div class="mosaic-row mosaic-row--left mosaic-row--slow">
                 <div class="mosaic-tile t7" role="button" tabindex="0"
                      data-title="Grid Work" data-year="2023" data-medium="Digital"
@@ -193,42 +187,86 @@
                     <span class="terminal-btn btn-green"></span>
                     <span class="terminal-title-bar" id="modalTitleBar">piece info</span>
                 </div>
+                <!-- Artwork preview: shows the tile's background image/gradient -->
+                <div class="modal-artwork" id="modalArtwork"></div>
                 <div class="terminal-body">
                     <div class="content" id="modalContent"></div>
                 </div>
             </div>
         </div>
 
+        <!-- Contact form modal -->
+        <div class="modal-overlay" id="contactModal" hidden>
+            <div class="terminal-window modal-window" role="dialog" aria-modal="true" aria-labelledby="contactTitleBar">
+                <div class="terminal-header">
+                    <button class="terminal-btn btn-red modal-close" id="contactClose" aria-label="Close"></button>
+                    <span class="terminal-btn btn-yellow"></span>
+                    <span class="terminal-btn btn-green"></span>
+                    <span class="terminal-title-bar" id="contactTitleBar">gustavoworks.com — contact</span>
+                </div>
+                <div class="terminal-body">
+                    <div class="content">
+                        <form class="contact-form" action="https://formsubmit.co/info@gustavoworks.com" method="POST">
+                            <div class="form-group">
+                                <input class="contact-input" type="text" name="name" placeholder="your name" autocomplete="name" required>
+                            </div>
+                            <div class="form-group">
+                                <input class="contact-input" type="email" name="email" placeholder="your email" autocomplete="email" required>
+                            </div>
+                            <div class="form-group">
+                                <textarea class="contact-textarea" name="message" placeholder="message" autocomplete="off" required></textarea>
+                            </div>
+                            <input type="hidden" name="_captcha" value="true">
+                            <button class="contact-button" type="submit">
+                                <span class="button-text">send_message</span>
+                                <span class="button-arrow">→</span>
+                            </button>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+
         <footer class="footer">
             <div class="footer-content">
-              <div class="social-links">
-                <a href="https://www.instagram.com/____gusworks____" target="_blank" class="social-icon">
-                  <i class="fab fa-instagram"></i>
-                </a>
-                <a href="mailto:info@gustavoworks.com" class="social-icon">
-                  <i class="far fa-envelope"></i>
-                </a>
-              </div>
-              <p>© 2025, Gustavo Henrique Costa Araújo</p>
+                <p>© 2025, Gustavo Henrique Costa Araújo</p>
+                <div class="social-links">
+                    <button class="footer-contact-btn" id="contactBtn">contact</button>
+                    <a href="https://www.instagram.com/____gusworks____" target="_blank" class="social-icon">
+                        <i class="fab fa-instagram"></i>
+                    </a>
+                </div>
             </div>
         </footer>
 
         <script>
             (function () {
-                var modal   = document.getElementById('pieceModal');
-                var content = document.getElementById('modalContent');
-                var titleBar = document.getElementById('modalTitleBar');
+                /* ── Piece modal ── */
+                var pieceModal  = document.getElementById('pieceModal');
+                var modalContent = document.getElementById('modalContent');
+                var modalTitleBar = document.getElementById('modalTitleBar');
+                var modalArtwork  = document.getElementById('modalArtwork');
+                var modalClose    = document.getElementById('modalClose');
 
-                // Open modal on tile click (or keyboard Enter/Space)
-                function openModal(tile) {
-                    var title       = tile.dataset.title || '';
-                    var year        = tile.dataset.year  || '';
-                    var medium      = tile.dataset.medium || '';
+                /* ── Contact modal ── */
+                var contactModal = document.getElementById('contactModal');
+                var contactClose = document.getElementById('contactClose');
+                var contactBtn   = document.getElementById('contactBtn');
+
+                function openPieceModal(tile) {
+                    var title       = tile.dataset.title       || '';
+                    var year        = tile.dataset.year        || '';
+                    var medium      = tile.dataset.medium      || '';
                     var description = tile.dataset.description || '';
                     var slug        = title.toLowerCase().replace(/\s+/g, '-');
 
-                    titleBar.textContent = title;
-                    content.innerHTML =
+                    /* Copy the tile's visual into the preview strip */
+                    var s = window.getComputedStyle(tile);
+                    modalArtwork.style.backgroundImage    = s.backgroundImage;
+                    modalArtwork.style.backgroundColor   = s.backgroundColor;
+
+                    modalTitleBar.textContent = title;
+                    modalContent.innerHTML =
                         '<div class="prompt-line">' +
                             '<span class="prompt" aria-hidden="true">$</span>' +
                             '<span class="cmd">open ' + slug + '</span>' +
@@ -238,34 +276,79 @@
                         '<br>' +
                         '<p class="output">' + description + '<span class="cursor" aria-hidden="true"></span></p>';
 
-                    modal.hidden = false;
-                    document.getElementById('modalClose').focus();
+                    pieceModal.hidden = false;
+                    modalClose.focus();
                 }
 
-                // Attach click listeners only to interactive (non-duplicate) tiles
-                document.querySelectorAll('.mosaic-tile[data-title]').forEach(function (tile) {
-                    tile.addEventListener('click', function () { openModal(tile); });
+                /*
+                 * Reliable tap handler for animated (moving) tiles.
+                 * Uses setPointerCapture so pointerup always fires on the tile
+                 * even if it has scrolled away by the time the finger lifts.
+                 * Cancels if the pointer moves > 12 px (the user is scrolling).
+                 */
+                function attachTileTap(tile) {
+                    var startX, startY, cancelled;
+
+                    tile.addEventListener('pointerdown', function (e) {
+                        startX    = e.clientX;
+                        startY    = e.clientY;
+                        cancelled = false;
+                        try { tile.setPointerCapture(e.pointerId); } catch (err) { /* ignore: pointerId may already be invalid */ }
+                        tile.classList.add('js-active');
+                    });
+
+                    tile.addEventListener('pointermove', function (e) {
+                        if (cancelled) return;
+                        if (Math.abs(e.clientX - startX) > 12 ||
+                            Math.abs(e.clientY - startY) > 12) {
+                            cancelled = true;
+                            tile.classList.remove('js-active');
+                            try { tile.releasePointerCapture(e.pointerId); } catch (err) { /* ignore: capture may have already been released */ }
+                        }
+                    });
+
+                    tile.addEventListener('pointerup', function (e) {
+                        tile.classList.remove('js-active');
+                        if (!cancelled) openPieceModal(tile);
+                    });
+
+                    tile.addEventListener('pointercancel', function () {
+                        cancelled = true;
+                        tile.classList.remove('js-active');
+                    });
+
                     tile.addEventListener('keydown', function (e) {
                         if (e.key === 'Enter' || e.key === ' ') {
                             e.preventDefault();
-                            openModal(tile);
+                            openPieceModal(tile);
                         }
                     });
+                }
+
+                document.querySelectorAll('.mosaic-tile[data-title]').forEach(attachTileTap);
+
+                /* Close piece modal */
+                modalClose.addEventListener('click', function () { pieceModal.hidden = true; });
+                pieceModal.addEventListener('click', function (e) {
+                    if (e.target === pieceModal) pieceModal.hidden = true;
                 });
 
-                // Close on red button
-                document.getElementById('modalClose').addEventListener('click', function () {
-                    modal.hidden = true;
+                /* Open / close contact modal */
+                contactBtn.addEventListener('click', function () {
+                    contactModal.hidden = false;
+                    contactClose.focus();
+                });
+                contactClose.addEventListener('click', function () { contactModal.hidden = true; });
+                contactModal.addEventListener('click', function (e) {
+                    if (e.target === contactModal) contactModal.hidden = true;
                 });
 
-                // Close on backdrop click
-                modal.addEventListener('click', function (e) {
-                    if (e.target === modal) modal.hidden = true;
-                });
-
-                // Close with Escape
+                /* Escape closes whichever modal is open */
                 document.addEventListener('keydown', function (e) {
-                    if (e.key === 'Escape') modal.hidden = true;
+                    if (e.key === 'Escape') {
+                        pieceModal.hidden    = true;
+                        contactModal.hidden  = true;
+                    }
                 });
             })();
         </script>

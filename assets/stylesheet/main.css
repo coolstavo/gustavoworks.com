@@ -4,15 +4,15 @@
 :root {
   --terminal-bg: #0c0c0c;
   --terminal-text: #c8c8c8;
-  --terminal-green: #00ff88;
+  --terminal-green: #3d5afe;
   --terminal-dim: #555555;
   --terminal-border: #222222;
   --terminal-win-bg: #111111;
   --terminal-header-bg: #1a1a1a;
 
   /* Legacy aliases used by page-specific CSS */
-  --ultramarine: #00ff88;
-  --gus-orange: #00ff88;
+  --ultramarine: #3d5afe;
+  --gus-orange: #3d5afe;
   --off-white: #c8c8c8;
   --off-black: #0c0c0c;
 }
@@ -141,7 +141,7 @@ p {
   border-radius: 8px;
   overflow: hidden;
   background: var(--terminal-win-bg);
-  box-shadow: 0 0 60px rgba(0, 255, 136, 0.06), 0 20px 60px rgba(0, 0, 0, 0.6);
+  box-shadow: 0 0 60px rgba(61, 90, 254, 0.08), 0 20px 60px rgba(0, 0, 0, 0.6);
   width: 100%;
   max-width: 620px;
   box-sizing: border-box;
