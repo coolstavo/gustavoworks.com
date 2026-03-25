@@ -214,6 +214,26 @@ body.home {
     background-image: radial-gradient(circle at 50% 50%, #1a1a2e 0%, #0c0c0c 70%);
 }
 
+/* Real artwork tiles */
+.mosaic-tile.tw1 {
+    background-color: #0a0c1a;
+    background-image: url('/assets/works/Untitle. Blue.jpeg');
+    background-size: cover;
+    background-position: center;
+}
+.mosaic-tile.tw2 {
+    background-color: #1a1a1a;
+    background-image: url('/assets/works/Untitled. Silver.jpeg');
+    background-size: cover;
+    background-position: center;
+}
+.mosaic-tile.tw3 {
+    background-color: #0d0d0d;
+    background-image: url('/assets/works/Variation 49.jpeg');
+    background-size: cover;
+    background-position: center;
+}
+
 /* ---------------------------------------------- */
 /* Piece info modal                                */
 
