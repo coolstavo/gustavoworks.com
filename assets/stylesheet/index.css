@@ -87,6 +87,8 @@ body.home {
 .mosaic-row--fast   { animation: mosaic-scroll-left  24s linear infinite; }
 .mosaic-row--medium { animation: mosaic-scroll-right 32s linear infinite; }
 .mosaic-row--slow   { animation: mosaic-scroll-left  42s linear infinite; }
+.mosaic-row--fast2  { animation: mosaic-scroll-right 28s linear infinite; }
+.mosaic-row--slow2  { animation: mosaic-scroll-left  50s linear infinite; }
 
 /* ---------------------------------------------- */
 /* Tiles                                           */
@@ -446,9 +448,10 @@ button.terminal-btn:hover {
 @media (max-width: 600px) {
 
     .mosaic-hero .title {
-        font-size: 130px;
-        left: -10px;
-        top: -40px;
+        font-size: 80px;
+        left: 10px;
+        top: 10px;
+        width: auto; /* override the 400px set by main.css mobile rule */
     }
 
     .mosaic-tile {
@@ -464,6 +467,8 @@ button.terminal-btn:hover {
     .mosaic-row--fast   { animation-duration: 18s; }
     .mosaic-row--medium { animation-duration: 24s; }
     .mosaic-row--slow   { animation-duration: 30s; }
+    .mosaic-row--fast2  { animation-duration: 21s; }
+    .mosaic-row--slow2  { animation-duration: 38s; }
 
     .modal-artwork { height: 130px; }
 
@@ -483,7 +488,9 @@ button.terminal-btn:hover {
     }
 }
 
-/* Hide 3rd row on very short screens */
+/* Hide extra rows on very short screens */
 @media (max-height: 500px) {
-    .mosaic-row--slow { display: none; }
+    .mosaic-row--slow,
+    .mosaic-row--fast2,
+    .mosaic-row--slow2 { display: none; }
 }
