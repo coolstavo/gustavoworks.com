@@ -109,16 +109,18 @@ body.home {
         border-color 0.4s ease;
 }
 
-/* Hover: only on devices with a real pointer (prevents double-tap on mobile) */
+/* Hover: only on devices with a real pointer (prevents double-tap on mobile).
+   Applied to all tiles – including the seamless-loop duplicate set – so every
+   visible square responds. */
 @media (hover: hover) {
-    .mosaic-tile[role="button"]:hover {
+    .mosaic-tile:hover {
         transform: scale(1.05);
         filter: brightness(1.3);
         border-color: var(--terminal-green);
         z-index: 2;
     }
 
-    .mosaic-tile[role="button"]:hover .mosaic-tile-overlay {
+    .mosaic-tile:hover .mosaic-tile-overlay {
         opacity: 1;
     }
 }
@@ -282,6 +284,7 @@ button.terminal-btn:hover {
     position: static;   /* cancel main.css fixed on mobile */
     width: 100%;
     box-sizing: border-box;
+    border-top: none;   /* remove the stripe line above the footer */
 }
 
 /* Contact button in footer */
