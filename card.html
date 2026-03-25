@@ -404,6 +404,26 @@
             animation: barGlow 2.8s ease-in-out infinite alternate;
         }
 
+        /* ── Desktop-large: scale card up on wide screens ── */
+        @media (min-width: 1000px) {
+            .spinner     { width: 880px; height: 248px; }
+            .front       { grid-template-columns: 172px 1fr 248px; }
+            .back-inner  { grid-template-columns: 172px 1fr 248px; }
+            .logo-slot   { width: 96px; height: 96px; }
+            .logo-col    { padding: 30px 22px; }
+            .name-col    { padding: 28px 34px; gap: 10px; }
+            .contact-col { padding: 28px 26px; gap: 10px; }
+            .artist-tag  { font-size: 8px; }
+            .full-name   { font-size: 16px; }
+            .sub-title   { font-size: 9px; }
+            .contact-label  { font-size: 7px; }
+            .contact-item a { font-size: 10px; }
+            .logo-slot-label { font-size: 8px; }
+            .front::before,
+            .back::before  { font-size: 280px; }
+            .card-glow     { width: 720px; }
+        }
+
         /* ── Responsive ── */
         @media (max-width: 820px) {
             .spinner    { width: 560px; height: 156px; }
@@ -519,7 +539,7 @@
                 </div>
 
                 <!-- ── Back ── -->
-                <div class="face back">
+                <div class="face back" id="back">
                     <div class="back-inner">
 
                     <div class="logo-col">
@@ -570,6 +590,7 @@
     <script>
         var spinner = document.getElementById('spinner');
         var front   = document.getElementById('front');
+        var back    = document.getElementById('back');
 
         // ── Rotation state ──────────────────────────────────────────────────
         // One full rotation every 26 s at 60 fps
@@ -607,6 +628,16 @@
 
             spinner.style.transform =
                 'rotateY(' + rotY + 'deg) rotateX(' + rotX + 'deg)';
+
+            // ── Show only the face currently pointing toward the viewer ──────
+            // Normalise rotY to [0, 360) then decide which face is front-facing.
+            // This supplements CSS backface-visibility:hidden with a JS guarantee,
+            // preventing browser GPU-compositing quirks where both faces bleed
+            // through simultaneously during the flip.
+            var ny = ((rotY % 360) + 360) % 360;
+            var frontFacing = ny < 90 || ny > 270;
+            front.style.visibility = frontFacing ? '' : 'hidden';
+            back.style.visibility  = frontFacing ? 'hidden' : '';
 
             requestAnimationFrame(tick);
         }
