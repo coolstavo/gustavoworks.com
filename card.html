@@ -93,7 +93,7 @@
 
         /* ── Glow shadow beneath card ── */
         .card-glow {
-            width: 620px;
+            width: 820px;
             height: 22px;
             margin-top: 10px;
             background: radial-gradient(ellipse at center, rgba(61,90,254,0.55) 0%, transparent 70%);
@@ -105,8 +105,8 @@
 
         /* ── Spin wrapper ── */
         .spinner {
-            width: 760px;
-            height: 212px;
+            width: 1000px;
+            height: 280px;
             position: relative;
             transform-style: preserve-3d;
             cursor: grab;
@@ -133,14 +133,14 @@
             background: #07070c;
             border: 1px solid rgba(61,90,254,0.18);
             display: grid;
-            grid-template-columns: 148px 1fr 214px;
+            grid-template-columns: 195px 1fr 280px;
         }
 
         /* Ghost "GW" watermark */
         .front::before {
             content: 'GW';
             position: absolute;
-            font-size: 240px;
+            font-size: 320px;
             font-weight: 900;
             font-style: italic;
             color: rgba(61,90,254,0.032);
@@ -202,15 +202,15 @@
             display: flex;
             justify-content: center;
             align-items: center;
-            padding: 26px 20px;
+            padding: 35px 26px;
             border-right: 1px solid rgba(61,90,254,0.07);
         }
 
         .logo-slot {
-            width: 84px;
-            height: 84px;
+            width: 110px;
+            height: 110px;
             border: 1px solid rgba(61,90,254,0.32);
-            border-radius: 12px;
+            border-radius: 14px;
             display: flex;
             justify-content: center;
             align-items: center;
@@ -246,7 +246,7 @@
         }
 
         .logo-slot-label {
-            font-size: 7px;
+            font-size: 9px;
             letter-spacing: 0.18em;
             text-transform: uppercase;
             color: rgba(61,90,254,0.38);
@@ -259,12 +259,12 @@
             display: flex;
             flex-direction: column;
             justify-content: center;
-            padding: 24px 30px;
-            gap: 9px;
+            padding: 32px 40px;
+            gap: 12px;
         }
 
         .artist-tag {
-            font-size: 7px;
+            font-size: 9px;
             letter-spacing: 0.24em;
             text-transform: uppercase;
             color: #3d5afe;
@@ -272,7 +272,7 @@
         }
 
         .full-name {
-            font-size: 14px;
+            font-size: 18px;
             font-weight: 600;
             color: #ccccd8;
             letter-spacing: 0.1em;
@@ -301,7 +301,7 @@
         }
 
         .sub-title {
-            font-size: 7.5px;
+            font-size: 10px;
             letter-spacing: 0.16em;
             text-transform: uppercase;
             color: #444;
@@ -314,8 +314,8 @@
             display: flex;
             flex-direction: column;
             justify-content: center;
-            padding: 24px 22px;
-            gap: 9px;
+            padding: 32px 28px;
+            gap: 12px;
             border-left: 1px solid rgba(61,90,254,0.07);
         }
 
@@ -326,7 +326,7 @@
         }
 
         .contact-label {
-            font-size: 6px;
+            font-size: 8px;
             letter-spacing: 0.2em;
             text-transform: uppercase;
             color: #3d5afe;
@@ -334,7 +334,7 @@
         }
 
         .contact-item a {
-            font-size: 8.5px;
+            font-size: 11px;
             color: #606070;
             text-decoration: none;
             letter-spacing: 0.03em;
@@ -359,7 +359,7 @@
            X axis; scaleX(-1) on the inner wrapper cancels that mirror out. */
         .back-inner {
             display: grid;
-            grid-template-columns: 148px 1fr 214px;
+            grid-template-columns: 195px 1fr 280px;
             width: 100%;
             height: 100%;
             transform: scaleX(-1);
@@ -369,7 +369,7 @@
         .back::before {
             content: 'GW';
             position: absolute;
-            font-size: 240px;
+            font-size: 320px;
             font-weight: 900;
             font-style: italic;
             color: rgba(61,90,254,0.032);
@@ -404,24 +404,24 @@
             animation: barGlow 2.8s ease-in-out infinite alternate;
         }
 
-        /* ── Desktop-large: scale card up on wide screens ── */
-        @media (min-width: 1000px) {
-            .spinner     { width: 880px; height: 248px; }
-            .front       { grid-template-columns: 172px 1fr 248px; }
-            .back-inner  { grid-template-columns: 172px 1fr 248px; }
-            .logo-slot   { width: 96px; height: 96px; }
-            .logo-col    { padding: 30px 22px; }
-            .name-col    { padding: 28px 34px; gap: 10px; }
-            .contact-col { padding: 28px 26px; gap: 10px; }
-            .artist-tag  { font-size: 8px; }
-            .full-name   { font-size: 16px; }
-            .sub-title   { font-size: 9px; }
-            .contact-label  { font-size: 7px; }
-            .contact-item a { font-size: 10px; }
-            .logo-slot-label { font-size: 8px; }
+        /* ── Desktop-large: scale card up even more on very wide screens ── */
+        @media (min-width: 1400px) {
+            .spinner     { width: 1100px; height: 308px; }
+            .front       { grid-template-columns: 215px 1fr 308px; }
+            .back-inner  { grid-template-columns: 215px 1fr 308px; }
+            .logo-slot   { width: 120px; height: 120px; }
+            .logo-col    { padding: 40px 28px; }
+            .name-col    { padding: 38px 46px; gap: 14px; }
+            .contact-col { padding: 38px 32px; gap: 14px; }
+            .artist-tag  { font-size: 10px; }
+            .full-name   { font-size: 20px; }
+            .sub-title   { font-size: 11px; }
+            .contact-label  { font-size: 9px; }
+            .contact-item a { font-size: 12px; }
+            .logo-slot-label { font-size: 10px; }
             .front::before,
-            .back::before  { font-size: 280px; }
-            .card-glow     { width: 720px; }
+            .back::before  { font-size: 350px; }
+            .card-glow     { width: 900px; }
         }
 
         /* ── Responsive ── */
@@ -439,14 +439,17 @@
         }
 
         @media (max-width: 580px) {
-            /* Portrait card — taller than wide for proper mobile readability */
-            .spinner    { width: min(370px, calc(100vw - 32px)); height: 570px; }
+            /* Portrait card — sized to fit mobile viewport without scrolling */
+            .spinner    { 
+                width: min(340px, calc(100vw - 40px)); 
+                height: min(480px, calc(100vh - 140px));
+            }
 
             /* Switch front face from 3-column grid to vertical stack */
             .front {
                 display: flex;
                 flex-direction: column;
-                padding: 24px 20px;
+                padding: 20px 18px;
                 gap: 0;
             }
 
@@ -455,39 +458,49 @@
             .back-inner {
                 display: flex;
                 flex-direction: column;
-                padding: 24px 20px;
+                padding: 20px 18px;
                 gap: 0;
             }
 
             .logo-col {
                 border-right: none;
                 border-bottom: 1px solid rgba(61,90,254,0.07);
-                padding: 0 0 18px 0;
+                padding: 0 0 14px 0;
                 justify-content: flex-start;
             }
 
-            .logo-slot  { width: 80px; height: 80px; border-radius: 10px; }
+            .logo-slot  { width: 70px; height: 70px; border-radius: 10px; }
 
             .name-col {
-                padding: 18px 0;
-                gap: 8px;
+                padding: 14px 0;
+                gap: 6px;
                 border-bottom: 1px solid rgba(61,90,254,0.07);
             }
 
-            .artist-tag { font-size: 10px; }
-            .full-name  { font-size: 19px; letter-spacing: 0.07em; }
-            .sub-title  { font-size: 10px; }
+            .artist-tag { font-size: 9px; }
+            .full-name  { font-size: 17px; letter-spacing: 0.07em; line-height: 1.4; }
+            .sub-title  { font-size: 9px; }
 
             .contact-col {
                 border-left: none;
-                padding: 18px 0 0 0;
-                gap: 14px;
+                padding: 14px 0 0 0;
+                gap: 11px;
             }
 
-            .contact-item a { font-size: 14px; }
-            .contact-label  { font-size: 9px; }
+            .contact-item a { font-size: 13px; }
+            .contact-label  { font-size: 8px; }
 
-            .card-glow  { width: min(370px, calc(100vw - 32px)); height: 18px; margin-top: 8px; }
+            .card-glow  { 
+                width: min(340px, calc(100vw - 40px)); 
+                height: 16px; 
+                margin-top: 6px; 
+            }
+
+            /* Reduce float animation distance on mobile */
+            @keyframes float {
+                0%,  100% { transform: translateY(0px); }
+                50%        { transform: translateY(-15px); }
+            }
         }
     </style>
 </head>

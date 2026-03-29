@@ -13,6 +13,7 @@ body.home {
     min-height: 100svh;
     min-height: 100dvh;
     overflow-x: hidden;
+    overflow-y: hidden;
 }
 
 /* ---------------------------------------------- */
@@ -472,6 +473,14 @@ button.terminal-btn:hover {
 /* Responsive – mobile                             */
 
 @media (max-width: 600px) {
+    
+    /* Ensure page fits without scrolling on mobile */
+    body.home {
+        height: 100svh;
+        height: 100dvh;
+        overflow: hidden;
+        padding-bottom: 50px; /* space for fixed footer */
+    }
 
     .mosaic-hero .title {
         font-size: 80px;
