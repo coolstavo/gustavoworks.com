@@ -1,0 +1,759 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>OS — Interactive Study Guide</title>
+<style>
+*{box-sizing:border-box;margin:0;padding:0}
+body{font-family:system-ui,-apple-system,sans-serif;background:#fff;color:#1a1a1a;padding:1rem;max-width:820px;margin:0 auto}
+:root{
+  --cp:#1a1a1a;--cs:#555;--ct:#999;
+  --bg:#fff;--bgs:#f5f5f3;--bgi:#E6F1FB;
+  --bd:rgba(0,0,0,0.12);--bds:rgba(0,0,0,0.22);--bdp:rgba(0,0,0,0.35);
+  --ci:#185FA5;--bdi:#85B7EB;
+  --r:8px;--rl:12px;
+}
+@media(prefers-color-scheme:dark){
+  :root{--cp:#f0f0f0;--cs:#aaa;--ct:#666;--bg:#1e1e1e;--bgs:#2a2a2a;--bgi:#0C447C;--bd:rgba(255,255,255,0.1);--bds:rgba(255,255,255,0.2);--bdp:rgba(255,255,255,0.3);--ci:#85B7EB;--bdi:#185FA5;}
+  body{background:#141414}
+}
+.nav{display:flex;gap:6px;flex-wrap:wrap;padding:1rem 0 0.75rem;border-bottom:0.5px solid var(--bd);margin-bottom:1rem}
+.nav button{font-size:13px;padding:5px 14px;border-radius:20px;border:0.5px solid var(--bds);background:transparent;color:var(--cs);cursor:pointer;transition:all .15s}
+.nav button.active{background:var(--bgi);color:var(--ci);border-color:var(--bdi)}
+.nav button:hover:not(.active){background:var(--bgs)}
+.sec{display:none}.sec.on{display:block}
+.card{background:var(--bg);border:0.5px solid var(--bd);border-radius:var(--rl);padding:1rem 1.25rem;margin-bottom:10px}
+.ch{display:flex;align-items:center;gap:10px;cursor:pointer;user-select:none}
+.ct2{font-size:15px;font-weight:500;flex:1;color:var(--cp)}
+.cb{display:none;padding-top:12px;border-top:0.5px solid var(--bd);margin-top:12px;font-size:14px;line-height:1.7;color:var(--cs)}
+.card.open .cb{display:block}
+.chev{width:16px;height:16px;transition:transform .2s;flex-shrink:0;stroke:var(--cs)}
+.card.open .chev{transform:rotate(180deg)}
+.tag{font-size:11px;padding:3px 8px;border-radius:10px;font-weight:500;flex-shrink:0}
+.t1{background:#E6F1FB;color:#0C447C}.t2{background:#EAF3DE;color:#27500A}
+.t3{background:#FAEEDA;color:#633806}.t4{background:#FBEAF0;color:#72243E}
+.t5{background:#E1F5EE;color:#085041}.t6{background:#EEEDFE;color:#3C3489}
+.fbox{background:var(--bgs);border-radius:var(--r);padding:10px 14px;font-family:ui-monospace,monospace;font-size:13px;color:var(--cp);margin:8px 0;word-break:break-all}
+.pb{height:4px;background:var(--bgs);border-radius:2px;margin:6px 0}
+.pf{height:100%;border-radius:2px;transition:width .3s}
+.pf-green{background:#1D9E75}.pf-blue{background:#378ADD}
+.stat-row{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:8px;margin-bottom:1rem}
+.stat{background:var(--bgs);border-radius:var(--r);padding:12px;text-align:center}
+.stat-v{font-size:22px;font-weight:500;color:var(--cp)}
+.stat-l{font-size:12px;color:var(--cs);margin-top:2px}
+btn,button{font-family:inherit;cursor:pointer;border-radius:var(--r);border:0.5px solid var(--bds);background:transparent;color:var(--cp);padding:6px 14px;font-size:13px;transition:background .15s}
+button:hover:not(:disabled){background:var(--bgs)}
+button:disabled{opacity:.4;cursor:default}
+button:active:not(:disabled){transform:scale(.98)}
+.fc{background:var(--bg);border:0.5px solid var(--bd);border-radius:var(--rl);min-height:190px;display:flex;flex-direction:column;align-items:center;justify-content:center;padding:2rem;text-align:center;cursor:pointer;transition:border-color .15s;margin-bottom:10px}
+.fc:hover{border-color:var(--bdp)}
+.fc-q{font-size:16px;font-weight:500;line-height:1.5;color:var(--cp)}
+.fc-a{font-size:14px;color:var(--cs);line-height:1.6;margin-top:14px;padding-top:14px;border-top:0.5px solid var(--bd);width:100%;white-space:pre-line;text-align:left}
+.fc-hint{font-size:12px;color:var(--ct);margin-top:12px}
+.qopt{width:100%;text-align:left;padding:10px 14px;margin-bottom:6px;border-radius:var(--r);border:0.5px solid var(--bds);background:var(--bg);cursor:pointer;font-size:14px;color:var(--cp);transition:all .15s;font-family:inherit}
+.qopt:hover:not(:disabled){background:var(--bgs)}
+.qopt.ok{background:#E1F5EE;border-color:#1D9E75;color:#085041}
+.qopt.no{background:#FCEBEB;border-color:#E24B4A;color:#791F1F}
+.fb{font-size:13px;padding:10px 14px;border-radius:var(--r);margin:8px 0;line-height:1.5}
+.fb-ok{background:#E1F5EE;color:#085041}
+.fb-no{background:#FCEBEB;color:#791F1F}
+.wk-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:10px;margin-top:0.5rem}
+.wk-card{background:var(--bg);border:0.5px solid var(--bd);border-radius:var(--rl);padding:1rem 1.25rem;cursor:pointer;transition:border-color .15s}
+.wk-card:hover{border-color:var(--bdp)}
+.wk-title{font-size:14px;font-weight:500;color:var(--cp);margin-bottom:4px}
+.wk-sub{font-size:12px;color:var(--cs);line-height:1.4;margin-bottom:10px}
+.wk-badge{display:inline-flex;align-items:center;gap:5px;font-size:11px;font-weight:500;padding:3px 8px;border-radius:10px}
+.score-ring{width:80px;height:80px;margin:0 auto 1rem}
+.unlock{display:inline-flex;align-items:center;gap:6px;font-size:12px;padding:3px 10px;border-radius:10px;background:#FAEEDA;color:#633806;font-weight:500}
+.wr-back{font-size:13px;color:var(--cs);cursor:pointer;display:inline-flex;align-items:center;gap:6px;margin-bottom:1rem;background:none;border:none;padding:0}
+.wr-back:hover{color:var(--cp)}
+.sep{height:0.5px;background:var(--bd);margin:1rem 0}
+</style>
+</head>
+<body>
+
+<div class="nav">
+  <button class="active" onclick="show('overview')">Overview</button>
+  <button onclick="show('concepts')">Concepts</button>
+  <button onclick="show('formulas')">Formulas</button>
+  <button onclick="show('flashcards')">Flashcards</button>
+  <button onclick="show('quiz')">Quiz</button>
+  <button onclick="show('weekreview')">Week review</button>
+</div>
+
+<!-- OVERVIEW -->
+<div id="overview" class="sec on">
+  <div class="stat-row">
+    <div class="stat"><div class="stat-v">44</div><div class="stat-l">concepts</div></div>
+    <div class="stat"><div class="stat-v">14</div><div class="stat-l">formulas</div></div>
+    <div class="stat"><div class="stat-v">20</div><div class="stat-l">quiz questions</div></div>
+  </div>
+  <div class="pb"><div class="pf pf-blue" id="overall-prog" style="width:0%"></div></div>
+  <div style="font-size:12px;color:var(--cs);margin-bottom:1rem" id="prog-label">0 of 20 quiz questions answered</div>
+  <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(0,1fr));gap:8px;margin-bottom:1.25rem">
+    <div class="card" style="cursor:pointer;margin:0" onclick="show('concepts')"><div style="font-size:13px;font-weight:500;color:var(--cp);margin-bottom:3px">Concepts</div><div style="font-size:12px;color:var(--cs)">All topics by week</div></div>
+    <div class="card" style="cursor:pointer;margin:0" onclick="show('formulas')"><div style="font-size:13px;font-weight:500;color:var(--cp);margin-bottom:3px">Formulas</div><div style="font-size:12px;color:var(--cs)">Calc cheat sheet</div></div>
+    <div class="card" style="cursor:pointer;margin:0" onclick="show('flashcards')"><div style="font-size:13px;font-weight:500;color:var(--cp);margin-bottom:3px">Flashcards</div><div style="font-size:12px;color:var(--cs)">30 term definitions</div></div>
+    <div class="card" style="cursor:pointer;margin:0" onclick="show('quiz')"><div style="font-size:13px;font-weight:500;color:var(--cp);margin-bottom:3px">Quiz</div><div style="font-size:12px;color:var(--cs)">20 exam questions</div></div>
+    <div class="card" style="cursor:pointer;margin:0;border-color:var(--bdi)" onclick="show('weekreview')"><div style="font-size:13px;font-weight:500;color:var(--ci);margin-bottom:3px">Week review</div><div style="font-size:12px;color:var(--cs)">Master each week before moving on</div></div>
+  </div>
+  <div class="card" style="padding:0.75rem 1rem">
+    <div style="font-size:12px;font-weight:500;color:var(--cs);margin-bottom:8px">Schedule</div>
+    <table style="width:100%;font-size:13px;border-collapse:collapse">
+      <tr style="border-bottom:0.5px solid var(--bd)"><td style="padding:6px 8px 6px 0;font-weight:500;color:var(--cp)">W1+2</td><td style="padding:6px 0;color:var(--cs)">Intro, OS components, running programs</td><td style="padding:6px 0 6px 8px;color:var(--ct);white-space:nowrap">Ch. 1, 2</td></tr>
+      <tr style="border-bottom:0.5px solid var(--bd)"><td style="padding:6px 8px 6px 0;font-weight:500;color:var(--cp)">W3+4</td><td style="padding:6px 0;color:var(--cs)">Process management & scheduling</td><td style="padding:6px 0 6px 8px;color:var(--ct);white-space:nowrap">Ch. 3, 5</td></tr>
+      <tr style="border-bottom:0.5px solid var(--bd)"><td style="padding:6px 8px 6px 0;font-weight:500;color:var(--cp)">W5+6</td><td style="padding:6px 0;color:var(--cs)">Threads & synchronization</td><td style="padding:6px 0 6px 8px;color:var(--ct);white-space:nowrap">Ch. 4, 6, 7</td></tr>
+      <tr style="border-bottom:0.5px solid var(--bd)"><td style="padding:6px 8px 6px 0;font-weight:500;color:var(--cp)">W7+8</td><td style="padding:6px 0;color:var(--cs)">Deadlocks & memory management</td><td style="padding:6px 0 6px 8px;color:var(--ct);white-space:nowrap">Ch. 8, 9</td></tr>
+      <tr style="border-bottom:0.5px solid var(--bd)"><td style="padding:6px 8px 6px 0;font-weight:500;color:var(--cp)">W9+10</td><td style="padding:6px 0;color:var(--cs)">Virtual memory & storage</td><td style="padding:6px 0 6px 8px;color:var(--ct);white-space:nowrap">Ch. 10, 11, 13, 14</td></tr>
+      <tr><td style="padding:6px 8px 6px 0;font-weight:500;color:var(--cp)">W11+12</td><td style="padding:6px 0;color:var(--cs)">Virtual machines & containers</td><td style="padding:6px 0 6px 8px;color:var(--ct);white-space:nowrap">Ch. 18</td></tr>
+    </table>
+  </div>
+</div>
+
+<!-- CONCEPTS -->
+<div id="concepts" class="sec"></div>
+
+<!-- FORMULAS -->
+<div id="formulas" class="sec"><div style="padding-top:0.75rem"></div></div>
+
+<!-- FLASHCARDS -->
+<div id="flashcards" class="sec">
+  <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:10px;padding-top:0.5rem">
+    <span style="font-size:13px;color:var(--cs)" id="fc-counter">Card 1 of 30</span>
+    <div style="display:flex;gap:6px"><button onclick="shuffleCards()">Shuffle</button><button onclick="resetCards()">Reset</button></div>
+  </div>
+  <div class="pb"><div class="pf pf-green" id="fc-prog" style="width:3%"></div></div>
+  <div class="fc" id="fc-card" onclick="flipCard()">
+    <div class="fc-q" id="fc-q"></div>
+    <div class="fc-a" id="fc-a" style="display:none"></div>
+    <div class="fc-hint" id="fc-hint">tap to reveal answer</div>
+  </div>
+  <div style="display:flex;gap:8px;justify-content:center">
+    <button onclick="prevCard()">← prev</button>
+    <button onclick="nextCard()">next →</button>
+  </div>
+</div>
+
+<!-- QUIZ -->
+<div id="quiz" class="sec"><div style="padding-top:0.5rem" id="quiz-area"></div></div>
+
+<!-- WEEK REVIEW -->
+<div id="weekreview" class="sec">
+  <div id="wr-home"></div>
+  <div id="wr-session" style="display:none"></div>
+</div>
+
+<script>
+// ─── DATA ────────────────────────────────────────────────────────────────────
+
+const concepts = [
+  {w:'W1+2',t:'t1',title:'What is an OS?',body:'An <b>intermediary</b> between user applications and hardware. Goals: execute programs, provide hardware abstraction (HAL), manage shared resources, protect against improper use.<br><br>4 computer components: hardware → OS → application programs → actors (users/other systems).'},
+  {w:'W1+2',t:'t1',title:'Kernel architectures',body:'<b>Monolithic:</b> all services in kernel space. Fast, but a bug can crash everything. Examples: Linux, FreeBSD.<br><b>Microkernel:</b> only IPC + VM + thread scheduling in kernel. Rest in user space. Secure, but slow (IPC overhead). Examples: Mach, Minix-3, QNX.<br><b>Hybrid:</b> mix. Windows NT, macOS.'},
+  {w:'W1+2',t:'t1',title:'Dual-mode operation',body:'CPU has two modes: <b>user mode</b> (restricted) and <b>kernel mode</b> (full access). A mode bit in the CPU hardware handles this. System calls and interrupts switch the CPU to kernel mode. Dual-mode is <i>partially implemented in the CPU</i>.'},
+  {w:'W1+2',t:'t1',title:'System calls',body:'Interface between user space and kernel. Examples: fork(), exec(), read(), write(), open(). Each causes a software interrupt (trap) switching to kernel mode.<br><br>fork() return values: 0 = child, positive PID = parent, -1 = error.'},
+  {w:'W1+2',t:'t1',title:'Compiler → linker → loader',body:'<b>Compiler:</b> source → object code with symbolic addresses.<br><b>Linker:</b> combines object files → executable. Works with <i>logical</i> addresses only (never physical).<br><b>Loader:</b> loads executable into RAM, OS assigns physical memory.<br><b>MMU:</b> translates logical → physical at runtime.'},
+  {w:'W3+4',t:'t2',title:'Process concept',body:'Process = a program in execution. Has: PID, state, register set (incl. PC), memory segments, open files/sockets, stored in PCB (Process Control Block).<br><br>Memory layout: .text (code) → .data → .bss → heap (grows up) ↕ stack (grows down).'},
+  {w:'W3+4',t:'t2',title:'Process states',body:'<b>new → ready → running → waiting or terminated</b><br><br>running → waiting: process requests I/O.<br>running → ready: preempted (higher-priority arrives or time quantum expires).<br>waiting → ready: I/O completes.'},
+  {w:'W3+4',t:'t2',title:'fork() and exec()',body:'<b>fork():</b> child = exact copy of parent. Returns 0 to child, child PID to parent.<br><b>exec():</b> replaces process image with a new program. Used after fork().<br><b>wait():</b> parent waits for child — prevents zombies.<br><br>Copied after fork: stack, heap, data. Code (.text) is shared (COW).'},
+  {w:'W3+4',t:'t2',title:'IPC methods',body:'<b>Shared memory:</b> fastest, but needs synchronization.<br><b>Pipes:</b> kernel-buffered, unidirectional. The | in shell connects stdout → stdin.<br><b>Sockets / RPC:</b> network-based. RPC uses parameter marshalling to serialize data.'},
+  {w:'W3+4',t:'t2',title:'Scheduling criteria',body:'<b>Throughput:</b> processes/time unit — higher is better.<br><b>Turnaround time:</b> finish − arrival — lower is better.<br><b>Waiting time:</b> time in ready queue — lower is better.<br><b>Response time:</b> time until first response.<br><b>CPU utilization:</b> % CPU busy — higher is better.'},
+  {w:'W3+4',t:'t2',title:'Scheduling algorithms',body:'<b>FCFS:</b> arrival order, non-preemptive, convoy effect possible, no starvation.<br><b>SJF:</b> shortest burst first, optimal avg WT, starvation possible.<br><b>RR:</b> time quantum, preemptive, fair, no starvation. Large q → FCFS; small q → overhead.<br><b>Priority:</b> starvation possible, fix with aging.'},
+  {w:'W3+4',t:'t2',title:'UNIX priority formula',body:'Recalculated every second:<br><code>priority = (recent_CPU_usage / 2) + 60</code><br><br>Lower number = higher priority. CPU-heavy processes get higher numbers (lower priority). recent_CPU_usage decays — idle processes recover priority.'},
+  {w:'W5+6',t:'t3',title:'Threads vs processes',body:'Thread has its own: thread ID, stack, register set, PC, errno.<br>Thread shares with siblings: code, global data, heap, file descriptors.<br><br>Thread creation ~30x faster than process. Threads are lighter but less isolated.'},
+  {w:'W5+6',t:'t3',title:'Concurrency vs parallelism',body:'<b>Concurrent:</b> multiple threads make progress by interleaving (can be 1 core).<br><b>Parallel:</b> threads run simultaneously on multiple cores.<br><br>Amdahl\'s law: speedup = 1/(S + (1−S)/N). If 25% sequential → max speedup = 4x.'},
+  {w:'W5+6',t:'t3',title:'Race conditions & critical section',body:'Race condition: result depends on execution order of concurrent threads accessing shared data. counter++ is 3 assembly instructions (load, add, store) — not atomic!<br><br>Critical section requirements: mutual exclusion, progress, bounded waiting.'},
+  {w:'W5+6',t:'t3',title:'Mutex vs semaphore',body:'<b>Mutex:</b> binary lock, only holder can unlock. Uses hardware atomic instruction (compare-and-swap).<br><b>Semaphore:</b> counter-based. acquire()/P() decrements; release()/V() increments. Counting semaphore limits concurrent access to N.'},
+  {w:'W5+6',t:'t3',title:'Busy waiting vs blocking',body:'<b>Spinlock (busy wait):</b> thread loops checking condition. Wastes CPU but avoids context switch. Good for short waits on multicore, pointless on single-core.<br><b>Blocking:</b> thread sleeps, OS schedules another. Better for long waits.'},
+  {w:'W7+8',t:'t4',title:'Deadlock — 4 conditions',body:'ALL four must hold simultaneously:<br>1. <b>Mutual exclusion</b> — only one process holds resource at a time.<br>2. <b>Hold and wait</b> — holds one resource while waiting for another.<br>3. <b>No preemption</b> — resources only released voluntarily.<br>4. <b>Circular wait</b> — chain of processes each waiting for the next.'},
+  {w:'W7+8',t:'t4',title:'Deadlock strategies',body:'<b>Prevention:</b> eliminate one of the 4 conditions.<br><b>Avoidance (Banker\'s):</b> only allocate if system stays in safe state.<br><b>Detection:</b> allow deadlocks, detect with wait-for graph, then recover.<br><b>Ignorance:</b> ostrich algorithm — used by most real OSes (deadlocks are rare).'},
+  {w:'W7+8',t:'t4',title:'Banker\'s algorithm',body:'Need[i] = Max[i] − Allocation[i]<br><br>Safe state check: find a process with Need ≤ Available → run it → add Allocation to Available → repeat. If all finish → safe. Otherwise → unsafe.'},
+  {w:'W7+8',t:'t4',title:'Logical vs physical addresses',body:'<b>Logical:</b> what the CPU generates. Compiler/linker uses logical addresses only.<br><b>Physical:</b> actual RAM location. Set at load time or runtime via MMU.<br><br>MMU = hardware in CPU that translates logical → physical at runtime.'},
+  {w:'W7+8',t:'t4',title:'Paging & fragmentation',body:'Paging: fixed-size pages (logical) mapped to frames (physical) via page table. No external fragmentation. Small internal fragmentation (last page).<br><br>Internal frag: unused space inside allocation. External frag: free space split between allocations. Paging has NO external fragmentation.'},
+  {w:'W9+10',t:'t5',title:'Virtual memory & demand paging',body:'Virtual memory: process uses more memory than physically available. Inactive pages stored on disk.<br><br>Demand paging: load page into RAM only when accessed. Valid-invalid bit: valid = in RAM, invalid = on disk. Page fault → OS loads page → restart instruction.'},
+  {w:'W9+10',t:'t5',title:'Page replacement algorithms',body:'<b>FIFO:</b> evict oldest. Simple. Bélády\'s anomaly possible.<br><b>LRU:</b> evict least recently used. Good approximation of optimal. Hard to implement exactly.<br><b>Optimal (OPT):</b> evict page not needed longest in future. Impossible in practice — benchmark only.<br><b>Clock:</b> practical LRU approx using reference bits.'},
+  {w:'W9+10',t:'t5',title:'EAT & thrashing',body:'EAT = (1−p) × mem_time + p × fault_time. Even tiny p massively increases EAT (disk is ~10,000x slower).<br><br>Thrashing: process spends more time paging than computing. CPU utilization drops, disk I/O near 100%. Fix: fewer concurrent processes or more RAM.'},
+  {w:'W9+10',t:'t5',title:'HDD vs SSD vs RAM',body:'<b>HDD:</b> seek time (2–10ms) + rotational latency (2–5ms). Sequential >> random.<br><b>SSD:</b> no moving parts, no seek latency. Read 10–100µs. Wear leveling required. ~100x faster than HDD.<br><b>RAM:</b> ~100ns. ~1000x faster than SSD.'},
+  {w:'W9+10',t:'t5',title:'Disk allocation & i-node',body:'<b>Contiguous:</b> consecutive blocks. Fast sequential + random. External fragmentation. Hard to extend.<br><b>Linked:</b> each block → next. Random access O(n). No external frag.<br><b>Indexed (i-node):</b> index block with all pointers. Good random access. Used in UNIX.'},
+  {w:'W9+10',t:'t5',title:'Boot process (UEFI)',body:'1. Power on → UEFI firmware runs POST.<br>2. Reads GPT (GUID Partition Table).<br>3. Finds EFI partition → loads bootloader.<br>4. Bootloader loads OS kernel.<br>5. Kernel starts init/systemd.<br><br>A disk has ONE MBR, but can have multiple filesystems and OSes.'},
+  {w:'W11+12',t:'t6',title:'Virtualization & hypervisors',body:'Virtualization: one physical machine runs multiple OSes concurrently in isolated VMs.<br><b>Type 1 (bare metal):</b> runs directly on hardware. Better performance. VMware ESXi, Hyper-V.<br><b>Type 2 (hosted):</b> runs on host OS. Easier setup. VirtualBox, VMware Workstation.'},
+  {w:'W11+12',t:'t6',title:'VMs vs containers',body:'<b>VM:</b> full OS per VM, complete hardware virtualization, GBs overhead, slow startup (minutes), strong isolation.<br><b>Container (Docker):</b> shares host kernel, uses namespaces + cgroups, MBs overhead, fast startup (seconds), less isolation.'},
+  {w:'W11+12',t:'t6',title:'Cloud models',body:'<b>IaaS:</b> provider manages hardware/VMs. You manage OS + apps. Example: AWS EC2.<br><b>PaaS:</b> provider manages hardware + OS + runtime. You manage apps + data. Example: Google App Engine.<br><b>SaaS:</b> provider manages everything. Example: Gmail.'},
+];
+
+const flashcards = [
+  {q:'What does MMU stand for and what does it do?',a:'Memory Management Unit. Hardware (integrated in CPU) that translates logical → physical addresses at runtime.'},
+  {q:'What is a PCB?',a:'Process Control Block. Kernel data structure storing everything about a process: PID, state, registers, memory limits, open files, priority.'},
+  {q:'What are the 4 necessary conditions for deadlock?',a:'1. Mutual exclusion\n2. Hold and wait\n3. No preemption of resources\n4. Circular wait\n\nALL four must hold simultaneously.'},
+  {q:'What is the difference between logical and physical addresses?',a:'Logical: generated by CPU / used by programs. Physical: actual RAM location. MMU translates logical → physical at runtime. Linker uses logical addresses only.'},
+  {q:'What is a page fault?',a:'Occurs when a process accesses a page not in physical memory (RAM). OS loads it from disk into a free frame, then restarts the instruction. NOT an error — normal virtual memory operation.'},
+  {q:'What is the EAT formula?',a:'EAT = (1 − p) × memory_access_time + p × page_fault_time\n\nWhere p = page fault rate. Even tiny p drastically increases EAT because disk is ~10,000x slower than RAM.'},
+  {q:'What is thrashing?',a:'When a process spends more time paging (swapping pages to/from disk) than executing code. CPU utilization drops, disk I/O near 100%. Fix: fewer concurrent processes or more RAM.'},
+  {q:'What is a semaphore?',a:'Synchronization primitive with a counter. acquire()/P() decrements — blocks if 0. release()/V() increments and wakes a waiting thread. Implemented using hardware atomic instructions.'},
+  {q:'Type 1 vs Type 2 hypervisor?',a:'Type 1 (bare metal): runs directly on hardware, no host OS. Better performance. Used in servers (ESXi, Hyper-V).\nType 2 (hosted): runs on host OS. Easier setup, more overhead (VirtualBox, VMware Workstation).'},
+  {q:'What is the UNIX priority formula?',a:'priority = (recent_CPU_usage / 2) + 60\n\nLower number = higher priority. CPU-heavy processes get high numbers (low priority). recent_CPU_usage decays so idle processes regain priority.'},
+  {q:'How does fork() tell parent from child?',a:'Return value of fork():\n• 0 → child process\n• positive PID → parent process\n• −1 → fork failed'},
+  {q:'Concurrent vs parallel?',a:'Concurrent: multiple threads make progress by interleaving — can run on 1 core.\nParallel: threads execute simultaneously on multiple cores at the same time.'},
+  {q:'What is a TLB?',a:'Translation Lookaside Buffer. Hardware cache for page table entries. TLB hit → fast translation. TLB miss → must look up page table in RAM (slow).'},
+  {q:'Internal vs external fragmentation?',a:'Internal: unused space INSIDE allocated block. Paging has this (last page not full).\nExternal: free space between blocks, too fragmented to use. Contiguous allocation has this. Paging has NO external fragmentation.'},
+  {q:'What is Amdahl\'s Law?',a:'Speedup = 1 / (S + (1−S)/N)\nS = sequential fraction, N = number of cores.\n\nIf 25% is sequential → max speedup = 4x regardless of cores.'},
+  {q:'What is wear leveling?',a:'SSD technique that distributes writes evenly across all flash cells to extend SSD lifetime. Each cell can only be erased/written 10,000–100,000 times.'},
+  {q:'What is a critical section?',a:'Code that accesses shared data and must not be executed by more than one thread at a time. Requires: mutual exclusion, progress, bounded waiting.'},
+  {q:'Three main IPC methods?',a:'1. Shared memory — fastest, needs synchronization\n2. Message passing / pipes — kernel-buffered, the | in shell\n3. Sockets / RPC — network-based, uses parameter marshalling'},
+  {q:'What is a safe state (Banker\'s algorithm)?',a:'A state where a safe sequence exists — all processes can eventually get the resources they need and finish. No safe sequence → unsafe state → risk of deadlock.'},
+  {q:'What is demand paging?',a:'Pages loaded from disk into RAM only when actually accessed, not at program start. Allows programs to run with less physical memory than their full size.'},
+  {q:'VM vs container?',a:'VM: full OS, complete virtualization, GBs overhead, slow startup, strong isolation.\nContainer: shares host kernel, namespaces + cgroups, MBs overhead, seconds to start, less isolation.'},
+  {q:'RR vs FCFS?',a:'FCFS: non-preemptive — process runs to completion.\nRR: preemptive — each process gets at most quantum q, then interrupted. Large q → FCFS. Small q → many context switches.'},
+  {q:'What is parameter marshalling?',a:'Encoding function parameters into a standard format for network transmission in RPC. Allows calling a function on a remote machine as if it were local.'},
+  {q:'What is the UNIX i-node?',a:'File Control Block (FCB) in UNIX. Contains metadata (owner, perms, timestamps) + block pointers: direct (fast), single/double/triple indirect (large files).'},
+  {q:'What is copy-on-write (COW)?',a:'After fork(), parent and child share memory pages marked read-only. A private copy is made only when one process writes. Avoids unnecessary memory copying.'},
+  {q:'What is a spinlock?',a:'Lock where thread loops (spins) checking if lock is free. Wastes CPU but avoids context switch overhead. Useful for very short waits on multicore. Pointless on single-core.'},
+  {q:'Does the linker use logical or physical addresses?',a:'Logical addresses only. Physical addresses are only set at load time by the OS loader, or at runtime via the MMU. The linker never sees physical addresses.'},
+  {q:'What is the working set model?',a:'Based on locality of reference — programs repeatedly access a small set of pages. Working set = pages accessed within recent time window. Keep hot 20% in RAM, cold 80% on disk.'},
+  {q:'What is SMP?',a:'Symmetric Multiprocessing. Multiple CPUs/cores share a single memory space. Each CPU can run OS code and any process. All processes can run on any CPU.'},
+  {q:'Running→waiting vs running→ready?',a:'Running → waiting: process requests I/O (disk, network, keyboard).\nRunning → ready: preempted — higher-priority process arrived or time quantum expired.'},
+];
+
+// ─── WEEK REVIEW DATA ────────────────────────────────────────────────────────
+const weekReviewData = {
+  'W1+2': {
+    title: 'Intro & OS components',
+    sub: 'System calls, kernel architectures, compiler pipeline',
+    tag: 't1',
+    questions: [
+      {type:'mc',q:'Dual-mode operation is partially implemented in...',opts:['the compiler','the CPU hardware','the OS kernel','the bootloader'],ans:1,exp:'The mode bit is a hardware feature of the CPU. It determines whether privileged instructions are allowed.'},
+      {type:'mc',q:'Which kernel architecture puts ONLY IPC, virtual memory, and thread scheduling in the kernel?',opts:['Monolithic kernel','Hybrid kernel','Microkernel','None of the above'],ans:2,exp:'Microkernel design: keep the kernel minimal (IPC, VM, scheduling), push everything else (drivers, filesystem, networking) to user space.'},
+      {type:'mc',q:'After fork(), the child process receives the return value...',opts:['The parent\'s PID','−1','0','Its own PID'],ans:2,exp:'fork() returns 0 to the child, the child\'s PID to the parent, and −1 on error. This is how you tell parent from child.'},
+      {type:'mc',q:'What does the linker work with?',opts:['Physical addresses only','Logical addresses only','Both logical and physical','Neither — it uses symbolic names only'],ans:1,exp:'The linker works exclusively with logical (virtual) addresses. Physical addresses are only assigned at load time or runtime via the MMU.'},
+      {type:'mc',q:'Which component translates logical addresses to physical addresses at runtime?',opts:['Linker','Loader','MMU','Compiler'],ans:2,exp:'The MMU (Memory Management Unit) is hardware integrated into the CPU that translates logical → physical addresses every time memory is accessed.'},
+      {type:'tf',q:'A system call switches the CPU from kernel mode to user mode.',ans:false,exp:'It\'s the opposite. A system call switches FROM user mode TO kernel mode (via a trap/software interrupt). When the system call finishes, it switches back to user mode.'},
+      {type:'tf',q:'Linux uses a monolithic kernel architecture.',ans:true,exp:'Correct. Linux is a monolithic kernel — all OS services run in kernel space. This gives it high performance but means a bug in any module can crash the kernel.'},
+      {type:'order',q:'Put the compilation pipeline steps in the correct order:',items:['Loader runs executable in memory','Linker combines object files into executable','Compiler translates source code to object code','CPU executes machine instructions'],ans:[2,1,0,3],exp:'Source code → Compiler → Object code → Linker → Executable → Loader → Running in memory → CPU executes.'},
+      {type:'mc',q:'A microkernel is slower than a monolithic kernel because...',opts:['It has less code','All services communicate via IPC (message passing)','It runs in user mode','It cannot use hardware directly'],ans:1,exp:'In a microkernel, services that would communicate directly in a monolithic kernel must instead pass messages via the kernel\'s IPC mechanism — lots of context switches and overhead.'},
+      {type:'mc',q:'Which of these is NOT a goal of the OS from the application\'s point of view?',opts:['Provide hardware abstraction','Compile source code','Manage shared resources','Protect resources'],ans:1,exp:'Compiling is done by the compiler, which is a separate application. The OS provides abstraction, resource management, and protection — it doesn\'t compile code.'},
+    ]
+  },
+  'W3+4': {
+    title: 'Process management & scheduling',
+    sub: 'Process states, fork, IPC, FCFS/SJF/RR/Priority',
+    tag: 't2',
+    questions: [
+      {type:'mc',q:'How many processes can have status "running" simultaneously on a quad-core machine?',opts:['1','4','Unlimited','Depends on RAM'],ans:1,exp:'Exactly one process per core can be truly running at any moment. A quad-core can have at most 4 running processes simultaneously.'},
+      {type:'mc',q:'A process goes from running → waiting when...',opts:['A higher-priority process arrives','The time quantum expires','It requests I/O','It is newly created'],ans:2,exp:'Running → waiting happens when the process needs to wait for something (I/O, a lock, etc.). Running → ready happens when it\'s preempted.'},
+      {type:'mc',q:'Which scheduling algorithm gives the minimum average waiting time?',opts:['FCFS','Round Robin','SJF (preemptive)','Priority scheduling'],ans:2,exp:'Preemptive SJF (SRTF) is provably optimal for minimizing average waiting time. It always picks the process with the shortest remaining burst time.'},
+      {type:'mc',q:'Round Robin with a very large time quantum behaves like...',opts:['SJF','FCFS','Priority scheduling','SRTF'],ans:1,exp:'With a huge quantum, each process runs to completion before the next gets CPU time — which is exactly FCFS (First Come First Served).'},
+      {type:'tf',q:'Priority scheduling can cause starvation.',ans:true,exp:'Correct. If high-priority processes keep arriving, low-priority processes may never get CPU time (starvation). The fix is aging — gradually increase the priority of waiting processes.'},
+      {type:'tf',q:'Round Robin can cause starvation.',ans:false,exp:'RR cannot cause starvation. Every process gets CPU time in a fair, cyclical order. No process is permanently skipped.'},
+      {type:'calc',q:'Given: P1 arrives at t=0 (burst=6), P2 at t=2 (burst=4), P3 at t=4 (burst=1), P4 at t=6 (burst=4). Non-preemptive SJF. What is the average waiting time?',ans:'3',hint:'Execution order: P1(0→6), P3(6→7), P2(7→11), P4(11→15). WT: P1=0, P3=2, P2=5, P4=5. Avg=(0+2+5+5)/4=3',exp:'P1 runs 0→6 (only one available). At t=6: P2(4) and P3(1) are waiting, P4 not arrived. SJF picks P3(1) → runs 6→7. At t=7: P2(4) and P4 not arrived → P2 runs 7→11. P4 runs 11→15. Waiting times: P1=0, P3=6−4=2, P2=7−2=5, P4=11−6=5. Average=(0+2+5+5)/4=3.'},
+      {type:'mc',q:'In the UNIX priority formula priority=(recent_CPU_usage/2)+60, a CPU-bound process over time will...',opts:['Get a lower number (higher priority)','Get a higher number (lower priority)','Stay the same','Immediately get the highest priority'],ans:1,exp:'CPU-bound processes accumulate high recent_CPU_usage, giving them a higher priority number, meaning LOWER actual priority. This is intentional — give interactive/I/O-bound processes priority.'},
+      {type:'mc',q:'The "convoy effect" is associated with which scheduling algorithm?',opts:['SJF','Round Robin','FCFS','Priority scheduling'],ans:2,exp:'In FCFS, short processes can get stuck waiting behind a long CPU-bound process — like cars in a convoy behind a slow truck. This is the convoy effect.'},
+      {type:'mc',q:'Which of the following correctly describes shared memory IPC?',opts:['Slowest IPC method','Requires the kernel to copy data on every access','Fastest IPC, but needs synchronization','Always deadlock-free'],ans:2,exp:'Shared memory is the fastest IPC because processes directly read/write the same memory region without kernel involvement. But this means you must handle synchronization yourself to avoid race conditions.'},
+    ]
+  },
+  'W5+6': {
+    title: 'Threads & synchronization',
+    sub: 'Race conditions, mutex, semaphores, monitors',
+    tag: 't3',
+    questions: [
+      {type:'mc',q:'Which of these does a thread NOT have its own copy of?',opts:['Stack','Register set','Program counter','Heap memory'],ans:3,exp:'The heap is shared among all threads in a process. Each thread has its own stack, registers, and PC — but they all share the heap, global variables, code, and file descriptors.'},
+      {type:'mc',q:'counter++ is not thread-safe because...',opts:['It takes too long','It is actually 3 assembly instructions (load, add, store) that can be interleaved','Java doesn\'t support it','It overflows'],ans:1,exp:'counter++ compiles to: LOAD value into register, ADD 1, STORE back. Another thread can interrupt between any of these steps and produce a wrong result — a race condition.'},
+      {type:'tf',q:'A spinlock is a good choice when the expected wait time is very short and you are on a multicore system.',ans:true,exp:'Correct. Spinlocks avoid the overhead of a context switch, which makes them efficient for very short waits. On multicore, the waiting thread spinning on one core doesn\'t block the lock-holder on another.'},
+      {type:'tf',q:'A spinlock is efficient on a single-core CPU.',ans:false,exp:'On single-core, a spinning thread wastes 100% of the CPU while it waits. The lock holder can\'t even run to release the lock! You must use a blocking lock on single-core.'},
+      {type:'mc',q:'Which of these is NOT one of the 3 requirements for a correct critical section solution?',opts:['Mutual exclusion','Progress','Bounded waiting','Maximum throughput'],ans:3,exp:'The three requirements are: mutual exclusion (only one inside at a time), progress (if no one is inside, a waiter must get in), and bounded waiting (no infinite waiting). Throughput is a scheduling criterion, not a CS requirement.'},
+      {type:'mc',q:'In Java, the synchronized keyword acquires a lock at...',opts:['Thread level','Class level','Object level','Method level'],ans:2,exp:'In Java, synchronized acquires a lock on the object (instance). Two synchronized methods on the same object share the same lock. You can also use synchronized(obj) to lock on a specific object.'},
+      {type:'mc',q:'A counting semaphore initialized to 5 means...',opts:['5 processes are waiting','5 processes are in the critical section','At most 5 processes can be in the critical section simultaneously','The semaphore can only count to 5'],ans:2,exp:'A counting semaphore initialized to N allows at most N threads to enter the critical section simultaneously. Each acquire() decrements the counter; each release() increments it.'},
+      {type:'tf',q:'A binary semaphore is functionally equivalent to a mutex lock.',ans:true,exp:'A binary semaphore (values 0 or 1) behaves the same as a mutex — only one thread can be in the critical section at a time. The main practical difference is that any thread can release a semaphore, while only the holder can release a mutex.'},
+      {type:'mc',q:'What is Amdahl\'s Law used for?',opts:['Calculating memory access time','Predicting maximum speedup from parallelization','Measuring disk I/O performance','Estimating page fault rate'],ans:1,exp:'Amdahl\'s Law: speedup = 1/(S + (1−S)/N). It tells you the theoretical maximum speedup from parallelizing a program given the fraction S that must remain sequential.'},
+      {type:'mc',q:'Priority inversion occurs when...',opts:['A high-priority process runs before a low-priority one','A low-priority process holds a lock needed by a high-priority process','Two processes have the same priority','The scheduler assigns wrong priorities'],ans:1,exp:'Priority inversion: a high-priority process is blocked waiting for a lock held by a low-priority process. Even worse, a medium-priority process may preempt the low-priority one, causing the high-priority process to wait even longer.'},
+    ]
+  },
+  'W7+8': {
+    title: 'Deadlocks & memory management',
+    sub: 'Banker\'s algorithm, paging, fragmentation, MMU',
+    tag: 't4',
+    questions: [
+      {type:'mc',q:'Which deadlock condition states that a process holds one resource while waiting for another?',opts:['Mutual exclusion','Hold and wait','No preemption','Circular wait'],ans:1,exp:'Hold and wait: a process already holding at least one resource is waiting to acquire additional resources currently held by other processes. This is condition #2.'},
+      {type:'tf',q:'If you remove circular wait, deadlock cannot occur even if the other 3 conditions hold.',ans:true,exp:'Correct. ALL four conditions must hold simultaneously for deadlock. Eliminating any one of them (including circular wait) prevents deadlock. Imposing a total ordering on resource acquisition eliminates circular wait.'},
+      {type:'mc',q:'The Banker\'s algorithm is used for...',opts:['Detecting deadlocks after they occur','Avoiding deadlocks by staying in safe states','Preventing deadlocks by eliminating conditions','Recovering from deadlocks'],ans:1,exp:'Banker\'s is a deadlock avoidance algorithm. It checks whether granting a resource request would leave the system in a safe state. If unsafe → deny the request until later.'},
+      {type:'calc',q:'Process needs: Need = Max − Allocation. If Max=[3,2] and Allocation=[1,1], what is Need?',ans:'2,1',hint:'Subtract each element: [3−1, 2−1] = [2,1]',exp:'Need[i] = Max[i] − Allocation[i] for each resource type. So [3−1, 2−1] = [2, 1]. The process still needs 2 units of resource A and 1 unit of resource B.'},
+      {type:'mc',q:'Which memory allocation method has NO external fragmentation?',opts:['Contiguous allocation','Segmentation','Paging','First fit'],ans:2,exp:'Paging divides memory into fixed-size pages and frames, so free space is never stranded between allocations. Internal fragmentation can still occur (last page may not be fully used), but not external.'},
+      {type:'mc',q:'A CPU generates a logical address. What happens next?',opts:['It is sent directly to RAM','The OS translates it to a physical address','The MMU translates it to a physical address','The linker translates it'],ans:2,exp:'The MMU (Memory Management Unit) — hardware integrated into the CPU — translates the logical address to a physical address on every memory access. This happens transparently and very fast.'},
+      {type:'tf',q:'The linker assigns physical addresses to variables and functions.',ans:false,exp:'The linker assigns logical (virtual) addresses. Physical addresses are only determined when the program is loaded by the OS loader, or at runtime by the MMU.'},
+      {type:'mc',q:'Logical address = 101010 binary. a5,a4 = page number, a3-a0 = offset. Page 2 → frame 2. Physical address?',opts:['26','36','42','48'],ans:2,exp:'Page number = binary 10 = 2. Offset = binary 1010 = 10. Physical = frame × page_size + offset = 2 × 16 + 10 = 32 + 10 = 42.'},
+      {type:'mc',q:'What is the purpose of a TLB (Translation Lookaside Buffer)?',opts:['Store page table on disk','Cache frequently used page table entries for faster translation','Translate logical to physical directly without a page table','Store the full page table for all processes'],ans:1,exp:'The TLB is a small, fast hardware cache that stores recently used page table entries. A TLB hit avoids the slow page table lookup in RAM. Without TLB, every memory access would require two memory accesses (page table + data).'},
+      {type:'mc',q:'What happens to internal fragmentation if you increase page size?',opts:['It decreases','It increases','It stays the same','It is eliminated'],ans:1,exp:'Larger pages mean the last page of a process is more likely to have lots of unused space (internal fragmentation). Smaller pages reduce internal fragmentation but increase the size of the page table.'},
+    ]
+  },
+  'W9+10': {
+    title: 'Virtual memory & storage',
+    sub: 'Page faults, replacement algorithms, HDD/SSD, filesystems',
+    tag: 't5',
+    questions: [
+      {type:'mc',q:'What does a page fault mean?',opts:['A bug in the page','An illegal memory access','The page is not currently in physical memory','There is no more logical memory'],ans:2,exp:'A page fault means the accessed page is valid (part of the process\'s address space) but not currently in RAM — it\'s on disk. The OS loads it in and restarts the instruction. Completely normal in virtual memory.'},
+      {type:'mc',q:'Which page replacement algorithm is theoretically optimal but impossible to implement?',opts:['FIFO','LRU','Optimal (OPT)','Clock'],ans:2,exp:'Optimal (OPT) evicts the page that won\'t be used for the longest time in the future. It\'s impossible because you\'d need to predict the future. Used only as a benchmark to evaluate other algorithms.'},
+      {type:'tf',q:'Bélády\'s anomaly means that adding more frames can sometimes increase page faults.',ans:true,exp:'Correct, and counterintuitively! Bélády\'s anomaly occurs with FIFO — more frames can result in more page faults for some reference strings. LRU and OPT do not have this anomaly.'},
+      {type:'mc',q:'Thrashing is best fixed by...',opts:['Getting a faster CPU','Reducing the number of concurrent processes (or adding RAM)','Using a better page replacement algorithm','Increasing page size'],ans:1,exp:'Thrashing happens because too many processes compete for too few frames. A faster CPU just means the processes page-fault faster. The fix is reducing multiprogramming degree (fewer competing processes) or adding more physical RAM.'},
+      {type:'mc',q:'The Effective Access Time (EAT) is mainly determined by...',opts:['The TLB hit ratio','The page fault rate','The memory bus speed','The disk rotation speed'],ans:1,exp:'EAT = (1−p)×mem_time + p×fault_time. Since disk access (fault time) is ~10,000x slower than RAM, even a tiny page fault rate p dominates the EAT calculation.'},
+      {type:'mc',q:'Which disk allocation method provides the best random access performance?',opts:['Contiguous allocation','Linked allocation','Indexed allocation (i-node)','FAT allocation'],ans:2,exp:'Indexed allocation (i-node) stores all block pointers in a single index block, so you can jump directly to any block. Linked allocation requires traversing the chain (O(n)) for random access.'},
+      {type:'tf',q:'An SSD has no rotational latency.',ans:true,exp:'Correct. SSDs are solid-state (no moving parts), so there is no seek time and no rotational latency. Access time is purely electronic — typically 10–100 microseconds for reads.'},
+      {type:'mc',q:'A disk can have only one...',opts:['Operating system','File system','MBR (Master Boot Record)','Boot partition'],ans:2,exp:'A disk has exactly one MBR (or GPT). But it can have multiple partitions, each with its own filesystem, and it can host multiple operating systems. You can dual-boot Linux and Windows on one disk.'},
+      {type:'mc',q:'In the UEFI boot process, which comes first?',opts:['Loading the OS kernel','GPT partition table read','POST (Power-On Self Test)','Bootloader execution'],ans:2,exp:'Boot order: Power on → UEFI runs POST → reads GPT → finds EFI partition → loads bootloader → bootloader loads kernel → kernel starts init/systemd.'},
+      {type:'mc',q:'LRU page replacement evicts...',opts:['The oldest loaded page','The page not used for the longest time','The page that won\'t be used longest in future','The page loaded last'],ans:1,exp:'LRU (Least Recently Used) evicts the page that was accessed least recently — i.e., not used for the longest time in the past. It approximates OPT by assuming recent past predicts near future.'},
+    ]
+  },
+  'W11+12': {
+    title: 'Virtual machines & containers',
+    sub: 'Hypervisors, Docker, trap-and-emulate, cloud models',
+    tag: 't6',
+    questions: [
+      {type:'mc',q:'A Type 1 hypervisor runs...',opts:['On top of a host OS','Directly on hardware','Inside a container','As a user-space application'],ans:1,exp:'Type 1 (bare metal) hypervisors run directly on hardware — there is no host OS between them. This gives better performance and is used in enterprise/cloud servers (VMware ESXi, Microsoft Hyper-V, Xen).'},
+      {type:'mc',q:'Why can\'t trap-and-emulate always be used for implementing VMMs?',opts:['Not all OSes support traps','Not all CPUs generate a trap for privileged instructions in user mode','VMMs must run in kernel mode','Some instructions cannot be emulated'],ans:1,exp:'On some CPU architectures, certain sensitive instructions silently fail (or behave differently) when executed in user mode instead of generating a trap. Without a trap, the VMM never gets control, making trap-and-emulate impossible.'},
+      {type:'tf',q:'Containers provide stronger isolation than virtual machines.',ans:false,exp:'VMs provide stronger isolation — each VM has its own full OS, so a compromise in one VM cannot easily affect others or the host. Containers share the host kernel, meaning a kernel vulnerability affects all containers.'},
+      {type:'mc',q:'What Linux features do containers primarily rely on for isolation?',opts:['Hypervisor and MMU','Namespaces and cgroups','Virtual memory and paging','Semaphores and mutexes'],ans:1,exp:'Containers use Linux namespaces (isolate process view: PID, network, filesystem, etc.) and cgroups (limit and account for CPU, memory, I/O per process group). Together these create lightweight isolation without a full OS.'},
+      {type:'mc',q:'In the IaaS cloud model, the customer is responsible for...',opts:['Only the application','The OS, middleware, and applications','Everything from hardware up','Nothing — provider manages all'],ans:1,exp:'IaaS: provider manages hardware and VMs. Customer manages OS, middleware, runtime, and applications. PaaS: provider also manages OS + runtime. SaaS: provider manages everything.'},
+      {type:'tf',q:'A virtual machine has access to only one physical CPU core.',ans:false,exp:'A VM can be configured to use multiple virtual CPUs (vCPUs), which the hypervisor maps to physical cores. Modern hypervisors support live migration — moving a running VM to a different physical host.'},
+      {type:'mc',q:'Binary translation in VMMs is used when...',opts:['The guest OS is too large','Trap-and-emulate is not possible due to CPU architecture','The host has more RAM than the guest needs','Containers are not available'],ans:1,exp:'When a CPU doesn\'t generate traps for all privileged instructions, binary translation is used: the VMM rewrites the guest OS machine code at runtime, replacing unsafe instructions with safe equivalents.'},
+      {type:'mc',q:'Which is a key advantage of containers over VMs?',opts:['Stronger security isolation','Full OS per instance','Much faster startup and less overhead','Better hardware virtualization'],ans:2,exp:'Containers start in seconds (vs minutes for VMs) and use MBs of overhead (vs GBs for VMs). This makes them ideal for microservices and rapid deployment. The tradeoff is weaker isolation.'},
+      {type:'mc',q:'What does "cloud native" mean?',opts:['Running any app on the cloud','Applications designed specifically for cloud environments using containers and microservices','Using cloud storage instead of local storage','Running Windows on Linux servers'],ans:1,exp:'Cloud native: applications designed from the ground up to run in cloud environments — built with containers, microservices architecture, auto-scaling, and continuous deployment pipelines.'},
+      {type:'tf',q:'Intel VT-x and AMD-V are hardware features that help implement virtualization.',ans:true,exp:'Correct. These CPU extensions add dedicated virtualization modes (guest/host modes), allowing the VMM to run guest code directly on hardware without the overhead of pure software emulation or binary translation.'},
+    ]
+  },
+};
+
+// ─── STATE ───────────────────────────────────────────────────────────────────
+let fcIndex=0, fcFlipped=false, fcOrder=[], quizAnswers={}, quizCurrent=0;
+let wrWeek=null, wrAnswers={}, wrCurrent=0, wrQuestions=[];
+const weekScores = {};
+
+// ─── NAVIGATION ──────────────────────────────────────────────────────────────
+function show(id) {
+  document.querySelectorAll('.sec').forEach(s=>s.classList.remove('on'));
+  document.querySelectorAll('.nav button').forEach(b=>b.classList.remove('active'));
+  document.getElementById(id).classList.add('on');
+  const labels={overview:'Overview',concepts:'Concepts',formulas:'Formulas',flashcards:'Flashcards',quiz:'Quiz',weekreview:'Week review'};
+  document.querySelectorAll('.nav button').forEach(b=>{if(b.textContent===labels[id])b.classList.add('active');});
+  if(id==='concepts'&&!document.getElementById('concepts').children.length) buildConcepts();
+  if(id==='formulas'&&!document.getElementById('formulas').querySelector('div').children.length) buildFormulas();
+  if(id==='flashcards'&&!fcOrder.length) initFlashcards();
+  if(id==='quiz'&&!document.getElementById('quiz-area').children.length) buildQuiz();
+  if(id==='weekreview') buildWRHome();
+}
+
+// ─── CONCEPTS ────────────────────────────────────────────────────────────────
+function buildConcepts() {
+  const c = document.getElementById('concepts');
+  c.innerHTML = '<div style="padding-top:0.5rem"></div>';
+  const d = c.querySelector('div');
+  concepts.forEach(con => {
+    const el = document.createElement('div');
+    el.className = 'card';
+    el.innerHTML = `<div class="ch" onclick="this.parentElement.classList.toggle('open')">
+      <span class="tag ${con.t}">${con.w}</span>
+      <span class="ct2">${con.title}</span>
+      <svg class="chev" viewBox="0 0 16 16" fill="none" stroke-width="1.5"><path d="M4 6l4 4 4-4"/></svg>
+    </div><div class="cb">${con.body}</div>`;
+    d.appendChild(el);
+  });
+}
+
+// ─── FORMULAS ────────────────────────────────────────────────────────────────
+function buildFormulas() {
+  const fms = [
+    {l:'Turnaround time',f:'TT = Finish_time − Arrival_time'},
+    {l:'Waiting time',f:'WT = TT − Burst_time'},
+    {l:'Average waiting time',f:'avg_WT = Σ(waiting_times) / n'},
+    {l:'UNIX priority',f:'priority = (recent_CPU_usage / 2) + 60   [lower = higher priority]'},
+    {l:'Page number',f:'page_number = address ÷ page_size   (integer division)'},
+    {l:'Page offset',f:'offset = address mod page_size'},
+    {l:'Physical address',f:'phys = (frame_number × page_size) + offset'},
+    {l:'Bits for page number',f:'bits = log₂(number_of_pages)'},
+    {l:'Bits for offset',f:'bits = log₂(page_size)'},
+    {l:'Page table entries (single-level)',f:'entries = 2^(address_bits − offset_bits)'},
+    {l:'Inverted PT entries',f:'entries = physical_memory ÷ page_size'},
+    {l:'EAT (page faults)',f:'EAT = (1 − p) × mem_time + p × fault_time'},
+    {l:'Amdahl\'s Law',f:'speedup = 1 / (S + (1 − S)/N)   S=sequential fraction, N=cores'},
+    {l:'Banker\'s Need matrix',f:'Need[i] = Max[i] − Allocation[i]'},
+  ];
+  const c = document.getElementById('formulas').querySelector('div');
+  fms.forEach(f => {
+    const d = document.createElement('div');
+    d.innerHTML = `<div style="font-size:13px;color:var(--cs);margin-bottom:4px">${f.l}</div><div class="fbox">${f.f}</div>`;
+    d.style.marginBottom = '12px';
+    c.appendChild(d);
+  });
+  const h = document.createElement('div');
+  h.style = 'font-size:14px;font-weight:500;margin:1.5rem 0 0.75rem;color:var(--cp)';
+  h.textContent = 'Exam tips';
+  c.appendChild(h);
+  ['Running processes ≤ number of cores — not unlimited!',
+   'The LINKER uses logical addresses only. Physical addresses are assigned at load/runtime.',
+   'Page fault ≠ error. It just means the page isn\'t in RAM yet — completely normal.',
+   'Deadlock requires ALL FOUR conditions. Remove any one and deadlock cannot occur.',
+   'FIFO and RR have no starvation. Priority and SJF can starve.',
+   'Contiguous allocation → external fragmentation. Paging → internal only.',
+   'Type 1 hypervisor = bare metal (better performance). Type 2 = hosted (easier setup).',
+   'A disk has ONE MBR but can have multiple filesystems and OSes.',
+   'Small RR quantum → better response time but more context switch overhead.'].forEach(t => {
+    const d = document.createElement('div');
+    d.style = 'display:flex;gap:10px;margin-bottom:8px;align-items:flex-start;font-size:14px;color:var(--cs);line-height:1.5';
+    d.innerHTML = `<span style="width:6px;height:6px;border-radius:50%;background:#1D9E75;flex-shrink:0;margin-top:7px"></span>${t}`;
+    c.appendChild(d);
+  });
+}
+
+// ─── FLASHCARDS ───────────────────────────────────────────────────────────────
+function initFlashcards(){fcOrder=flashcards.map((_,i)=>i);fcIndex=0;renderFC();}
+function renderFC(){
+  const card=flashcards[fcOrder[fcIndex]];
+  document.getElementById('fc-q').textContent=card.q;
+  document.getElementById('fc-a').textContent=card.a;
+  document.getElementById('fc-a').style.display='none';
+  document.getElementById('fc-hint').style.display='block';
+  fcFlipped=false;
+  document.getElementById('fc-counter').textContent=`Card ${fcIndex+1} of ${flashcards.length}`;
+  document.getElementById('fc-prog').style.width=Math.round(((fcIndex+1)/flashcards.length)*100)+'%';
+}
+function flipCard(){
+  fcFlipped=!fcFlipped;
+  document.getElementById('fc-a').style.display=fcFlipped?'block':'none';
+  document.getElementById('fc-hint').style.display=fcFlipped?'none':'block';
+}
+function nextCard(){if(fcIndex<flashcards.length-1){fcIndex++;renderFC();}}
+function prevCard(){if(fcIndex>0){fcIndex--;renderFC();}}
+function shuffleCards(){fcOrder.sort(()=>Math.random()-0.5);fcIndex=0;renderFC();}
+function resetCards(){fcOrder=flashcards.map((_,i)=>i);fcIndex=0;renderFC();}
+
+// ─── GLOBAL QUIZ ─────────────────────────────────────────────────────────────
+const quizData = [
+  {q:'Dual-mode operation is partially implemented in...',opts:['the compiler','the CPU hardware','the OS kernel','the bootloader'],ans:1,exp:'The mode bit is a hardware feature of the CPU. The CPU checks this bit to determine whether privileged instructions are allowed.'},
+  {q:'After fork(), how does the programmer know if they\'re in the parent or child?',opts:['By calling getppid()','Via a special CPU instruction','Through the return value of fork()','They can\'t tell'],ans:2,exp:'fork() returns 0 to the child and the child\'s PID to the parent. -1 means fork failed.'},
+  {q:'How many processes can have status "running" at once on a modern OS?',opts:['Unlimited','Depends on RAM','Depends on number of cores','Always exactly 1'],ans:2,exp:'At most one process per core can be truly running at any moment.'},
+  {q:'Large time quantum in Round Robin makes it behave like...',opts:['SJF','Priority scheduling','FCFS','SRTF'],ans:2,exp:'With a very large time quantum, each process effectively runs to completion before the next gets CPU — which is FCFS.'},
+  {q:'A semaphore is implemented using...',opts:['A special CPU register','A hardware counter','A special atomic CPU instruction','Disabling all interrupts'],ans:2,exp:'Semaphores require atomic compare-and-swap or test-and-set CPU instructions to prevent race conditions during acquire/release.'},
+  {q:'Which conditions are ALL necessary for deadlock?',opts:['Mutual exclusion only','Hold-and-wait + circular wait','All four: ME + hold-and-wait + no preemption + circular wait','No preemption only'],ans:2,exp:'Deadlock requires ALL FOUR conditions simultaneously.'},
+  {q:'What does a page fault mean?',opts:['There is a bug on a page','An illegal memory access','The page is not currently in physical memory','The logical address space is full'],ans:2,exp:'A page fault means the page is valid but not in RAM — it\'s on disk. The OS loads it. Normal virtual memory operation.'},
+  {q:'Effective Access Time (EAT) is mainly proportional to...',opts:['Hit ratio','Memory access time','Page fault rate','TLB miss rate'],ans:2,exp:'Because disk access (fault time) is orders of magnitude larger than RAM, even a tiny page fault rate dominates EAT.'},
+  {q:'What does indexed disk allocation (i-node) support?',opts:['Nearly full random access','Sequential access only','Contiguous block groups only','Only small files'],ans:0,exp:'The index block stores all pointers so you can jump directly to any block — nearly full random access.'},
+  {q:'A disk can have only one...',opts:['Operating system','Filesystem','MBR (Master Boot Record)','Boot sector'],ans:2,exp:'One MBR per disk. But multiple partitions, filesystems, and OSes are all possible.'},
+  {q:'Why can\'t trap-and-emulate always be used for VMMs?',opts:['Not all OSes support traps','Not all CPUs trap on privileged instructions','VMMs must run in user mode','Some instructions can\'t be emulated'],ans:1,exp:'Some CPU architectures don\'t generate traps for certain sensitive instructions in user mode — they silently fail or behave differently, breaking trap-and-emulate.'},
+  {q:'Which memory allocation method has NO external fragmentation?',opts:['Contiguous allocation','Segmentation','Paging','All of the above'],ans:2,exp:'Paging uses fixed-size pages/frames, so free space is never stranded between allocations.'},
+  {q:'What is thrashing?',opts:['CPU too fast for RAM','More time paging than computing','Too many threads in a process','Disk wearing out'],ans:1,exp:'Thrashing: process constantly page-faults and spends nearly all time loading pages from disk, barely executing useful code.'},
+  {q:'What type of parallelism distributes data partitions across cores?',opts:['Task parallelism','Pipeline parallelism','Data parallelism','Hyper-threading'],ans:2,exp:'Data parallelism: split dataset, run same operation on each partition. Examples: map/reduce, matrix multiplication.'},
+  {q:'Which scheduling algorithm CAN cause starvation?',opts:['FCFS','Round Robin','Priority scheduling','None of the above'],ans:2,exp:'Priority scheduling can starve low-priority processes. FCFS and RR cannot cause starvation.'},
+  {q:'A Type 1 hypervisor runs...',opts:['On top of a host OS','Directly on the hardware','Inside a container','As a user-space process'],ans:1,exp:'Type 1 (bare metal) hypervisors run directly on hardware with no host OS. Better performance, used in enterprise/cloud.'},
+  {q:'What is the main advantage of the Banker\'s algorithm?',opts:['Detects deadlocks after they occur','Prevents deadlocks by ensuring safe states','Eliminates circular wait','Speeds up resource allocation'],ans:1,exp:'Banker\'s is deadlock avoidance — checks if allocation leaves system in a safe state before granting.'},
+  {q:'Logical = 101010 binary. a5,a4 = page#, a3..a0 = offset. Page 2 → frame 2. Physical address?',opts:['26','36','42','48'],ans:2,exp:'Page# = binary 10 = 2. Offset = binary 1010 = 10. Physical = 2×16 + 10 = 42.'},
+  {q:'What is Amdahl\'s Law about?',opts:['Memory access time calculation','The limit on parallel speedup from sequential code','Optimal page replacement','Disk seek time'],ans:1,exp:'speedup = 1/(S + (1−S)/N). Sequential fraction S limits how much adding cores helps.'},
+  {q:'After fork(), which memory segments are COPIED to the child?',opts:['Only the stack','Stack, heap, and data segments','Only the heap','All segments including code'],ans:1,exp:'Stack, heap, and data are copied (using COW). Code (.text) is shared read-only.'},
+];
+
+function buildQuiz(){renderQuizQ();}
+function renderQuizQ(){
+  const area=document.getElementById('quiz-area');
+  const answered=Object.keys(quizAnswers).length;
+  area.innerHTML='';
+  const prog=document.createElement('div');
+  prog.innerHTML=`<div style="display:flex;justify-content:space-between;font-size:12px;color:var(--cs);margin-bottom:6px"><span>Question ${quizCurrent+1} of ${quizData.length}</span><span>${answered} answered</span></div><div class="pb"><div class="pf pf-blue" style="width:${Math.round((answered/quizData.length)*100)}%"></div></div>`;
+  area.appendChild(prog);
+  const q=quizData[quizCurrent];
+  const qDiv=document.createElement('div');
+  qDiv.style.marginTop='1rem';
+  qDiv.innerHTML=`<div style="font-size:15px;font-weight:500;margin-bottom:16px;line-height:1.5;color:var(--cp)">${q.q}</div>`;
+  q.opts.forEach((opt,i)=>{
+    const btn=document.createElement('button');
+    btn.className='qopt';btn.textContent=opt;
+    const prev=quizAnswers[quizCurrent];
+    if(prev!==undefined){btn.disabled=true;if(i===q.ans)btn.classList.add('ok');if(i===prev&&prev!==q.ans)btn.classList.add('no');}
+    else{btn.onclick=()=>{quizAnswers[quizCurrent]=i;renderQuizQ();};}
+    qDiv.appendChild(btn);
+  });
+  if(quizAnswers[quizCurrent]!==undefined){
+    const fb=document.createElement('div');
+    const ok=quizAnswers[quizCurrent]===q.ans;
+    fb.className='fb '+(ok?'fb-ok':'fb-no');
+    fb.innerHTML=(ok?'<b>Correct!</b> ':'<b>Incorrect.</b> ')+q.exp;
+    qDiv.appendChild(fb);
+  }
+  area.appendChild(qDiv);
+  const nav=document.createElement('div');
+  nav.style='display:flex;gap:8px;margin-top:1rem;justify-content:space-between';
+  nav.innerHTML=`<button onclick="quizCurrent--;renderQuizQ()" ${quizCurrent===0?'disabled':''}>← prev</button><button onclick="quizCurrent++;renderQuizQ()" ${quizCurrent===quizData.length-1?'disabled':''}>next →</button>`;
+  area.appendChild(nav);
+  document.getElementById('overall-prog').style.width=Math.round((Object.keys(quizAnswers).length/quizData.length)*100)+'%';
+  document.getElementById('prog-label').textContent=`${Object.keys(quizAnswers).length} of ${quizData.length} quiz questions answered`;
+}
+
+// ─── WEEK REVIEW ─────────────────────────────────────────────────────────────
+function buildWRHome() {
+  const home = document.getElementById('wr-home');
+  const session = document.getElementById('wr-session');
+  session.style.display = 'none';
+  home.style.display = 'block';
+
+  home.innerHTML = `<div style="padding-top:0.5rem">
+    <div style="font-size:14px;color:var(--cs);margin-bottom:1rem;line-height:1.6">
+      Each week has 10 questions — a mix of multiple choice, true/false, and calculation questions.
+      Get 8/10 or more to unlock a passing badge. You can retry as many times as you like.
+    </div>
+    <div class="wk-grid" id="wk-grid"></div>
+  </div>`;
+
+  const grid = home.querySelector('#wk-grid');
+  Object.entries(weekReviewData).forEach(([wk, data]) => {
+    const score = weekScores[wk];
+    const pct = score !== undefined ? Math.round((score / data.questions.length) * 100) : null;
+    const passed = pct !== null && pct >= 80;
+
+    const card = document.createElement('div');
+    card.className = 'wk-card';
+    card.onclick = () => startWeekReview(wk);
+
+    let badgeHtml = '';
+    if (pct !== null) {
+      const col = passed ? '#085041' : '#633806';
+      const bg = passed ? '#E1F5EE' : '#FAEEDA';
+      badgeHtml = `<span class="wk-badge" style="background:${bg};color:${col}">${passed ? '✓ Passed' : `${pct}% — retry`} · ${score}/${data.questions.length}</span>`;
+    } else {
+      badgeHtml = `<span class="wk-badge" style="background:var(--bgs);color:var(--cs)">Not started</span>`;
+    }
+
+    card.innerHTML = `
+      <div style="display:flex;align-items:center;gap:8px;margin-bottom:6px">
+        <span class="tag ${data.tag}">${wk}</span>
+        <span class="wk-title">${data.title}</span>
+      </div>
+      <div class="wk-sub">${data.sub}</div>
+      <div style="display:flex;align-items:center;justify-content:space-between">
+        ${badgeHtml}
+        <span style="font-size:12px;color:var(--ci)">Start →</span>
+      </div>`;
+    grid.appendChild(card);
+  });
+}
+
+function startWeekReview(wk) {
+  wrWeek = wk;
+  wrAnswers = {};
+  wrCurrent = 0;
+  wrQuestions = [...weekReviewData[wk].questions].sort(() => Math.random() - 0.5);
+  document.getElementById('wr-home').style.display = 'none';
+  document.getElementById('wr-session').style.display = 'block';
+  renderWRQ();
+}
+
+function renderWRQ() {
+  const session = document.getElementById('wr-session');
+  const data = weekReviewData[wrWeek];
+  const q = wrQuestions[wrCurrent];
+  const answered = Object.keys(wrAnswers).length;
+  const allDone = answered === wrQuestions.length;
+
+  if (allDone && wrCurrent >= wrQuestions.length) {
+    renderWRResults();
+    return;
+  }
+
+  session.innerHTML = `
+    <button class="wr-back" onclick="backToWRHome()">
+      <svg width="16" height="16" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M10 12L6 8l4-4"/></svg>
+      ${data.title}
+    </button>
+    <div style="display:flex;justify-content:space-between;font-size:12px;color:var(--cs);margin-bottom:6px">
+      <span>Question ${wrCurrent+1} of ${wrQuestions.length}</span>
+      <span>${answered} answered</span>
+    </div>
+    <div class="pb"><div class="pf pf-green" style="width:${Math.round(((wrCurrent)/wrQuestions.length)*100)}%"></div></div>
+    <div id="wr-qbody" style="margin-top:1rem"></div>
+    <div style="display:flex;gap:8px;margin-top:1rem;justify-content:space-between">
+      <button onclick="wrPrev()" ${wrCurrent===0?'disabled':''}>← prev</button>
+      <button onclick="wrNext()" ${wrCurrent===wrQuestions.length-1?'disabled':''}>next →</button>
+    </div>
+    ${allDone ? `<div style="margin-top:1rem;text-align:center"><button onclick="renderWRResults()" style="background:var(--bgi);color:var(--ci);border-color:var(--bdi);padding:8px 20px">See results →</button></div>` : ''}
+  `;
+
+  const body = session.querySelector('#wr-qbody');
+  const prev = wrAnswers[wrCurrent];
+
+  if (q.type === 'mc') {
+    body.innerHTML = `<div style="font-size:15px;font-weight:500;margin-bottom:16px;line-height:1.5;color:var(--cp)">${q.q}</div>`;
+    q.opts.forEach((opt, i) => {
+      const btn = document.createElement('button');
+      btn.className = 'qopt';
+      btn.textContent = opt;
+      if (prev !== undefined) {
+        btn.disabled = true;
+        if (i === q.ans) btn.classList.add('ok');
+        if (i === prev.chosen && prev.chosen !== q.ans) btn.classList.add('no');
+      } else {
+        btn.onclick = () => { wrAnswers[wrCurrent] = {chosen: i, correct: i === q.ans}; renderWRQ(); };
+      }
+      body.appendChild(btn);
+    });
+  } else if (q.type === 'tf') {
+    body.innerHTML = `<div style="font-size:15px;font-weight:500;margin-bottom:16px;line-height:1.5;color:var(--cp)">${q.q}</div>`;
+    ['True', 'False'].forEach((label, i) => {
+      const val = i === 0;
+      const btn = document.createElement('button');
+      btn.className = 'qopt';
+      btn.textContent = label;
+      if (prev !== undefined) {
+        btn.disabled = true;
+        if (val === q.ans) btn.classList.add('ok');
+        if (val === prev.chosen && val !== q.ans) btn.classList.add('no');
+      } else {
+        btn.onclick = () => { wrAnswers[wrCurrent] = {chosen: val, correct: val === q.ans}; renderWRQ(); };
+      }
+      body.appendChild(btn);
+    });
+  } else if (q.type === 'calc') {
+    body.innerHTML = `<div style="font-size:15px;font-weight:500;margin-bottom:12px;line-height:1.5;color:var(--cp)">${q.q}</div>
+      <div style="font-size:12px;color:var(--cs);margin-bottom:8px">Hint: ${q.hint}</div>`;
+    if (prev === undefined) {
+      const inp = document.createElement('input');
+      inp.type = 'text';
+      inp.placeholder = 'Your answer...';
+      inp.style = 'width:100%;padding:10px 14px;border-radius:var(--r);border:0.5px solid var(--bds);background:var(--bg);color:var(--cp);font-size:14px;font-family:inherit;margin-bottom:8px';
+      body.appendChild(inp);
+      const btn = document.createElement('button');
+      btn.textContent = 'Check answer';
+      btn.style = 'padding:8px 20px';
+      btn.onclick = () => {
+        const val = inp.value.trim().replace(/\s/g,'');
+        const correct = val === q.ans.replace(/\s/g,'') || val === q.ans;
+        wrAnswers[wrCurrent] = {chosen: val, correct};
+        renderWRQ();
+      };
+      body.appendChild(btn);
+    } else {
+      const col = prev.correct ? '#085041' : '#791F1F';
+      const bg = prev.correct ? '#E1F5EE' : '#FCEBEB';
+      body.innerHTML += `<div style="background:${bg};color:${col};padding:10px 14px;border-radius:var(--r);font-size:14px">Your answer: <b>${prev.chosen}</b> · Correct answer: <b>${q.ans}</b></div>`;
+    }
+  } else if (q.type === 'order') {
+    body.innerHTML = `<div style="font-size:15px;font-weight:500;margin-bottom:12px;line-height:1.5;color:var(--cp)">${q.q}</div>`;
+    if (prev === undefined) {
+      let order = q.items.map((item, i) => ({item, origIdx: i})).sort(() => Math.random() - 0.5);
+      const listEl = document.createElement('div');
+      listEl.id = 'sort-list';
+      order.forEach((o, pos) => {
+        const d = document.createElement('div');
+        d.style = 'display:flex;align-items:center;gap:8px;margin-bottom:6px';
+        d.dataset.orig = o.origIdx;
+        d.innerHTML = `<div style="display:flex;flex-direction:column;gap:2px">
+          <button onclick="moveItem(this,-1)" style="padding:1px 8px;font-size:11px;border-radius:4px" ${pos===0?'disabled':''}>▲</button>
+          <button onclick="moveItem(this,1)" style="padding:1px 8px;font-size:11px;border-radius:4px" ${pos===order.length-1?'disabled':''}>▼</button>
+        </div>
+        <div style="flex:1;padding:8px 12px;border:0.5px solid var(--bd);border-radius:var(--r);font-size:14px;color:var(--cp);background:var(--bg)">${o.item}</div>`;
+        listEl.appendChild(d);
+      });
+      body.appendChild(listEl);
+      const btn = document.createElement('button');
+      btn.textContent = 'Check order';
+      btn.style = 'padding:8px 20px;margin-top:8px';
+      btn.onclick = () => {
+        const items = [...listEl.querySelectorAll('[data-orig]')].map(el => parseInt(el.dataset.orig));
+        const correct = JSON.stringify(items) === JSON.stringify(q.ans);
+        wrAnswers[wrCurrent] = {chosen: items, correct};
+        renderWRQ();
+      };
+      body.appendChild(btn);
+    } else {
+      const correct = prev.correct;
+      const col = correct ? '#085041' : '#791F1F';
+      const bg = correct ? '#E1F5EE' : '#FCEBEB';
+      body.innerHTML += `<div style="background:${bg};color:${col};padding:10px 14px;border-radius:var(--r);font-size:14px;margin-bottom:8px">${correct ? 'Correct order!' : 'Not quite. Correct order:'}</div>`;
+      if (!correct) {
+        q.ans.forEach((idx, pos) => {
+          body.innerHTML += `<div style="padding:6px 10px;margin-bottom:4px;border:0.5px solid var(--bd);border-radius:var(--r);font-size:13px;color:var(--cs)">${pos+1}. ${q.items[idx]}</div>`;
+        });
+      }
+    }
+  }
+
+  if (prev !== undefined) {
+    const fb = document.createElement('div');
+    fb.className = 'fb ' + (prev.correct ? 'fb-ok' : 'fb-no');
+    fb.innerHTML = (prev.correct ? '<b>Correct!</b> ' : '<b>Incorrect.</b> ') + q.exp;
+    body.appendChild(fb);
+  }
+}
+
+function moveItem(btn, dir) {
+  const list = document.getElementById('sort-list');
+  const row = btn.closest('[data-orig]');
+  const items = [...list.children];
+  const idx = items.indexOf(row);
+  const target = items[idx + dir];
+  if (!target) return;
+  if (dir === -1) list.insertBefore(row, target);
+  else list.insertBefore(target, row);
+  // refresh disabled states
+  [...list.children].forEach((child, i) => {
+    const btns = child.querySelectorAll('button');
+    btns[0].disabled = i === 0;
+    btns[1].disabled = i === list.children.length - 1;
+  });
+}
+
+function wrNext() { if (wrCurrent < wrQuestions.length - 1) { wrCurrent++; renderWRQ(); } }
+function wrPrev() { if (wrCurrent > 0) { wrCurrent--; renderWRQ(); } }
+
+function renderWRResults() {
+  const session = document.getElementById('wr-session');
+  const data = weekReviewData[wrWeek];
+  const correct = Object.values(wrAnswers).filter(a => a.correct).length;
+  const total = wrQuestions.length;
+  const pct = Math.round((correct / total) * 100);
+  const passed = pct >= 80;
+  weekScores[wrWeek] = correct;
+
+  const colFg = passed ? '#085041' : '#633806';
+  const colBg = passed ? '#E1F5EE' : '#FAEEDA';
+
+  session.innerHTML = `
+    <button class="wr-back" onclick="backToWRHome()">
+      <svg width="16" height="16" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M10 12L6 8l4-4"/></svg>
+      All weeks
+    </button>
+    <div style="text-align:center;padding:2rem 1rem">
+      <div style="width:80px;height:80px;border-radius:50%;border:3px solid ${passed ? '#1D9E75' : '#EF9F27'};display:flex;align-items:center;justify-content:center;margin:0 auto 1rem">
+        <span style="font-size:22px;font-weight:500;color:${passed ? '#1D9E75' : '#BA7517'}">${pct}%</span>
+      </div>
+      <div style="font-size:16px;font-weight:500;color:var(--cp);margin-bottom:6px">${passed ? 'Nice work!' : 'Keep studying!'}</div>
+      <div style="font-size:14px;color:var(--cs);margin-bottom:6px">${correct} of ${total} correct · ${data.title}</div>
+      <div style="display:inline-block;padding:4px 14px;border-radius:10px;font-size:13px;font-weight:500;background:${colBg};color:${colFg};margin-bottom:1.5rem">
+        ${passed ? '✓ Week passed' : 'Need 8/10 to pass — try again'}
+      </div>
+    </div>
+    <div class="sep"></div>
+    <div style="font-size:13px;font-weight:500;color:var(--cs);margin-bottom:10px">Question review</div>
+  `;
+
+  wrQuestions.forEach((q, i) => {
+    const ans = wrAnswers[i];
+    const ok = ans && ans.correct;
+    const d = document.createElement('div');
+    d.style = `margin-bottom:10px;padding:10px 14px;border-radius:var(--r);border:0.5px solid ${ok ? '#1D9E75' : '#E24B4A'};background:${ok ? '#E1F5EE' : '#FCEBEB'}`;
+    d.innerHTML = `<div style="font-size:13px;font-weight:500;color:${ok ? '#085041' : '#791F1F'};margin-bottom:4px">${ok ? '✓' : '✗'} ${q.q}</div>
+      <div style="font-size:12px;color:${ok ? '#0F6E56' : '#993C1D'};line-height:1.5">${q.exp}</div>`;
+    session.appendChild(d);
+  });
+
+  const retryRow = document.createElement('div');
+  retryRow.style = 'display:flex;gap:8px;margin-top:1.5rem;justify-content:center';
+  retryRow.innerHTML = `<button onclick="startWeekReview('${wrWeek}')" style="padding:8px 20px">Retry this week</button>
+    <button onclick="backToWRHome()" style="padding:8px 20px;background:var(--bgi);color:var(--ci);border-color:var(--bdi)">All weeks</button>`;
+  session.appendChild(retryRow);
+}
+
+function backToWRHome() {
+  document.getElementById('wr-session').style.display = 'none';
+  document.getElementById('wr-home').style.display = 'block';
+  buildWRHome();
+}
+
+// Boot
+show('overview');
+</script>
+</body>
+</html>
