@@ -1,0 +1,1149 @@
+<!DOCTYPE html>
+
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Boulder Routine</title>
+<link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=DM+Sans:wght@300;400;500;600&display=swap" rel="stylesheet" />
+<style>
+  :root {
+    --bg: #0f0e0d;
+    --surface: #1a1816;
+    --surface2: #222018;
+    --border: #2e2b26;
+    --accent: #e87c2e;
+    --accent2: #f0a050;
+    --text: #e8e0d4;
+    --muted: #7a7268;
+    --warm: #c9531a;
+    --cool: #2e7da6;
+    --green: #4a9c5c;
+  }
+
+- { box-sizing: border-box; margin: 0; padding: 0; }
+
+body {
+background: var(–bg);
+color: var(–text);
+font-family: ‘DM Sans’, sans-serif;
+min-height: 100vh;
+background-image:
+radial-gradient(ellipse at 20% 0%, rgba(232,124,46,0.07) 0%, transparent 50%),
+radial-gradient(ellipse at 80% 100%, rgba(46,125,166,0.05) 0%, transparent 50%);
+}
+
+header {
+padding: 2.5rem 2rem 1.5rem;
+border-bottom: 1px solid var(–border);
+display: flex;
+align-items: flex-end;
+gap: 1.5rem;
+flex-wrap: wrap;
+}
+
+.logo-block h1 {
+font-family: ‘Bebas Neue’, sans-serif;
+font-size: clamp(2.8rem, 8vw, 5rem);
+letter-spacing: 0.03em;
+line-height: 0.9;
+color: var(–text);
+}
+
+.logo-block h1 span {
+color: var(–accent);
+}
+
+.logo-block p {
+color: var(–muted);
+font-size: 0.85rem;
+font-weight: 300;
+letter-spacing: 0.1em;
+text-transform: uppercase;
+margin-top: 0.4rem;
+}
+
+.total-time {
+margin-left: auto;
+text-align: right;
+}
+
+.total-time .num {
+font-family: ‘Bebas Neue’, sans-serif;
+font-size: 2.8rem;
+color: var(–accent);
+line-height: 1;
+}
+
+.total-time .label {
+font-size: 0.75rem;
+color: var(–muted);
+text-transform: uppercase;
+letter-spacing: 0.1em;
+}
+
+/* TABS */
+.tabs {
+display: flex;
+gap: 0;
+padding: 1.5rem 2rem 0;
+}
+
+.tab-btn {
+font-family: ‘Bebas Neue’, sans-serif;
+font-size: 1.4rem;
+letter-spacing: 0.05em;
+padding: 0.6rem 2rem;
+border: 1px solid var(–border);
+background: none;
+color: var(–muted);
+cursor: pointer;
+transition: all 0.2s;
+position: relative;
+}
+
+.tab-btn:first-child { border-radius: 6px 0 0 6px; }
+.tab-btn:last-child { border-radius: 0 6px 6px 0; border-left: none; }
+
+.tab-btn.active {
+background: var(–accent);
+color: var(–bg);
+border-color: var(–accent);
+z-index: 1;
+}
+
+.tab-btn:not(.active):hover {
+color: var(–text);
+border-color: var(–muted);
+}
+
+/* MAIN CONTENT */
+.content {
+padding: 2rem;
+max-width: 900px;
+margin: 0 auto;
+}
+
+.phase { display: none; }
+.phase.active { display: block; }
+
+/* SECTION */
+.section {
+margin-bottom: 1.5rem;
+border: 1px solid var(–border);
+border-radius: 10px;
+overflow: hidden;
+background: var(–surface);
+transition: border-color 0.2s;
+}
+
+.section.completed { border-color: var(–green); opacity: 0.7; }
+
+.section-header {
+display: flex;
+align-items: center;
+gap: 1rem;
+padding: 1rem 1.2rem;
+cursor: pointer;
+user-select: none;
+border-bottom: 1px solid var(–border);
+transition: background 0.15s;
+}
+
+.section-header:hover { background: var(–surface2); }
+
+.section-icon {
+font-size: 1.6rem;
+width: 2.4rem;
+text-align: center;
+flex-shrink: 0;
+}
+
+.section-meta { flex: 1; }
+
+.section-name {
+font-family: ‘Bebas Neue’, sans-serif;
+font-size: 1.3rem;
+letter-spacing: 0.05em;
+color: var(–text);
+}
+
+.section-sub {
+font-size: 0.78rem;
+color: var(–muted);
+font-weight: 300;
+}
+
+.section-time {
+font-family: ‘Bebas Neue’, sans-serif;
+font-size: 1.1rem;
+color: var(–accent);
+flex-shrink: 0;
+}
+
+.section-check {
+width: 1.4rem;
+height: 1.4rem;
+border: 2px solid var(–border);
+border-radius: 50%;
+cursor: pointer;
+flex-shrink: 0;
+transition: all 0.2s;
+display: flex;
+align-items: center;
+justify-content: center;
+font-size: 0.7rem;
+color: transparent;
+}
+
+.section.completed .section-check {
+background: var(–green);
+border-color: var(–green);
+color: white;
+}
+
+.chevron {
+color: var(–muted);
+font-size: 0.9rem;
+transition: transform 0.2s;
+flex-shrink: 0;
+}
+
+.section.open .chevron { transform: rotate(180deg); }
+
+/* EXERCISES */
+.exercises {
+display: none;
+padding: 0.6rem 1.2rem 1rem;
+gap: 0.5rem;
+flex-direction: column;
+}
+
+.section.open .exercises { display: flex; }
+
+.exercise {
+display: flex;
+gap: 0.8rem;
+align-items: flex-start;
+padding: 0.7rem 0.8rem;
+border-radius: 7px;
+background: var(–surface2);
+border: 1px solid transparent;
+transition: border-color 0.15s;
+margin-top: 0.4rem;
+}
+
+.exercise:hover { border-color: var(–border); }
+
+.ex-bullet {
+width: 6px;
+height: 6px;
+border-radius: 50%;
+background: var(–accent);
+flex-shrink: 0;
+margin-top: 0.45rem;
+}
+
+.ex-content { flex: 1; }
+
+.ex-name {
+font-weight: 500;
+font-size: 0.9rem;
+color: var(–text);
+margin-bottom: 0.15rem;
+}
+
+.ex-detail {
+font-size: 0.78rem;
+color: var(–muted);
+font-weight: 300;
+line-height: 1.4;
+}
+
+.ex-badge {
+font-family: ‘Bebas Neue’, sans-serif;
+font-size: 0.8rem;
+letter-spacing: 0.05em;
+padding: 0.15rem 0.5rem;
+border-radius: 4px;
+flex-shrink: 0;
+color: var(–bg);
+}
+
+.badge-reps { background: var(–accent2); }
+.badge-time { background: var(–cool); }
+.badge-sets { background: var(–warm); }
+
+/* TIMER BUTTON */
+.timer-btn {
+display: inline-flex;
+align-items: center;
+gap: 0.3rem;
+margin-top: 0.4rem;
+padding: 0.25rem 0.6rem;
+border-radius: 4px;
+border: 1px solid var(–accent);
+background: none;
+color: var(–accent);
+font-size: 0.75rem;
+font-family: ‘DM Sans’, sans-serif;
+cursor: pointer;
+transition: all 0.15s;
+}
+
+.timer-btn:hover { background: var(–accent); color: var(–bg); }
+.timer-btn.running { background: var(–accent); color: var(–bg); }
+
+/* CORE TABLE */
+.core-table {
+width: 100%;
+border-collapse: collapse;
+font-size: 0.82rem;
+margin-top: 0.6rem;
+}
+
+.core-table th {
+text-align: left;
+font-weight: 500;
+font-size: 0.72rem;
+text-transform: uppercase;
+letter-spacing: 0.08em;
+color: var(–muted);
+padding: 0.4rem 0.6rem;
+border-bottom: 1px solid var(–border);
+}
+
+.core-table td {
+padding: 0.55rem 0.6rem;
+border-bottom: 1px solid rgba(46,43,38,0.5);
+vertical-align: top;
+}
+
+.core-table tr:last-child td { border-bottom: none; }
+
+.core-table .ex-col { color: var(–text); font-weight: 500; }
+.core-table .val-col { color: var(–accent2); font-family: ‘Bebas Neue’, sans-serif; font-size: 0.95rem; }
+.core-table .target-col { color: var(–muted); font-weight: 300; }
+
+/* PROGRESS */
+.progress-bar-wrap {
+padding: 0 2rem 1rem;
+max-width: 900px;
+margin: 0 auto;
+}
+
+.progress-label {
+display: flex;
+justify-content: space-between;
+font-size: 0.75rem;
+color: var(–muted);
+margin-bottom: 0.4rem;
+text-transform: uppercase;
+letter-spacing: 0.08em;
+}
+
+.progress-track {
+height: 4px;
+background: var(–border);
+border-radius: 2px;
+overflow: hidden;
+}
+
+.progress-fill {
+height: 100%;
+background: linear-gradient(90deg, var(–accent), var(–accent2));
+border-radius: 2px;
+transition: width 0.4s ease;
+}
+
+/* TIP BOX */
+.tip-box {
+background: rgba(232,124,46,0.07);
+border: 1px solid rgba(232,124,46,0.2);
+border-radius: 8px;
+padding: 0.9rem 1.1rem;
+margin: 1.2rem 0 0;
+font-size: 0.82rem;
+color: var(–muted);
+line-height: 1.5;
+}
+
+.tip-box strong { color: var(–accent); }
+
+/* RESET BTN */
+.reset-btn {
+display: block;
+margin: 1.5rem auto 0;
+padding: 0.6rem 2rem;
+border: 1px solid var(–border);
+border-radius: 6px;
+background: none;
+color: var(–muted);
+font-family: ‘DM Sans’, sans-serif;
+font-size: 0.82rem;
+cursor: pointer;
+text-transform: uppercase;
+letter-spacing: 0.08em;
+transition: all 0.2s;
+}
+
+.reset-btn:hover { color: var(–text); border-color: var(–muted); }
+
+/* TIMER OVERLAY */
+#timer-overlay {
+display: none;
+position: fixed;
+inset: 0;
+background: rgba(0,0,0,0.85);
+z-index: 100;
+align-items: center;
+justify-content: center;
+flex-direction: column;
+gap: 1rem;
+}
+
+#timer-overlay.show { display: flex; }
+
+#timer-label {
+font-family: ‘Bebas Neue’, sans-serif;
+font-size: 1.4rem;
+letter-spacing: 0.1em;
+color: var(–muted);
+text-transform: uppercase;
+text-align: center;
+}
+
+#timer-display {
+font-family: ‘Bebas Neue’, sans-serif;
+font-size: clamp(5rem, 20vw, 9rem);
+color: var(–accent);
+line-height: 1;
+text-align: center;
+}
+
+#timer-ring {
+position: absolute;
+top: 50%;
+left: 50%;
+transform: translate(-50%, -50%);
+pointer-events: none;
+}
+
+.timer-center {
+position: relative;
+display: flex;
+align-items: center;
+justify-content: center;
+flex-direction: column;
+gap: 0;
+}
+
+#timer-close {
+font-family: ‘DM Sans’, sans-serif;
+font-size: 0.85rem;
+color: var(–muted);
+background: none;
+border: 1px solid var(–border);
+border-radius: 6px;
+padding: 0.5rem 1.5rem;
+cursor: pointer;
+margin-top: 1rem;
+transition: all 0.2s;
+}
+
+#timer-close:hover { color: var(–text); border-color: var(–muted); }
+
+svg#ring {
+width: 220px;
+height: 220px;
+}
+
+circle.track { fill: none; stroke: var(–border); stroke-width: 6; }
+circle.prog { fill: none; stroke: var(–accent); stroke-width: 6; stroke-linecap: round; transition: stroke-dashoffset 1s linear; }
+</style>
+
+</head>
+<body>
+
+<!-- TIMER OVERLAY -->
+
+<div id="timer-overlay">
+  <div id="timer-label">Holding...</div>
+  <div class="timer-center">
+    <svg id="ring" viewBox="0 0 220 220">
+      <circle class="track" cx="110" cy="110" r="100"/>
+      <circle class="prog" id="ring-prog" cx="110" cy="110" r="100"
+        stroke-dasharray="628.3"
+        stroke-dashoffset="0"
+        transform="rotate(-90 110 110)"/>
+    </svg>
+    <div id="timer-display" style="position:absolute;">0:00</div>
+  </div>
+  <button id="timer-close" onclick="stopTimer()">✕ Stop</button>
+</div>
+
+<header>
+  <div class="logo-block">
+    <h1>BOULDER<br><span>ROUTINE</span></h1>
+    <p>Warm-up & Warm-down guide</p>
+  </div>
+  <div class="total-time">
+    <div class="num" id="phase-time">~17</div>
+    <div class="label">Minutes</div>
+  </div>
+</header>
+
+<div class="tabs">
+  <button class="tab-btn active" onclick="switchTab('warmup')">🔥 Warm-Up</button>
+  <button class="tab-btn" onclick="switchTab('warmdown')">❄️ Warm-Down</button>
+</div>
+
+<!-- PROGRESS -->
+
+<div class="progress-bar-wrap">
+  <div class="progress-label">
+    <span>Progress</span>
+    <span id="prog-text">0 / 7 sections</span>
+  </div>
+  <div class="progress-track">
+    <div class="progress-fill" id="prog-fill" style="width:0%"></div>
+  </div>
+</div>
+
+<div class="content">
+
+  <!-- ====== WARM-UP ====== -->
+
+  <div class="phase active" id="phase-warmup">
+
+```
+<!-- 1 Pulse Raiser -->
+<div class="section" id="s-wu-1">
+  <div class="section-header" onclick="toggleSection('wu-1')">
+    <div class="section-icon">🏃</div>
+    <div class="section-meta">
+      <div class="section-name">Pulse Raiser</div>
+      <div class="section-sub">Get blood flowing to every muscle</div>
+    </div>
+    <div class="section-time">2 min</div>
+    <div class="section-check" onclick="event.stopPropagation();toggleDone('wu-1')">✓</div>
+    <div class="chevron">▼</div>
+  </div>
+  <div class="exercises">
+    <div class="exercise">
+      <div class="ex-bullet"></div>
+      <div class="ex-content">
+        <div class="ex-name">Jumping Jacks / Light Jog / Skipping</div>
+        <div class="ex-detail">Pick one or rotate between them. Don't skip this — cold tendons are injury-prone tendons.</div>
+        <button class="timer-btn" onclick="startTimer(120,'Pulse Raiser')">⏱ 2:00</button>
+      </div>
+      <span class="ex-badge badge-time">2 MIN</span>
+    </div>
+  </div>
+</div>
+
+<!-- 2 Legs -->
+<div class="section" id="s-wu-2">
+  <div class="section-header" onclick="toggleSection('wu-2')">
+    <div class="section-icon">🦵</div>
+    <div class="section-meta">
+      <div class="section-name">Legs</div>
+      <div class="section-sub">Squats · Lunges · Calf raises · Swings</div>
+    </div>
+    <div class="section-time">3 min</div>
+    <div class="section-check" onclick="event.stopPropagation();toggleDone('wu-2')">✓</div>
+    <div class="chevron">▼</div>
+  </div>
+  <div class="exercises">
+    <div class="exercise">
+      <div class="ex-bullet"></div>
+      <div class="ex-content">
+        <div class="ex-name">Leg Swings</div>
+        <div class="ex-detail">Hold a wall for balance. Forward/back 10x then side-to-side 10x, each leg.</div>
+      </div>
+      <span class="ex-badge badge-reps">10×2 LEGS</span>
+    </div>
+    <div class="exercise">
+      <div class="ex-bullet"></div>
+      <div class="ex-content">
+        <div class="ex-name">Bodyweight Squats</div>
+        <div class="ex-detail">Slow, full depth, torso upright. Focus on control.</div>
+      </div>
+      <span class="ex-badge badge-reps">15 REPS</span>
+    </div>
+    <div class="exercise">
+      <div class="ex-bullet"></div>
+      <div class="ex-content">
+        <div class="ex-name">Walking Lunges</div>
+        <div class="ex-detail">10 steps each leg. Keep torso tall, front knee over ankle.</div>
+      </div>
+      <span class="ex-badge badge-reps">10 EACH</span>
+    </div>
+    <div class="exercise">
+      <div class="ex-bullet"></div>
+      <div class="ex-content">
+        <div class="ex-name">Calf Raises</div>
+        <div class="ex-detail">Slow up, slow down. Useful for precision footwork on small holds.</div>
+      </div>
+      <span class="ex-badge badge-reps">15 REPS</span>
+    </div>
+  </div>
+</div>
+
+<!-- 3 Hips & Lower Back -->
+<div class="section" id="s-wu-3">
+  <div class="section-header" onclick="toggleSection('wu-3')">
+    <div class="section-icon">🔄</div>
+    <div class="section-meta">
+      <div class="section-name">Hips & Lower Back</div>
+      <div class="section-sub">Hip circles · Cat-cow · World's greatest stretch</div>
+    </div>
+    <div class="section-time">2 min</div>
+    <div class="section-check" onclick="event.stopPropagation();toggleDone('wu-3')">✓</div>
+    <div class="chevron">▼</div>
+  </div>
+  <div class="exercises">
+    <div class="exercise">
+      <div class="ex-bullet"></div>
+      <div class="ex-content">
+        <div class="ex-name">Hip Circles</div>
+        <div class="ex-detail">Hands on hips, make big slow circles. 10 each direction.</div>
+      </div>
+      <span class="ex-badge badge-reps">10 EACH WAY</span>
+    </div>
+    <div class="exercise">
+      <div class="ex-bullet"></div>
+      <div class="ex-content">
+        <div class="ex-name">Cat-Cow</div>
+        <div class="ex-detail">On all fours, alternate arching and rounding the spine. Slow and deliberate.</div>
+      </div>
+      <span class="ex-badge badge-reps">10 REPS</span>
+    </div>
+    <div class="exercise">
+      <div class="ex-bullet"></div>
+      <div class="ex-content">
+        <div class="ex-name">World's Greatest Stretch</div>
+        <div class="ex-detail">Step into a deep lunge, place same-side hand on floor, rotate opposite arm to the sky. This one does a lot — don't rush it.</div>
+      </div>
+      <span class="ex-badge badge-reps">5 EACH SIDE</span>
+    </div>
+  </div>
+</div>
+
+<!-- 4 Back & Chest -->
+<div class="section" id="s-wu-4">
+  <div class="section-header" onclick="toggleSection('wu-4')">
+    <div class="section-icon">💪</div>
+    <div class="section-meta">
+      <div class="section-name">Back & Chest</div>
+      <div class="section-sub">Thoracic rotation · Cobras · Chest opener</div>
+    </div>
+    <div class="section-time">2 min</div>
+    <div class="section-check" onclick="event.stopPropagation();toggleDone('wu-4')">✓</div>
+    <div class="chevron">▼</div>
+  </div>
+  <div class="exercises">
+    <div class="exercise">
+      <div class="ex-bullet"></div>
+      <div class="ex-content">
+        <div class="ex-name">Thoracic Rotations</div>
+        <div class="ex-detail">Seated or kneeling, hands behind head, rotate upper body through full range.</div>
+      </div>
+      <span class="ex-badge badge-reps">10 EACH SIDE</span>
+    </div>
+    <div class="exercise">
+      <div class="ex-bullet"></div>
+      <div class="ex-content">
+        <div class="ex-name">Wide Arm Swings</div>
+        <div class="ex-detail">Cross-body arm swings to open the chest. Swing with control, not momentum.</div>
+      </div>
+      <span class="ex-badge badge-reps">15 REPS</span>
+    </div>
+    <div class="exercise">
+      <div class="ex-bullet"></div>
+      <div class="ex-content">
+        <div class="ex-name">Doorframe Chest Stretch</div>
+        <div class="ex-detail">Arm at 90°, hand on doorframe, gently turn away. Gentle only — not a max stretch.</div>
+        <button class="timer-btn" onclick="startTimer(20,'Chest Stretch — Left')">⏱ 20s each</button>
+      </div>
+      <span class="ex-badge badge-time">20S EACH</span>
+    </div>
+    <div class="exercise">
+      <div class="ex-bullet"></div>
+      <div class="ex-content">
+        <div class="ex-name">Prone Cobras</div>
+        <div class="ex-detail">Face down, lift chest slightly off the floor, hold 3s. Activates back extensors.</div>
+      </div>
+      <span class="ex-badge badge-reps">8 REPS</span>
+    </div>
+  </div>
+</div>
+
+<!-- 5 Shoulders & Arms -->
+<div class="section" id="s-wu-5">
+  <div class="section-header" onclick="toggleSection('wu-5')">
+    <div class="section-icon">🙆</div>
+    <div class="section-meta">
+      <div class="section-name">Shoulders & Arms</div>
+      <div class="section-sub">CARs · Tricep · Bicep wall stretch</div>
+    </div>
+    <div class="section-time">2 min</div>
+    <div class="section-check" onclick="event.stopPropagation();toggleDone('wu-5')">✓</div>
+    <div class="chevron">▼</div>
+  </div>
+  <div class="exercises">
+    <div class="exercise">
+      <div class="ex-bullet"></div>
+      <div class="ex-content">
+        <div class="ex-name">Shoulder CARs</div>
+        <div class="ex-detail">Controlled Articular Rotations — slow, full-range shoulder circles. 5 each direction per arm.</div>
+      </div>
+      <span class="ex-badge badge-reps">5×2 EACH ARM</span>
+    </div>
+    <div class="exercise">
+      <div class="ex-bullet"></div>
+      <div class="ex-content">
+        <div class="ex-name">Tricep Overhead Stretch</div>
+        <div class="ex-detail">Arm overhead, hand behind neck, gently push elbow back with the other hand.</div>
+        <button class="timer-btn" onclick="startTimer(20,'Tricep Stretch')">⏱ 20s each</button>
+      </div>
+      <span class="ex-badge badge-time">20S EACH</span>
+    </div>
+    <div class="exercise">
+      <div class="ex-bullet"></div>
+      <div class="ex-content">
+        <div class="ex-name">Bicep Wall Stretch</div>
+        <div class="ex-detail">Palm flat on wall, arm straight, gently turn body away.</div>
+        <button class="timer-btn" onclick="startTimer(20,'Bicep Wall Stretch')">⏱ 20s each</button>
+      </div>
+      <span class="ex-badge badge-time">20S EACH</span>
+    </div>
+  </div>
+</div>
+
+<!-- 6 Wrists & Fingers -->
+<div class="section" id="s-wu-6">
+  <div class="section-header" onclick="toggleSection('wu-6')">
+    <div class="section-icon">🤚</div>
+    <div class="section-meta">
+      <div class="section-name">Wrists & Fingers</div>
+      <div class="section-sub">Most important section — never skip this</div>
+    </div>
+    <div class="section-time">3 min</div>
+    <div class="section-check" onclick="event.stopPropagation();toggleDone('wu-6')">✓</div>
+    <div class="chevron">▼</div>
+  </div>
+  <div class="exercises">
+    <div class="exercise">
+      <div class="ex-bullet"></div>
+      <div class="ex-content">
+        <div class="ex-name">Wrist CARs</div>
+        <div class="ex-detail">Arm extended, slow full circles with the wrist. 5 reps each direction, each hand.</div>
+      </div>
+      <span class="ex-badge badge-reps">5×2 EACH HAND</span>
+    </div>
+    <div class="exercise">
+      <div class="ex-bullet"></div>
+      <div class="ex-content">
+        <div class="ex-name">Prayer Stretch</div>
+        <div class="ex-detail">Palms together, elbows out. Hold.</div>
+        <button class="timer-btn" onclick="startTimer(20,'Prayer Stretch')">⏱ 20s</button>
+      </div>
+      <span class="ex-badge badge-time">20S</span>
+    </div>
+    <div class="exercise">
+      <div class="ex-bullet"></div>
+      <div class="ex-content">
+        <div class="ex-name">Reverse Prayer Stretch</div>
+        <div class="ex-detail">Backs of hands together, fingers pointing down.</div>
+        <button class="timer-btn" onclick="startTimer(20,'Reverse Prayer Stretch')">⏱ 20s</button>
+      </div>
+      <span class="ex-badge badge-time">20S</span>
+    </div>
+    <div class="exercise">
+      <div class="ex-bullet"></div>
+      <div class="ex-content">
+        <div class="ex-name">Finger Spreads</div>
+        <div class="ex-detail">Slowly spread all fingers wide, hold briefly, close. Repeat.</div>
+      </div>
+      <span class="ex-badge badge-reps">10 CYCLES</span>
+    </div>
+    <div class="exercise">
+      <div class="ex-bullet"></div>
+      <div class="ex-content">
+        <div class="ex-name">Low-Load Finger Rolls</div>
+        <div class="ex-detail">On an edge or hangboard — just supporting weight, not full hanging. Tendons need graduated loading.</div>
+      </div>
+      <span class="ex-badge badge-sets">3×5 REPS</span>
+    </div>
+  </div>
+</div>
+
+<!-- 7 Easy Climbing -->
+<div class="section" id="s-wu-7">
+  <div class="section-header" onclick="toggleSection('wu-7')">
+    <div class="section-icon">🧗</div>
+    <div class="section-meta">
+      <div class="section-name">Easy Climbing</div>
+      <div class="section-sub">V0–V1 only · Footwork focus · No projecting</div>
+    </div>
+    <div class="section-time">3 min</div>
+    <div class="section-check" onclick="event.stopPropagation();toggleDone('wu-7')">✓</div>
+    <div class="chevron">▼</div>
+  </div>
+  <div class="exercises">
+    <div class="exercise">
+      <div class="ex-bullet"></div>
+      <div class="ex-content">
+        <div class="ex-name">Traverse Easy Problems</div>
+        <div class="ex-detail">Climb slow and deliberate. Focus on precise foot placement, not sending. This bridges the gap from warm-up to real climbing.</div>
+        <button class="timer-btn" onclick="startTimer(180,'Easy Climbing')">⏱ 3:00</button>
+      </div>
+      <span class="ex-badge badge-time">3 MIN</span>
+    </div>
+  </div>
+</div>
+
+<div class="tip-box">
+  <strong>💡 Returning climber reminder:</strong> Your tendons take 2–3× longer than muscles to adapt. Keep the first 2–3 sessions to easier grades than you think you need — your connective tissue will thank you.
+</div>
+<button class="reset-btn" onclick="resetPhase('warmup')">Reset Warm-Up Progress</button>
+```
+
+  </div>
+
+  <!-- ====== WARM-DOWN ====== -->
+
+  <div class="phase" id="phase-warmdown">
+
+```
+<!-- 1 Shake Out -->
+<div class="section" id="s-wd-1">
+  <div class="section-header" onclick="toggleSection('wd-1')">
+    <div class="section-icon">🫶</div>
+    <div class="section-meta">
+      <div class="section-name">Shake Out & Breathe</div>
+      <div class="section-sub">Flush the pump, slow the heart rate</div>
+    </div>
+    <div class="section-time">1 min</div>
+    <div class="section-check" onclick="event.stopPropagation();toggleDone('wd-1')">✓</div>
+    <div class="chevron">▼</div>
+  </div>
+  <div class="exercises">
+    <div class="exercise">
+      <div class="ex-bullet"></div>
+      <div class="ex-content">
+        <div class="ex-name">Arm Shake</div>
+        <div class="ex-detail">Arms loose and low, shake forearms vigorously. Helps flush lactic acid from the forearms.</div>
+      </div>
+      <span class="ex-badge badge-time">30S</span>
+    </div>
+    <div class="exercise">
+      <div class="ex-bullet"></div>
+      <div class="ex-content">
+        <div class="ex-name">Deep Breaths</div>
+        <div class="ex-detail">5 slow, deep breaths. Signals your nervous system to switch out of send mode.</div>
+      </div>
+      <span class="ex-badge badge-reps">5 BREATHS</span>
+    </div>
+  </div>
+</div>
+
+<!-- 2 Forearm & Fingers -->
+<div class="section" id="s-wd-2">
+  <div class="section-header" onclick="toggleSection('wd-2')">
+    <div class="section-icon">🤚</div>
+    <div class="section-meta">
+      <div class="section-name">Forearm & Finger Cool-Down</div>
+      <div class="section-sub">Flexor · Extensor stretches</div>
+    </div>
+    <div class="section-time">2 min</div>
+    <div class="section-check" onclick="event.stopPropagation();toggleDone('wd-2')">✓</div>
+    <div class="chevron">▼</div>
+  </div>
+  <div class="exercises">
+    <div class="exercise">
+      <div class="ex-bullet"></div>
+      <div class="ex-content">
+        <div class="ex-name">Flexor Stretch</div>
+        <div class="ex-detail">Arm out, palm facing up, pull fingers back gently with other hand.</div>
+        <button class="timer-btn" onclick="startTimer(30,'Flexor Stretch')">⏱ 30s each</button>
+      </div>
+      <span class="ex-badge badge-time">30S EACH</span>
+    </div>
+    <div class="exercise">
+      <div class="ex-bullet"></div>
+      <div class="ex-content">
+        <div class="ex-name">Extensor Stretch</div>
+        <div class="ex-detail">Arm out, palm down, press fingers toward the floor with other hand.</div>
+        <button class="timer-btn" onclick="startTimer(30,'Extensor Stretch')">⏱ 30s each</button>
+      </div>
+      <span class="ex-badge badge-time">30S EACH</span>
+    </div>
+  </div>
+</div>
+
+<!-- 3 Spine Decompression -->
+<div class="section" id="s-wd-3">
+  <div class="section-header" onclick="toggleSection('wd-3')">
+    <div class="section-icon">🌀</div>
+    <div class="section-meta">
+      <div class="section-name">Spine Decompression</div>
+      <div class="section-sub">Do this before core work — release first</div>
+    </div>
+    <div class="section-time">1 min</div>
+    <div class="section-check" onclick="event.stopPropagation();toggleDone('wd-3')">✓</div>
+    <div class="chevron">▼</div>
+  </div>
+  <div class="exercises">
+    <div class="exercise">
+      <div class="ex-bullet"></div>
+      <div class="ex-content">
+        <div class="ex-name">Knees to Chest</div>
+        <div class="ex-detail">Lie on your back, hug both knees in, rock gently side to side.</div>
+        <button class="timer-btn" onclick="startTimer(30,'Knees to Chest')">⏱ 30s</button>
+      </div>
+      <span class="ex-badge badge-time">30S</span>
+    </div>
+    <div class="exercise">
+      <div class="ex-bullet"></div>
+      <div class="ex-content">
+        <div class="ex-name">Supine Twist</div>
+        <div class="ex-detail">Knees to one side, arms out wide. Releases the lower back and obliques.</div>
+        <button class="timer-btn" onclick="startTimer(15,'Supine Twist')">⏱ 15s each</button>
+      </div>
+      <span class="ex-badge badge-time">15S EACH</span>
+    </div>
+  </div>
+</div>
+
+<!-- 4 CORE CIRCUIT -->
+<div class="section" id="s-wd-4">
+  <div class="section-header" onclick="toggleSection('wd-4')">
+    <div class="section-icon">🔥</div>
+    <div class="section-meta">
+      <div class="section-name">Core Circuit</div>
+      <div class="section-sub">3 rounds · Rest 30–45s between rounds</div>
+    </div>
+    <div class="section-time">10 min</div>
+    <div class="section-check" onclick="event.stopPropagation();toggleDone('wd-4')">✓</div>
+    <div class="chevron">▼</div>
+  </div>
+  <div class="exercises">
+    <div style="padding: 0.4rem 0.2rem 0.2rem; font-size:0.75rem; color:var(--muted); text-transform:uppercase; letter-spacing:0.08em;">
+      Start with 2 rounds → progress to 3 once form stays solid throughout
+    </div>
+    <table class="core-table">
+      <thead>
+        <tr>
+          <th>Exercise</th>
+          <th>Sets × Reps/Time</th>
+          <th>Target</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td class="ex-col">
+            Hollow Body Hold
+            <br><button class="timer-btn" style="margin-top:4px" onclick="startTimer(35,'Hollow Body Hold')">⏱ 35s</button>
+          </td>
+          <td class="val-col">3 × 30–40s</td>
+          <td class="target-col">Full anterior chain — key for overhangs</td>
+        </tr>
+        <tr>
+          <td class="ex-col">Dead Bug</td>
+          <td class="val-col">3 × 10/side</td>
+          <td class="target-col">Anti-rotation, lower abs</td>
+        </tr>
+        <tr>
+          <td class="ex-col">Bicycle Crunches</td>
+          <td class="val-col">3 × 20 slow</td>
+          <td class="target-col">Obliques — go slow, no rushing</td>
+        </tr>
+        <tr>
+          <td class="ex-col">Leg Raises</td>
+          <td class="val-col">3 × 12</td>
+          <td class="target-col">Lower abs, hip flexors</td>
+        </tr>
+        <tr>
+          <td class="ex-col">
+            Side Plank
+            <br><button class="timer-btn" style="margin-top:4px" onclick="startTimer(30,'Side Plank')">⏱ 30s</button>
+          </td>
+          <td class="val-col">3 × 30s/side</td>
+          <td class="target-col">Lateral core, obliques</td>
+        </tr>
+        <tr>
+          <td class="ex-col">
+            V-Sit Hold
+            <br><button class="timer-btn" style="margin-top:4px" onclick="startTimer(20,'V-Sit Hold')">⏱ 20s</button>
+          </td>
+          <td class="val-col">3 × 20s</td>
+          <td class="target-col">Deep core, balance</td>
+        </tr>
+      </tbody>
+    </table>
+    <div style="padding: 0.3rem 0.2rem; font-size:0.75rem; color:var(--muted);">
+      <button class="timer-btn" onclick="startTimer(40,'Rest Between Rounds')">⏱ Rest 40s</button>
+      &nbsp;Use between rounds
+    </div>
+  </div>
+</div>
+
+<!-- 5 Final Release -->
+<div class="section" id="s-wd-5">
+  <div class="section-header" onclick="toggleSection('wd-5')">
+    <div class="section-icon">🌿</div>
+    <div class="section-meta">
+      <div class="section-name">Final Release</div>
+      <div class="section-sub">Lats · Hamstrings · Hips</div>
+    </div>
+    <div class="section-time">1 min</div>
+    <div class="section-check" onclick="event.stopPropagation();toggleDone('wd-5')">✓</div>
+    <div class="chevron">▼</div>
+  </div>
+  <div class="exercises">
+    <div class="exercise">
+      <div class="ex-bullet"></div>
+      <div class="ex-content">
+        <div class="ex-name">Child's Pose</div>
+        <div class="ex-detail">Arms extended forward to stretch lats and lower back.</div>
+        <button class="timer-btn" onclick="startTimer(30, `Child's Pose`)">⏱ 30s</button>
+      </div>
+      <span class="ex-badge badge-time">30S</span>
+    </div>
+    <div class="exercise">
+      <div class="ex-bullet"></div>
+      <div class="ex-content">
+        <div class="ex-name">Seated Forward Fold</div>
+        <div class="ex-detail">Legs straight, reach toward feet. Don't bounce — hold still.</div>
+        <button class="timer-btn" onclick="startTimer(30,'Seated Forward Fold')">⏱ 30s</button>
+      </div>
+      <span class="ex-badge badge-time">30S</span>
+    </div>
+    <div class="exercise">
+      <div class="ex-bullet"></div>
+      <div class="ex-content">
+        <div class="ex-name">Lying Figure-4 Stretch</div>
+        <div class="ex-detail">Cross one ankle over opposite knee, pull gently. Closes out the hips after all that leg work.</div>
+        <button class="timer-btn" onclick="startTimer(30,'Figure-4 Stretch')">⏱ 30s each</button>
+      </div>
+      <span class="ex-badge badge-time">30S EACH</span>
+    </div>
+  </div>
+</div>
+
+<div class="tip-box">
+  <strong>💡 Core progress tip:</strong> The hollow body hold and V-sit directly train the body tension you need on steep problems. Add 5s to holds each week — you'll feel the carry-over on the wall quickly.
+</div>
+<button class="reset-btn" onclick="resetPhase('warmdown')">Reset Warm-Down Progress</button>
+```
+
+  </div>
+
+</div>
+
+<script>
+  const tabs = { warmup: 7, warmdown: 5 };
+  const done = { warmup: new Set(), warmdown: new Set() };
+  let currentPhase = 'warmup';
+
+  // Timer state
+  let timerInterval = null;
+  let timerTotal = 0;
+  let timerRemaining = 0;
+  const circumference = 2 * Math.PI * 100; // 628.3
+
+  function switchTab(phase) {
+    currentPhase = phase;
+    document.querySelectorAll('.tab-btn').forEach((b,i) => b.classList.toggle('active', (i===0&&phase==='warmup')||(i===1&&phase==='warmdown')));
+    document.querySelectorAll('.phase').forEach(p => p.classList.remove('active'));
+    document.getElementById('phase-'+phase).classList.add('active');
+    document.getElementById('phase-time').textContent = phase === 'warmup' ? '~17' : '~15';
+    updateProgress();
+  }
+
+  function toggleSection(id) {
+    const el = document.getElementById('s-'+id);
+    el.classList.toggle('open');
+  }
+
+  function toggleDone(id) {
+    const phase = id.startsWith('wu') ? 'warmup' : 'warmdown';
+    const el = document.getElementById('s-'+id);
+    if (done[phase].has(id)) {
+      done[phase].delete(id);
+      el.classList.remove('completed');
+    } else {
+      done[phase].add(id);
+      el.classList.add('completed');
+      el.classList.remove('open');
+    }
+    updateProgress();
+  }
+
+  function updateProgress() {
+    const total = tabs[currentPhase];
+    const count = done[currentPhase].size;
+    const pct = (count / total) * 100;
+    document.getElementById('prog-fill').style.width = pct + '%';
+    document.getElementById('prog-text').textContent = count + ' / ' + total + ' sections';
+  }
+
+  function resetPhase(phase) {
+    done[phase].clear();
+    const prefix = phase === 'warmup' ? 'wu' : 'wd';
+    document.querySelectorAll('[id^="s-'+prefix+'"]').forEach(el => {
+      el.classList.remove('completed','open');
+    });
+    updateProgress();
+  }
+
+  // TIMER
+  function startTimer(seconds, label) {
+    stopTimer();
+    timerTotal = seconds;
+    timerRemaining = seconds;
+    document.getElementById('timer-label').textContent = label || 'Hold...';
+    updateTimerDisplay();
+    document.getElementById('timer-overlay').classList.add('show');
+
+    timerInterval = setInterval(() => {
+      timerRemaining--;
+      updateTimerDisplay();
+      if (timerRemaining <= 0) {
+        stopTimer();
+        // Flash done
+        document.getElementById('timer-display').textContent = 'DONE!';
+        document.getElementById('timer-display').style.color = 'var(--green)';
+        setTimeout(() => {
+          document.getElementById('timer-overlay').classList.remove('show');
+          document.getElementById('timer-display').style.color = 'var(--accent)';
+        }, 1200);
+      }
+    }, 1000);
+  }
+
+  function updateTimerDisplay() {
+    const m = Math.floor(timerRemaining / 60);
+    const s = timerRemaining % 60;
+    document.getElementById('timer-display').textContent = m + ':' + String(s).padStart(2,'0');
+    // Ring
+    const frac = timerRemaining / timerTotal;
+    const offset = circumference * (1 - frac);
+    document.getElementById('ring-prog').style.strokeDashoffset = offset;
+  }
+
+  function stopTimer() {
+    if (timerInterval) { clearInterval(timerInterval); timerInterval = null; }
+    document.getElementById('timer-overlay').classList.remove('show');
+  }
+
+  // Close overlay on bg click
+  document.getElementById('timer-overlay').addEventListener('click', function(e) {
+    if (e.target === this) stopTimer();
+  });
+</script>
+
+</body>
+</html>
