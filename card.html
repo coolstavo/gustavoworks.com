@@ -2,126 +2,703 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Card</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>GusWorks — Business Card</title>
     <style>
-        body {
+        *, *::before, *::after {
+            box-sizing: border-box;
             margin: 0;
+            padding: 0;
+        }
+
+        body {
+            background: #04040a;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
             overflow: hidden;
-            background-color: black;
-            font-family: 'Helvetica Neue', sans-serif;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            height: 100vh;
+            font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
         }
-        
-        .card-container {
-            width: 95vw;
-            height: 95vh;
-            perspective: 1000px;
+
+        /* ── Starfield ── */
+        body::before {
+            content: '';
+            position: fixed;
+            inset: 0;
+            background:
+                radial-gradient(1px   1px   at 12% 18%, rgba(255,255,255,0.65) 0%, transparent 100%),
+                radial-gradient(1px   1px   at 87%  8%, rgba(255,255,255,0.55) 0%, transparent 100%),
+                radial-gradient(1.5px 1.5px at 52% 65%, rgba(255,255,255,0.6)  0%, transparent 100%),
+                radial-gradient(1px   1px   at  6% 82%, rgba(255,255,255,0.4)  0%, transparent 100%),
+                radial-gradient(1px   1px   at 94% 52%, rgba(255,255,255,0.45) 0%, transparent 100%),
+                radial-gradient(1px   1px   at 32% 10%, rgba(255,255,255,0.38) 0%, transparent 100%),
+                radial-gradient(2px   2px   at 65% 90%, rgba(255,255,255,0.28) 0%, transparent 100%),
+                radial-gradient(1px   1px   at 74% 35%, rgba(255,255,255,0.42) 0%, transparent 100%),
+                radial-gradient(1px   1px   at 42% 92%, rgba(255,255,255,0.3)  0%, transparent 100%),
+                radial-gradient(1px   1px   at 20% 58%, rgba(255,255,255,0.32) 0%, transparent 100%),
+                radial-gradient(1px   1px   at 60% 25%, rgba(255,255,255,0.25) 0%, transparent 100%),
+                radial-gradient(1px   1px   at  3% 45%, rgba(255,255,255,0.35) 0%, transparent 100%),
+                radial-gradient(1px   1px   at 78% 72%, rgba(255,255,255,0.22) 0%, transparent 100%),
+                radial-gradient(1px   1px   at 47% 40%, rgba(255,255,255,0.2)  0%, transparent 100%),
+                radial-gradient(1px   1px   at 15% 95%, rgba(255,255,255,0.24) 0%, transparent 100%),
+                radial-gradient(1px   1px   at 91% 30%, rgba(255,255,255,0.3)  0%, transparent 100%),
+                radial-gradient(2px   2px   at 35% 75%, rgba(255,255,255,0.17) 0%, transparent 100%),
+                radial-gradient(1px   1px   at 58%  5%, rgba(255,255,255,0.38) 0%, transparent 100%);
+            pointer-events: none;
+            z-index: 0;
+        }
+
+        /* ── Ambient haze ── */
+        body::after {
+            content: '';
+            position: fixed;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            width: 900px;
+            height: 500px;
+            background: radial-gradient(ellipse at center, rgba(61,90,254,0.09) 0%, transparent 65%);
+            filter: blur(40px);
+            pointer-events: none;
+            z-index: 0;
+        }
+
+        /* ── Scene ── */
+        .scene {
+            perspective: 1400px;
+            perspective-origin: 50% 50%;
+            z-index: 1;
             display: flex;
-            justify-content: center;
+            flex-direction: column;
             align-items: center;
         }
-        
-        .card {
-            width: 100%;
-            height: 100%;
+
+        /* ── Float wrapper ── */
+        .float {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            animation: float 5s ease-in-out infinite;
             position: relative;
-            transition: transform 0.8s;
+            /* preserve-3d prevents the browser from flattening the 3D context
+               into an opaque compositing layer (the "black box" artifact). */
             transform-style: preserve-3d;
-            border-radius: 50px;
-            transform-origin: center;
-            animation: slowSpin 15s infinite linear;
         }
-        
-        @keyframes slowSpin {
-            from {
-                transform: rotateY(0deg);
-            }
-            to {
-                transform: rotateY(360deg);
-            }
+
+        @keyframes float {
+            0%,  100% { transform: translateY(0px); }
+            50%        { transform: translateY(-28px); }
         }
-        
-        .front, .back {
+
+        /* ── Glow shadow beneath card ── */
+        .card-glow {
+            width: 820px;
+            height: 22px;
+            margin-top: 10px;
+            background: radial-gradient(ellipse at center, rgba(61,90,254,0.55) 0%, transparent 70%);
+            filter: blur(16px);
+            pointer-events: none;
+            opacity: 0.75;
+            transform: scaleY(0.6);
+        }
+
+        /* ── Spin wrapper ── */
+        .spinner {
+            width: 1000px;
+            height: 280px;
+            position: relative;
+            transform-style: preserve-3d;
+            cursor: grab;
+        }
+
+        .spinner:active {
+            cursor: grabbing;
+        }
+
+        /* ── Card faces ── */
+        .face {
             position: absolute;
-            width: 100%;
-            height: 100%;
+            inset: 0;
+            border-radius: 14px;
             backface-visibility: hidden;
+            -webkit-backface-visibility: hidden;
+            overflow: hidden;
+        }
+
+        /* ════════════════════════════════════════
+           FRONT
+        ════════════════════════════════════════ */
+        .front {
+            background: #07070c;
+            border: 1px solid rgba(61,90,254,0.18);
+            display: grid;
+            grid-template-columns: 195px 1fr 280px;
+        }
+
+        /* Ghost "GW" watermark */
+        .front::before {
+            content: 'GW';
+            position: absolute;
+            font-size: 320px;
+            font-weight: 900;
+            font-style: italic;
+            color: rgba(61,90,254,0.032);
+            left: 50%;
+            top: 50%;
+            transform: translate(-50%, -50%);
+            pointer-events: none;
+            letter-spacing: -0.04em;
+            white-space: nowrap;
+            z-index: 0;
+            user-select: none;
+        }
+
+        /* Holographic shimmer overlay — position driven by JS --mx/--my */
+        .front::after {
+            content: '';
+            position: absolute;
+            inset: 0;
+            background: radial-gradient(
+                ellipse 55% 80% at var(--mx, 50%) var(--my, -20%),
+                rgba(130,170,255,0.11) 0%,
+                rgba(61,90,254,0.06)  40%,
+                transparent           70%
+            );
+            pointer-events: none;
+            z-index: 2;
+        }
+
+        /* Bottom neon line */
+        .front-bar {
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            height: 1.5px;
+            background: linear-gradient(
+                to right,
+                transparent                  0%,
+                rgba(61,90,254,0)            8%,
+                rgba(61,90,254,0.55)        30%,
+                rgba(160,195,255,0.9)       50%,
+                rgba(61,90,254,0.55)        70%,
+                rgba(61,90,254,0)           92%,
+                transparent                 100%
+            );
+            z-index: 3;
+            animation: barGlow 2.8s ease-in-out infinite alternate;
+        }
+
+        @keyframes barGlow {
+            0%   { opacity: 0.45; }
+            100% { opacity: 1; }
+        }
+
+        /* ── Logo column ── */
+        .logo-col {
+            position: relative;
+            z-index: 1;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            padding: 35px 26px;
+            border-right: 1px solid rgba(61,90,254,0.07);
+        }
+
+        .logo-slot {
+            width: 110px;
+            height: 110px;
+            border: 1px solid rgba(61,90,254,0.32);
+            border-radius: 14px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            position: relative;
+        }
+
+        /* Corner tick marks */
+        .logo-slot::before,
+        .logo-slot::after {
+            content: '';
+            position: absolute;
+            width: 11px;
+            height: 11px;
+            border-color: #3d5afe;
+            border-style: solid;
+        }
+        .logo-slot::before {
+            top: -1px; left: -1px;
+            border-width: 2px 0 0 2px;
+            border-radius: 3px 0 0 0;
+        }
+        .logo-slot::after {
+            bottom: -1px; right: -1px;
+            border-width: 0 2px 2px 0;
+            border-radius: 0 0 3px 0;
+        }
+
+        .logo-slot img {
+            width: 90%;
+            height: 90%;
+            object-fit: contain;
+            filter: invert(1);
+        }
+
+        .logo-slot-label {
+            font-size: 9px;
+            letter-spacing: 0.18em;
+            text-transform: uppercase;
+            color: rgba(61,90,254,0.38);
+        }
+
+        /* ── Name column ── */
+        .name-col {
+            position: relative;
+            z-index: 1;
             display: flex;
             flex-direction: column;
             justify-content: center;
-            align-items: center;
-            background-color: #0437f2;
-            color: black;
-            border-radius: 50px;
-            text-align: center;
-            box-sizing: border-box;
-            padding: 0 20px;
+            padding: 32px 40px;
+            gap: 12px;
         }
-        
-        .front h1, .back h1 {
-            font-size: 2em;
-            font-weight: bold;
-            margin-bottom: 20px;
+
+        .artist-tag {
+            font-size: 9px;
+            letter-spacing: 0.24em;
             text-transform: uppercase;
-            letter-spacing: 2px;
-            text-align: center;
+            color: #3d5afe;
+            opacity: 0.8;
         }
-        
+
+        .full-name {
+            font-size: 18px;
+            font-weight: 600;
+            color: #ccccd8;
+            letter-spacing: 0.1em;
+            text-transform: uppercase;
+            line-height: 1.5;
+        }
+
+        .divider-row {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .divider-dot {
+            width: 3px;
+            height: 3px;
+            border-radius: 50%;
+            background: #3d5afe;
+            flex-shrink: 0;
+        }
+
+        .divider-line {
+            height: 1px;
+            flex: 1;
+            background: linear-gradient(to right, rgba(61,90,254,0.45), transparent);
+        }
+
+        .sub-title {
+            font-size: 10px;
+            letter-spacing: 0.16em;
+            text-transform: uppercase;
+            color: #444;
+        }
+
+        /* ── Contact column ── */
+        .contact-col {
+            position: relative;
+            z-index: 1;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            padding: 32px 28px;
+            gap: 12px;
+            border-left: 1px solid rgba(61,90,254,0.07);
+        }
+
+        .contact-item {
+            display: flex;
+            flex-direction: column;
+            gap: 1px;
+        }
+
+        .contact-label {
+            font-size: 8px;
+            letter-spacing: 0.2em;
+            text-transform: uppercase;
+            color: #3d5afe;
+            opacity: 0.7;
+        }
+
+        .contact-item a {
+            font-size: 11px;
+            color: #606070;
+            text-decoration: none;
+            letter-spacing: 0.03em;
+            transition: color 0.2s;
+        }
+
+        .contact-item a:hover {
+            color: #bbbbc8;
+        }
+
+        /* ════════════════════════════════════════
+           BACK
+        ════════════════════════════════════════ */
         .back {
             transform: rotateY(180deg);
+            background: #06060c;
+            border: 1px solid rgba(61,90,254,0.14);
         }
-        
-        .flipped {
-            animation: none;
-            transform: rotateY(180deg);
+
+        /* Counter-rotate the content so text reads correctly when the card is
+           flipped. The face itself carries rotateY(180deg) which mirrors the
+           X axis; scaleX(-1) on the inner wrapper cancels that mirror out. */
+        .back-inner {
+            display: grid;
+            grid-template-columns: 195px 1fr 280px;
+            width: 100%;
+            height: 100%;
+            transform: scaleX(-1);
         }
-        
-        button {
+
+        /* Ghost "GW" watermark (mirrors the front) */
+        .back::before {
+            content: 'GW';
             position: absolute;
-            bottom: 20px;
-            padding: 10px 20px;
-            background-color: white;
-            color: #3F00FF;
-            border: none;
-            border-radius: 5px;
-            cursor: pointer;
+            font-size: 320px;
+            font-weight: 900;
+            font-style: italic;
+            color: rgba(61,90,254,0.032);
             left: 50%;
-            transform: translateX(-50%);
+            top: 50%;
+            transform: translate(-50%, -50%);
+            pointer-events: none;
+            letter-spacing: -0.04em;
+            white-space: nowrap;
+            z-index: 0;
+            user-select: none;
+        }
+
+        /* Bottom neon line (mirrors front) */
+        .back::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            height: 1.5px;
+            background: linear-gradient(
+                to right,
+                transparent                 0%,
+                rgba(61,90,254,0)           8%,
+                rgba(61,90,254,0.55)       30%,
+                rgba(160,195,255,0.9)      50%,
+                rgba(61,90,254,0.55)       70%,
+                rgba(61,90,254,0)          92%,
+                transparent                100%
+            );
+            animation: barGlow 2.8s ease-in-out infinite alternate;
+        }
+
+        /* ── Desktop-large: scale card up even more on very wide screens ── */
+        @media (min-width: 1400px) {
+            .spinner     { width: 1100px; height: 308px; }
+            .front       { grid-template-columns: 215px 1fr 308px; }
+            .back-inner  { grid-template-columns: 215px 1fr 308px; }
+            .logo-slot   { width: 120px; height: 120px; }
+            .logo-col    { padding: 40px 28px; }
+            .name-col    { padding: 38px 46px; gap: 14px; }
+            .contact-col { padding: 38px 32px; gap: 14px; }
+            .artist-tag  { font-size: 10px; }
+            .full-name   { font-size: 20px; }
+            .sub-title   { font-size: 11px; }
+            .contact-label  { font-size: 9px; }
+            .contact-item a { font-size: 12px; }
+            .logo-slot-label { font-size: 10px; }
+            .front::before,
+            .back::before  { font-size: 350px; }
+            .card-glow     { width: 900px; }
+        }
+
+        /* ── Responsive ── */
+        @media (max-width: 820px) {
+            .spinner    { width: 640px; height: 178px; }
+            .front      { grid-template-columns: 126px 1fr 186px; }
+            .back-inner { grid-template-columns: 126px 1fr 186px; }
+            .logo-col   { padding: 22px 16px; }
+            .logo-slot  { width: 80px; height: 80px; }
+            .name-col   { padding: 22px 26px; gap: 8px; }
+            .full-name  { font-size: 12px; }
+            .contact-col { padding: 22px 18px; gap: 8px; }
+            .contact-item a { font-size: 8px; }
+            .card-glow  { width: 520px; }
+        }
+
+        @media (max-width: 580px) {
+            /* Portrait card — sized to fit mobile viewport without scrolling */
+            .spinner    { 
+                width: min(340px, calc(100vw - 40px)); 
+                height: min(480px, calc(100vh - 140px));
+            }
+
+            /* Switch front face from 3-column grid to vertical stack */
+            .front {
+                display: flex;
+                flex-direction: column;
+                padding: 20px 18px;
+                gap: 0;
+            }
+
+            /* Switch back face content wrapper to vertical stack;
+               scaleX(-1) remains in force from the base rule above. */
+            .back-inner {
+                display: flex;
+                flex-direction: column;
+                padding: 20px 18px;
+                gap: 0;
+            }
+
+            .logo-col {
+                border-right: none;
+                border-bottom: 1px solid rgba(61,90,254,0.07);
+                padding: 0 0 14px 0;
+                justify-content: flex-start;
+            }
+
+            .logo-slot  { width: 70px; height: 70px; border-radius: 10px; }
+
+            .name-col {
+                padding: 14px 0;
+                gap: 6px;
+                border-bottom: 1px solid rgba(61,90,254,0.07);
+            }
+
+            .artist-tag { font-size: 9px; }
+            .full-name  { font-size: 17px; letter-spacing: 0.07em; line-height: 1.4; }
+            .sub-title  { font-size: 9px; }
+
+            .contact-col {
+                border-left: none;
+                padding: 14px 0 0 0;
+                gap: 11px;
+            }
+
+            .contact-item a { font-size: 13px; }
+            .contact-label  { font-size: 8px; }
+
+            .card-glow  { 
+                width: min(340px, calc(100vw - 40px)); 
+                height: 16px; 
+                margin-top: 6px; 
+            }
+
+            /* Reduce float animation distance on mobile */
+            @keyframes float {
+                0%,  100% { transform: translateY(0px); }
+                50%        { transform: translateY(-15px); }
+            }
         }
     </style>
 </head>
 <body>
-    <div class="card-container">
-        <div class="card" id="card">
-            <div class="front">
-                <h1>Gustavo Henrique Costa Araújo</h1>
-                <p>Artist Name: GusWorks</p>
-                <p>Phone: <a href="tel:+123456789">+123456789</a></p>
-                <p>Instagram: <a href="https://www.instagram.com/____gusworks____" target="_blank">@____gusworks____</a></p>
-                <p>Website: <a href="https://gustavoworks.com" target="_blank">gustavoworks.com</a></p>
-                <p>Email: <a href="mailto:info@gustavoworks.com">info@gustavoworks.com</a></p>
-                <button onclick="flipCard()">Flip</button>
-            </div>
-            <div class="back">
-                <h1>Gustavo Henrique Costa Araújo</h1>
-                <p>Artist Name: GusWorks</p>
-                <p>Phone: <a href="tel:+123456789">+123456789</a></p>
-                <p>Instagram: <a href="https://www.instagram.com/____gusworks____" target="_blank">@____gusworks____</a></p>
-                <p>Website: <a href="https://gustavoworks.com" target="_blank">gustavoworks.com</a></p>
-                <p>Email: <a href="mailto:info@gustavoworks.com">info@gustavoworks.com</a></p>
-                <button onclick="flipCard()">Flip</button>
-            </div>
-        </div>
-    </div>
-    
+    <div class="scene">
+        <div class="float">
+
+            <div class="spinner" id="spinner">
+
+                <!-- ── Front ── -->
+                <div class="face front" id="front">
+                    <div class="front-bar"></div>
+
+                    <div class="logo-col">
+                        <div class="logo-slot">
+                            <img src="assets/logos/logo.svg" alt="GusWorks logo">
+                        </div>
+                    </div>
+
+                    <div class="name-col">
+                        <span class="artist-tag">GusWorks</span>
+                        <div class="full-name">Gustavo Henrique<br>Costa Araújo</div>
+                        <div class="divider-row">
+                            <div class="divider-dot"></div>
+                            <div class="divider-line"></div>
+                        </div>
+                        <div class="sub-title">Creative Artist</div>
+                    </div>
+
+                    <div class="contact-col">
+                        <div class="contact-item">
+                            <span class="contact-label">Web</span>
+                            <a href="https://gustavoworks.com" target="_blank">gustavoworks.com</a>
+                        </div>
+                        <div class="contact-item">
+                            <span class="contact-label">Instagram</span>
+                            <a href="https://www.instagram.com/____gusworks____" target="_blank">@____gusworks____</a>
+                        </div>
+                        <div class="contact-item">
+                            <span class="contact-label">Email</span>
+                            <a href="mailto:info@gustavoworks.com">info@gustavoworks.com</a>
+                        </div>
+                        <div class="contact-item">
+                            <span class="contact-label">Tel</span>
+                            <a href="tel:+123456789">+123456789</a>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- ── Back ── -->
+                <div class="face back" id="back">
+                    <div class="back-inner">
+
+                    <div class="logo-col">
+                        <div class="logo-slot">
+                            <img src="assets/logos/logo.svg" alt="GusWorks logo">
+                        </div>
+                    </div>
+
+                    <div class="name-col">
+                        <span class="artist-tag">GusWorks</span>
+                        <div class="full-name">Gustavo Henrique<br>Costa Araújo</div>
+                        <div class="divider-row">
+                            <div class="divider-dot"></div>
+                            <div class="divider-line"></div>
+                        </div>
+                        <div class="sub-title">Creative Artist</div>
+                    </div>
+
+                    <div class="contact-col">
+                        <div class="contact-item">
+                            <span class="contact-label">Web</span>
+                            <a href="https://gustavoworks.com" target="_blank">gustavoworks.com</a>
+                        </div>
+                        <div class="contact-item">
+                            <span class="contact-label">Instagram</span>
+                            <a href="https://www.instagram.com/____gusworks____" target="_blank">@____gusworks____</a>
+                        </div>
+                        <div class="contact-item">
+                            <span class="contact-label">Email</span>
+                            <a href="mailto:info@gustavoworks.com">info@gustavoworks.com</a>
+                        </div>
+                        <div class="contact-item">
+                            <span class="contact-label">Tel</span>
+                            <a href="tel:+123456789">+123456789</a>
+                        </div>
+                    </div>
+
+                    </div><!-- /.back-inner -->
+                </div>
+
+            </div><!-- /.spinner -->
+
+            <div class="card-glow"></div>
+        </div><!-- /.float -->
+    </div><!-- /.scene -->
+
     <script>
-        function flipCard() {
-            document.getElementById('card').classList.toggle('flipped');
+        var spinner = document.getElementById('spinner');
+        var front   = document.getElementById('front');
+        var back    = document.getElementById('back');
+
+        // ── Rotation state ──────────────────────────────────────────────────
+        // One full rotation every 26 s at 60 fps
+        var AUTO_VEL = 360 / (26 * 60); // ≈ 0.231 deg / frame
+
+        var rotY = 0;      // current Y rotation (spin axis)
+        var rotX = 0;      // current X rotation (tilt axis)
+        var velY = AUTO_VEL; // current Y angular velocity
+        var velX = 0;        // current X angular velocity
+
+        // ── Drag state ──────────────────────────────────────────────────────
+        var dragging = false;
+        var lastX = 0, lastY = 0;
+        var dragVelY = 0, dragVelX = 0; // smoothed drag delta per frame
+
+        // ── rAF loop ────────────────────────────────────────────────────────
+        function tick() {
+            if (dragging) {
+                // While dragging: velocity = smoothed pointer delta
+                velY = dragVelY;
+                velX = dragVelX;
+                // Reset deltas each frame (populated by pointermove)
+                dragVelY = 0;
+                dragVelX = 0;
+            } else {
+                // Ease Y velocity back to auto-spin speed (feels like magnetic catch)
+                velY += (AUTO_VEL - velY) * 0.032;
+                // X velocity and tilt both decay to zero
+                velX *= 0.85;
+                rotX *= 0.90;
+            }
+
+            rotY += velY;
+            rotX  = Math.max(-50, Math.min(50, rotX + velX));
+
+            spinner.style.transform =
+                'rotateY(' + rotY + 'deg) rotateX(' + rotX + 'deg)';
+
+            // ── Show only the face currently pointing toward the viewer ──────
+            // Normalise rotY to [0, 360) then decide which face is front-facing.
+            // This supplements CSS backface-visibility:hidden with a JS guarantee,
+            // preventing browser GPU-compositing quirks where both faces bleed
+            // through simultaneously during the flip.
+            var ny = ((rotY % 360) + 360) % 360;
+            var frontFacing = ny < 90 || ny > 270;
+            front.style.visibility = frontFacing ? '' : 'hidden';
+            back.style.visibility  = frontFacing ? 'hidden' : '';
+
+            requestAnimationFrame(tick);
         }
+
+        requestAnimationFrame(tick);
+
+        // ── Pointer events (mouse + touch via Pointer API) ──────────────────
+        spinner.addEventListener('pointerdown', function (e) {
+            dragging = true;
+            lastX = e.clientX;
+            lastY = e.clientY;
+            dragVelY = 0;
+            dragVelX = 0;
+            spinner.setPointerCapture(e.pointerId);
+            e.preventDefault();
+        });
+
+        spinner.addEventListener('pointermove', function (e) {
+            // Always update shimmer (hover highlight)
+            var rect = spinner.getBoundingClientRect();
+            if (rect.width > 0) {
+                front.style.setProperty('--mx',
+                    ((e.clientX - rect.left) / rect.width  * 100).toFixed(1) + '%');
+                front.style.setProperty('--my',
+                    ((e.clientY - rect.top)  / rect.height * 100).toFixed(1) + '%');
+            }
+
+            if (!dragging) return;
+
+            var dx = e.clientX - lastX;
+            var dy = e.clientY - lastY;
+
+            // Accumulate drag delta; rAF loop reads & resets each frame
+            dragVelY += dx * 0.55;
+            dragVelX += -dy * 0.35;
+
+            lastX = e.clientX;
+            lastY = e.clientY;
+        });
+
+        spinner.addEventListener('pointerup',     function () { dragging = false; });
+        spinner.addEventListener('pointercancel', function () { dragging = false; });
+
+        // Reset shimmer to centre when cursor leaves
+        spinner.addEventListener('pointerleave', function (e) {
+            if (e.pointerType === 'mouse' && !dragging) {
+                front.style.setProperty('--mx', '50%');
+                front.style.setProperty('--my', '-20%');
+            }
+        });
     </script>
 </body>
 </html>

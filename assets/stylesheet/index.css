@@ -1,23 +1,531 @@
-/* Content */
-.content {
-    padding: 20px;
-    max-width: 600px;
-    box-sizing: border-box;
-    align-self: center;
-    justify-self: center;
-}
+/* ================================================ */
+/* index.css – Home page: full-screen mosaic hero   */
+/* ================================================ */
 
-.content a {
-    color: var(--orange-white);
+/* ---------------------------------------------- */
+/* Body layout override for home page              */
+
+body.home {
+    display: flex;
+    flex-direction: column;
+    /* Use dynamic viewport height so mosaic + footer fit without scrolling */
+    /* svh first (fallback for browsers without dvh), dvh second (preferred – updates as browser chrome shows/hides) */
+    min-height: 100svh;
+    min-height: 100dvh;
+    overflow-x: hidden;
+    overflow-y: hidden;
 }
 
 /* ---------------------------------------------- */
-/* Responsive design for different viewports */
+/* Mosaic hero – fills remaining viewport          */
 
-/* Phone view (max-width: 600px) */
-@media (max-width: 600px) {
+.mosaic-hero {
+    position: relative;
+    flex: 1;
+    min-height: 0; /* flex child; height determined by parent dvh */
+    width: 100%;
+    overflow: hidden;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    gap: 14px;
+    /* Subtle gradient fade at top and bottom edges */
+    -webkit-mask-image: linear-gradient(
+        to bottom,
+        transparent 0%,
+        black 8%,
+        black 92%,
+        transparent 100%
+    );
+    mask-image: linear-gradient(
+        to bottom,
+        transparent 0%,
+        black 8%,
+        black 92%,
+        transparent 100%
+    );
+}
 
-    .content {
-        padding: 15px;
+/* On desktop/tablet: lock page to exactly the viewport so footer is always visible */
+@media (min-width: 601px) {
+    body.home {
+        height: 100svh;
+        height: 100dvh;
+        overflow: hidden;
     }
+}
+
+/* Title overlays the mosaic */
+.mosaic-hero .title {
+    position: absolute;
+    left: 20px;
+    top: -70px;
+    z-index: 5;
+    pointer-events: none;
+}
+
+/* ---------------------------------------------- */
+/* Scroll animations – GPU-accelerated            */
+
+@keyframes mosaic-scroll-left {
+    0%   { transform: translate3d(0, 0, 0); }
+    100% { transform: translate3d(-50%, 0, 0); }
+}
+
+@keyframes mosaic-scroll-right {
+    0%   { transform: translate3d(-50%, 0, 0); }
+    100% { transform: translate3d(0, 0, 0); }
+}
+
+/* ---------------------------------------------- */
+/* Rows                                            */
+
+.mosaic-row {
+    display: flex;
+    width: max-content;
+    gap: 14px;
+    will-change: transform;
+}
+
+.mosaic-row--fast   { animation: mosaic-scroll-left  24s linear infinite; }
+.mosaic-row--medium { animation: mosaic-scroll-right 32s linear infinite; }
+.mosaic-row--slow   { animation: mosaic-scroll-left  42s linear infinite; }
+.mosaic-row--fast2  { animation: mosaic-scroll-right 28s linear infinite; }
+.mosaic-row--slow2  { animation: mosaic-scroll-left  50s linear infinite; }
+
+/* ---------------------------------------------- */
+/* Tiles                                           */
+
+.mosaic-tile {
+    position: relative;
+    width: 200px;
+    height: 240px;
+    flex-shrink: 0;
+    border-radius: 4px;
+    overflow: hidden;
+    border: 1px solid var(--terminal-border);
+    background-size: cover;
+    background-position: center;
+    cursor: pointer;
+    touch-action: manipulation; /* prevent double-tap zoom, improve tap speed */
+    transition:
+        transform 0.5s cubic-bezier(0.25, 0.46, 0.45, 0.94),
+        filter 0.5s ease,
+        border-color 0.4s ease;
+}
+
+/* Hover: only on devices with a real pointer (prevents double-tap on mobile).
+   Applied to all tiles – including the seamless-loop duplicate set – so every
+   visible square responds. */
+@media (hover: hover) {
+    .mosaic-tile:hover {
+        transform: scale(1.05);
+        filter: brightness(1.3);
+        border-color: var(--terminal-green);
+        z-index: 2;
+    }
+
+    .mosaic-tile:hover .mosaic-tile-overlay {
+        opacity: 1;
+    }
+}
+
+/* Keyboard focus */
+.mosaic-tile[role="button"]:focus-visible {
+    outline: 2px solid var(--terminal-green);
+    outline-offset: 2px;
+    z-index: 2;
+}
+
+/* JS-driven active state for instant touch feedback */
+.mosaic-tile.js-active {
+    transform: scale(1.04);
+    border-color: var(--terminal-green);
+    z-index: 2;
+}
+
+.mosaic-tile.js-active .mosaic-tile-overlay {
+    opacity: 1;
+}
+
+/* Hover overlay with piece name */
+.mosaic-tile-overlay {
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    padding: 28px 12px 12px;
+    background: linear-gradient(transparent, rgba(0, 0, 0, 0.88));
+    opacity: 0;
+    transition: opacity 0.35s ease;
+    pointer-events: none;
+}
+
+.mosaic-tile-name {
+    font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
+    font-style: italic;
+    font-weight: 300;
+    font-size: 13px;
+    color: var(--terminal-text);
+    display: block;
+}
+
+/* ---------------------------------------------- */
+/* Placeholder tile colour schemes – blue palette  */
+/* Replace background-image with artwork URLs      */
+
+.mosaic-tile.t1 {
+    background-color: #0a0f30;
+    background-image: linear-gradient(135deg, #0a0f30 0%, #1a2a6c 60%, #3d5afe 100%);
+}
+.mosaic-tile.t2 {
+    background-color: #0c0c0c;
+    background-image: radial-gradient(circle at 25% 75%, rgba(61, 90, 254, 0.3) 0%, #0c0c0c 65%);
+}
+.mosaic-tile.t3 {
+    background-color: #111111;
+    background-image: repeating-linear-gradient(
+        0deg,
+        #111 0px, #111 7px,
+        #1a1a2e 7px, #1a1a2e 8px
+    );
+}
+.mosaic-tile.t4 {
+    background-color: #0d0d1a;
+    background-image: linear-gradient(225deg, #1a1a2e 0%, #0d0d3a 100%);
+}
+.mosaic-tile.t5 {
+    background-color: #0c0c0c;
+    background-image: radial-gradient(ellipse at 80% 20%, rgba(61, 90, 254, 0.35) 0%, #0c0c0c 60%);
+}
+.mosaic-tile.t6 {
+    background-color: #0a0a1a;
+    background-image: linear-gradient(45deg, #0a0a1a 0%, #0f0f3a 55%, rgba(61, 90, 254, 0.7) 100%);
+}
+.mosaic-tile.t7 {
+    background-color: #111111;
+    background-image: repeating-linear-gradient(
+        90deg,
+        #111 0px, #111 13px,
+        #1a1a2e 13px, #1a1a2e 14px
+    );
+}
+.mosaic-tile.t8 {
+    background-color: #0c0c0c;
+    background-image: radial-gradient(circle at 50% 50%, #1a1a2e 0%, #0c0c0c 70%);
+}
+
+/* Real artwork tiles */
+.mosaic-tile.tw1 {
+    background-color: #0a0c1a;
+    background-image: url('/assets/works/Untitle. Blue.jpeg');
+    background-size: cover;
+    background-position: center;
+}
+.mosaic-tile.tw2 {
+    background-color: #1a1a1a;
+    background-image: url('/assets/works/Untitled. Silver.jpeg');
+    background-size: cover;
+    background-position: center;
+}
+.mosaic-tile.tw3 {
+    background-color: #0d0d0d;
+    background-image: url('/assets/works/Variation 49.jpeg');
+    background-size: cover;
+    background-position: center;
+}
+
+/* ---------------------------------------------- */
+/* Piece info modal                                */
+
+.modal-overlay {
+    position: fixed;
+    inset: 0;
+    background: rgba(0, 0, 0, 0.72);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    z-index: 200;
+    padding: 20px;
+    box-sizing: border-box;
+    animation: modal-fade-in 0.2s ease;
+}
+
+.modal-overlay[hidden] {
+    display: none;
+}
+
+@keyframes modal-fade-in {
+    from { opacity: 0; }
+    to   { opacity: 1; }
+}
+
+/* Terminal-window as modal */
+.modal-window {
+    width: 100%;
+    max-width: 520px;
+    max-height: 90vh;
+    overflow-y: auto;
+    grid-row: unset;
+    align-self: unset;
+    justify-self: unset;
+    animation: modal-slide-up 0.3s cubic-bezier(0.34, 1.4, 0.64, 1);
+}
+
+@keyframes modal-slide-up {
+    from { transform: translateY(24px) scale(0.96); opacity: 0; }
+    to   { transform: translateY(0)    scale(1);    opacity: 1; }
+}
+
+/* Red close button as an actual <button> */
+button.terminal-btn {
+    border: none;
+    padding: 0;
+    cursor: pointer;
+    display: inline-block;
+    width: 12px;
+    height: 12px;
+    border-radius: 50%;
+    flex-shrink: 0;
+    transition: filter 0.2s ease;
+}
+
+button.terminal-btn:hover {
+    filter: brightness(1.35);
+}
+
+/* Artwork preview in the piece modal — show the full image */
+.modal-artwork {
+    height: 55vh;
+    background-size: contain;
+    background-repeat: no-repeat;
+    background-position: center;
+    background-color: #0a0a0a;
+    border-bottom: 1px solid var(--terminal-border);
+    flex-shrink: 0;
+}
+
+/* ---------------------------------------------- */
+/* Footer – override fixed positioning on home     */
+
+.home .footer {
+    grid-row: unset;
+    position: static;   /* cancel main.css fixed on mobile */
+    width: 100%;
+    box-sizing: border-box;
+    border-top: none;   /* remove the stripe line above the footer */
+}
+
+/* Contact button in footer */
+.footer-contact-btn {
+    background: transparent;
+    border: 1px solid var(--terminal-dim);
+    color: var(--terminal-dim);
+    font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
+    font-style: italic;
+    font-weight: 300;
+    font-size: 15px;
+    padding: 3px 12px;
+    border-radius: 4px;
+    cursor: pointer;
+    transition: border-color 0.2s ease, color 0.2s ease;
+}
+
+.footer-contact-btn:hover {
+    border-color: var(--terminal-green);
+    color: var(--terminal-green);
+}
+
+/* ---------------------------------------------- */
+/* Contact form styles (ported from about.css)     */
+
+.contact-form {
+    display: flex;
+    flex-direction: column;
+    align-items: stretch;
+    gap: 16px;
+    text-transform: uppercase;
+    background: transparent;
+    border: none;
+    box-shadow: none;
+    border-radius: 0;
+    padding: 0;
+    color: var(--terminal-text);
+}
+
+.form-group {
+    width: 100%;
+    position: relative;
+    display: flex;
+    align-items: flex-start;
+    gap: 8px;
+}
+
+.form-group::before {
+    content: '$' / '';
+    color: var(--terminal-green);
+    font-family: 'Courier New', Courier, monospace;
+    font-size: 14px;
+    flex-shrink: 0;
+    padding-top: 10px;
+}
+
+.contact-input {
+    flex: 1;
+    padding: 8px 4px;
+    border: none;
+    border-bottom: 1px solid var(--terminal-dim);
+    border-radius: 0;
+    text-transform: uppercase;
+    font-family: 'Courier New', Courier, monospace;
+    font-size: 14px;
+    background: transparent;
+    color: var(--terminal-text);
+    box-sizing: border-box;
+    outline: none;
+    transition: border-color 0.2s ease;
+}
+
+.contact-input::placeholder { color: var(--terminal-dim); }
+
+.contact-input:focus {
+    border-bottom-color: var(--terminal-green);
+    box-shadow: 0 1px 0 var(--terminal-green);
+}
+
+.contact-textarea {
+    flex: 1;
+    padding: 8px 4px;
+    border: none;
+    border-bottom: 1px solid var(--terminal-dim);
+    border-radius: 0;
+    text-transform: uppercase;
+    resize: vertical;
+    min-height: 90px;
+    max-height: 180px;
+    font-family: 'Courier New', Courier, monospace;
+    font-size: 14px;
+    background: transparent;
+    color: var(--terminal-text);
+    box-sizing: border-box;
+    outline: none;
+    transition: border-color 0.2s ease;
+}
+
+.contact-textarea::placeholder { color: var(--terminal-dim); }
+
+.contact-textarea:focus {
+    border-bottom-color: var(--terminal-green);
+    box-shadow: 0 1px 0 var(--terminal-green);
+}
+
+.contact-button {
+    background: transparent;
+    color: var(--terminal-green);
+    border: 1px solid var(--terminal-green);
+    padding: 10px 24px;
+    border-radius: 4px;
+    text-transform: uppercase;
+    cursor: pointer;
+    font-family: 'Courier New', Courier, monospace;
+    font-size: 14px;
+    font-weight: normal;
+    letter-spacing: 1px;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    align-self: flex-start;
+    transition: background 0.2s ease, color 0.2s ease;
+}
+
+.contact-button::before {
+    content: '$' / '';
+    color: var(--terminal-green);
+}
+
+.contact-button:hover {
+    background: var(--terminal-green);
+    color: var(--terminal-bg);
+}
+
+.button-arrow {
+    transition: transform 0.2s ease;
+}
+
+.contact-button:hover .button-arrow {
+    transform: translateX(4px);
+}
+
+/* ---------------------------------------------- */
+/* Responsive – tablet                             */
+
+@media (max-width: 900px) {
+    .mosaic-tile {
+        width: 160px;
+        height: 190px;
+    }
+
+    .mosaic-row { gap: 10px; }
+    .mosaic-hero { gap: 10px; }
+}
+
+/* ---------------------------------------------- */
+/* Responsive – mobile                             */
+
+@media (max-width: 600px) {
+    
+    /* Ensure page fits without scrolling on mobile */
+    body.home {
+        height: 100svh;
+        height: 100dvh;
+        overflow: hidden;
+        padding-bottom: 50px; /* space for fixed footer */
+    }
+
+    .mosaic-hero .title {
+        font-size: 80px;
+        left: 10px;
+        top: 10px;
+        width: auto; /* override the 400px set by main.css mobile rule */
+    }
+
+    .mosaic-tile {
+        width: 120px;
+        height: 148px;
+    }
+
+    .mosaic-tile-name { font-size: 11px; }
+
+    .mosaic-row { gap: 8px; }
+    .mosaic-hero { gap: 8px; }
+
+    .mosaic-row--fast   { animation-duration: 18s; }
+    .mosaic-row--medium { animation-duration: 24s; }
+    .mosaic-row--slow   { animation-duration: 30s; }
+    .mosaic-row--fast2  { animation-duration: 21s; }
+    .mosaic-row--slow2  { animation-duration: 38s; }
+
+    .modal-artwork { height: 45vh; }
+
+    .modal-window { max-width: 100%; }
+    .modal-overlay { padding: 10px; }
+
+    .footer-contact-btn { font-size: 13px; }
+
+    .form-group::before { font-size: 12px; }
+
+    .contact-input,
+    .contact-textarea { font-size: 12px; }
+
+    .contact-button {
+        font-size: 12px;
+        padding: 8px 16px;
+    }
+}
+
+/* Hide extra rows on very short screens */
+@media (max-height: 500px) {
+    .mosaic-row--slow,
+    .mosaic-row--fast2,
+    .mosaic-row--slow2 { display: none; }
 }

@@ -1,54 +1,568 @@
 <!DOCTYPE html>
 <html lang="en">
     <head>
-
         <meta charset="UTF-8">
-        <meta name="viewport" content="width=device-width, initial-scale=1.0">
-        <title>__--eqf gUSTAVO __{}</title>
-        <link rel="icon" type="image/png" href="/assets/images/logo.png">
-        <link rel = "stylesheet" type = "text/css" href = "/assets/stylesheet/index.css">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+        <title>gus</title>
+        <link rel="icon" type="image/svg+xml" href="/assets/logos/logo.svg">
+        <link rel="stylesheet" type="text/css" href="/assets/stylesheet/index.css">
         <link rel="stylesheet" href="/assets/stylesheet/main.css">
         <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
     </head>
 
-    <body class="container">
+    <body class="home">
 
-        <nav class="nav-bar">
-            <a href="index.html" class="active">home</a> <span class="separator">|</span>
-            <a href="works.html">works</a> <span class="separator">|</span>
-            <a href="about.html">about</a>
-        </nav>
+        <!-- Full-screen mosaic hero; title sits on top -->
+        <section class="mosaic-hero" aria-label="Artwork gallery">
 
-        <div class="title">
-            gus
+            <div class="title" aria-hidden="true">guswrks</div>
+
+            <!-- Row 1 – fastest, scrolls left -->
+            <div class="mosaic-row mosaic-row--left mosaic-row--fast">
+                <div class="mosaic-tile t1" role="button" tabindex="0"
+                     data-title="Untitled I" data-year="2023" data-medium="Mixed Media"
+                     data-description="A study of form and negative space, exploring the tension between structure and dissolution.">
+                    <div class="mosaic-tile-overlay"><span class="mosaic-tile-name">Untitled I</span></div>
+                </div>
+                <div class="mosaic-tile t2" role="button" tabindex="0"
+                     data-title="Fragment II" data-year="2022" data-medium="Digital"
+                     data-description="Exploration of the boundary between digital and analogue processes.">
+                    <div class="mosaic-tile-overlay"><span class="mosaic-tile-name">Fragment II</span></div>
+                </div>
+                <div class="mosaic-tile t3" role="button" tabindex="0"
+                     data-title="Echo" data-year="2024" data-medium="Screen Print"
+                     data-description="Repetition as a visual language — how a motif transforms with each iteration.">
+                    <div class="mosaic-tile-overlay"><span class="mosaic-tile-name">Echo</span></div>
+                </div>
+                <div class="mosaic-tile t4" role="button" tabindex="0"
+                     data-title="Surface Study" data-year="2023" data-medium="Acrylic on Board"
+                     data-description="Texture and surface treated as the primary subject of composition.">
+                    <div class="mosaic-tile-overlay"><span class="mosaic-tile-name">Surface Study</span></div>
+                </div>
+                <div class="mosaic-tile t5" role="button" tabindex="0"
+                     data-title="Sequence IV" data-year="2024" data-medium="Photography"
+                     data-description="Serial documentation of urban structure and the rhythms it creates.">
+                    <div class="mosaic-tile-overlay"><span class="mosaic-tile-name">Sequence IV</span></div>
+                </div>
+                <div class="mosaic-tile t6" role="button" tabindex="0"
+                     data-title="Void" data-year="2022" data-medium="Charcoal"
+                     data-description="The tension between presence and absence; what remains when form is removed.">
+                    <div class="mosaic-tile-overlay"><span class="mosaic-tile-name">Void</span></div>
+                </div>
+                <div class="mosaic-tile t7" role="button" tabindex="0"
+                     data-title="Grid Work" data-year="2023" data-medium="Digital"
+                     data-description="Systems and self-imposed rules explored as generators of creative form.">
+                    <div class="mosaic-tile-overlay"><span class="mosaic-tile-name">Grid Work</span></div>
+                </div>
+                <div class="mosaic-tile t8" role="button" tabindex="0"
+                     data-title="Archive" data-year="2024" data-medium="Mixed Media"
+                     data-description="A meditation on personal memory, collected objects, and the passage of time.">
+                    <div class="mosaic-tile-overlay"><span class="mosaic-tile-name">Archive</span></div>
+                </div>
+                <div class="mosaic-tile tw1" role="button" tabindex="0"
+                     data-title="Untitled. Blue" data-year="2024" data-medium="Mixed Media"
+                     data-description="An exploration of blue as a spatial and emotional force.">
+                    <div class="mosaic-tile-overlay"><span class="mosaic-tile-name">Untitled. Blue</span></div>
+                </div>
+                <div class="mosaic-tile tw2" role="button" tabindex="0"
+                     data-title="Untitled. Silver" data-year="2024" data-medium="Mixed Media"
+                     data-description="Metallic surface as a mirror of light and perception.">
+                    <div class="mosaic-tile-overlay"><span class="mosaic-tile-name">Untitled. Silver</span></div>
+                </div>
+                <div class="mosaic-tile tw3" role="button" tabindex="0"
+                     data-title="Variation 49" data-year="2024" data-medium="Mixed Media"
+                     data-description="One in a series of variations — incremental change as creative method.">
+                    <div class="mosaic-tile-overlay"><span class="mosaic-tile-name">Variation 49</span></div>
+                </div>
+                <!-- duplicate set for seamless loop -->
+                <div class="mosaic-tile t1" aria-hidden="true"><div class="mosaic-tile-overlay"><span class="mosaic-tile-name">Untitled I</span></div></div>
+                <div class="mosaic-tile t2" aria-hidden="true"><div class="mosaic-tile-overlay"><span class="mosaic-tile-name">Fragment II</span></div></div>
+                <div class="mosaic-tile t3" aria-hidden="true"><div class="mosaic-tile-overlay"><span class="mosaic-tile-name">Echo</span></div></div>
+                <div class="mosaic-tile t4" aria-hidden="true"><div class="mosaic-tile-overlay"><span class="mosaic-tile-name">Surface Study</span></div></div>
+                <div class="mosaic-tile t5" aria-hidden="true"><div class="mosaic-tile-overlay"><span class="mosaic-tile-name">Sequence IV</span></div></div>
+                <div class="mosaic-tile t6" aria-hidden="true"><div class="mosaic-tile-overlay"><span class="mosaic-tile-name">Void</span></div></div>
+                <div class="mosaic-tile t7" aria-hidden="true"><div class="mosaic-tile-overlay"><span class="mosaic-tile-name">Grid Work</span></div></div>
+                <div class="mosaic-tile t8" aria-hidden="true"><div class="mosaic-tile-overlay"><span class="mosaic-tile-name">Archive</span></div></div>
+                <div class="mosaic-tile tw1" aria-hidden="true"><div class="mosaic-tile-overlay"><span class="mosaic-tile-name">Untitled. Blue</span></div></div>
+                <div class="mosaic-tile tw2" aria-hidden="true"><div class="mosaic-tile-overlay"><span class="mosaic-tile-name">Untitled. Silver</span></div></div>
+                <div class="mosaic-tile tw3" aria-hidden="true"><div class="mosaic-tile-overlay"><span class="mosaic-tile-name">Variation 49</span></div></div>
+            </div>
+
+            <!-- Row 2 – medium, scrolls right -->
+            <div class="mosaic-row mosaic-row--right mosaic-row--medium">
+                <div class="mosaic-tile t5" role="button" tabindex="0"
+                     data-title="Sequence IV" data-year="2024" data-medium="Photography"
+                     data-description="Serial documentation of urban structure and the rhythms it creates.">
+                    <div class="mosaic-tile-overlay"><span class="mosaic-tile-name">Sequence IV</span></div>
+                </div>
+                <div class="mosaic-tile t8" role="button" tabindex="0"
+                     data-title="Archive" data-year="2024" data-medium="Mixed Media"
+                     data-description="A meditation on personal memory, collected objects, and the passage of time.">
+                    <div class="mosaic-tile-overlay"><span class="mosaic-tile-name">Archive</span></div>
+                </div>
+                <div class="mosaic-tile t3" role="button" tabindex="0"
+                     data-title="Echo" data-year="2024" data-medium="Screen Print"
+                     data-description="Repetition as a visual language — how a motif transforms with each iteration.">
+                    <div class="mosaic-tile-overlay"><span class="mosaic-tile-name">Echo</span></div>
+                </div>
+                <div class="mosaic-tile t6" role="button" tabindex="0"
+                     data-title="Void" data-year="2022" data-medium="Charcoal"
+                     data-description="The tension between presence and absence; what remains when form is removed.">
+                    <div class="mosaic-tile-overlay"><span class="mosaic-tile-name">Void</span></div>
+                </div>
+                <div class="mosaic-tile t1" role="button" tabindex="0"
+                     data-title="Untitled I" data-year="2023" data-medium="Mixed Media"
+                     data-description="A study of form and negative space, exploring the tension between structure and dissolution.">
+                    <div class="mosaic-tile-overlay"><span class="mosaic-tile-name">Untitled I</span></div>
+                </div>
+                <div class="mosaic-tile t7" role="button" tabindex="0"
+                     data-title="Grid Work" data-year="2023" data-medium="Digital"
+                     data-description="Systems and self-imposed rules explored as generators of creative form.">
+                    <div class="mosaic-tile-overlay"><span class="mosaic-tile-name">Grid Work</span></div>
+                </div>
+                <div class="mosaic-tile t2" role="button" tabindex="0"
+                     data-title="Fragment II" data-year="2022" data-medium="Digital"
+                     data-description="Exploration of the boundary between digital and analogue processes.">
+                    <div class="mosaic-tile-overlay"><span class="mosaic-tile-name">Fragment II</span></div>
+                </div>
+                <div class="mosaic-tile t4" role="button" tabindex="0"
+                     data-title="Surface Study" data-year="2023" data-medium="Acrylic on Board"
+                     data-description="Texture and surface treated as the primary subject of composition.">
+                    <div class="mosaic-tile-overlay"><span class="mosaic-tile-name">Surface Study</span></div>
+                </div>
+                <div class="mosaic-tile tw2" role="button" tabindex="0"
+                     data-title="Untitled. Silver" data-year="2024" data-medium="Mixed Media"
+                     data-description="Metallic surface as a mirror of light and perception.">
+                    <div class="mosaic-tile-overlay"><span class="mosaic-tile-name">Untitled. Silver</span></div>
+                </div>
+                <div class="mosaic-tile tw3" role="button" tabindex="0"
+                     data-title="Variation 49" data-year="2024" data-medium="Mixed Media"
+                     data-description="One in a series of variations — incremental change as creative method.">
+                    <div class="mosaic-tile-overlay"><span class="mosaic-tile-name">Variation 49</span></div>
+                </div>
+                <div class="mosaic-tile tw1" role="button" tabindex="0"
+                     data-title="Untitled. Blue" data-year="2024" data-medium="Mixed Media"
+                     data-description="An exploration of blue as a spatial and emotional force.">
+                    <div class="mosaic-tile-overlay"><span class="mosaic-tile-name">Untitled. Blue</span></div>
+                </div>
+                <!-- duplicate set -->
+                <div class="mosaic-tile t5" aria-hidden="true"><div class="mosaic-tile-overlay"><span class="mosaic-tile-name">Sequence IV</span></div></div>
+                <div class="mosaic-tile t8" aria-hidden="true"><div class="mosaic-tile-overlay"><span class="mosaic-tile-name">Archive</span></div></div>
+                <div class="mosaic-tile t3" aria-hidden="true"><div class="mosaic-tile-overlay"><span class="mosaic-tile-name">Echo</span></div></div>
+                <div class="mosaic-tile t6" aria-hidden="true"><div class="mosaic-tile-overlay"><span class="mosaic-tile-name">Void</span></div></div>
+                <div class="mosaic-tile t1" aria-hidden="true"><div class="mosaic-tile-overlay"><span class="mosaic-tile-name">Untitled I</span></div></div>
+                <div class="mosaic-tile t7" aria-hidden="true"><div class="mosaic-tile-overlay"><span class="mosaic-tile-name">Grid Work</span></div></div>
+                <div class="mosaic-tile t2" aria-hidden="true"><div class="mosaic-tile-overlay"><span class="mosaic-tile-name">Fragment II</span></div></div>
+                <div class="mosaic-tile t4" aria-hidden="true"><div class="mosaic-tile-overlay"><span class="mosaic-tile-name">Surface Study</span></div></div>
+                <div class="mosaic-tile tw2" aria-hidden="true"><div class="mosaic-tile-overlay"><span class="mosaic-tile-name">Untitled. Silver</span></div></div>
+                <div class="mosaic-tile tw3" aria-hidden="true"><div class="mosaic-tile-overlay"><span class="mosaic-tile-name">Variation 49</span></div></div>
+                <div class="mosaic-tile tw1" aria-hidden="true"><div class="mosaic-tile-overlay"><span class="mosaic-tile-name">Untitled. Blue</span></div></div>
+            </div>
+
+            <!-- Row 3 – slowest, scrolls left -->
+            <div class="mosaic-row mosaic-row--left mosaic-row--slow">
+                <div class="mosaic-tile t7" role="button" tabindex="0"
+                     data-title="Grid Work" data-year="2023" data-medium="Digital"
+                     data-description="Systems and self-imposed rules explored as generators of creative form.">
+                    <div class="mosaic-tile-overlay"><span class="mosaic-tile-name">Grid Work</span></div>
+                </div>
+                <div class="mosaic-tile t2" role="button" tabindex="0"
+                     data-title="Fragment II" data-year="2022" data-medium="Digital"
+                     data-description="Exploration of the boundary between digital and analogue processes.">
+                    <div class="mosaic-tile-overlay"><span class="mosaic-tile-name">Fragment II</span></div>
+                </div>
+                <div class="mosaic-tile t5" role="button" tabindex="0"
+                     data-title="Sequence IV" data-year="2024" data-medium="Photography"
+                     data-description="Serial documentation of urban structure and the rhythms it creates.">
+                    <div class="mosaic-tile-overlay"><span class="mosaic-tile-name">Sequence IV</span></div>
+                </div>
+                <div class="mosaic-tile t1" role="button" tabindex="0"
+                     data-title="Untitled I" data-year="2023" data-medium="Mixed Media"
+                     data-description="A study of form and negative space, exploring the tension between structure and dissolution.">
+                    <div class="mosaic-tile-overlay"><span class="mosaic-tile-name">Untitled I</span></div>
+                </div>
+                <div class="mosaic-tile t8" role="button" tabindex="0"
+                     data-title="Archive" data-year="2024" data-medium="Mixed Media"
+                     data-description="A meditation on personal memory, collected objects, and the passage of time.">
+                    <div class="mosaic-tile-overlay"><span class="mosaic-tile-name">Archive</span></div>
+                </div>
+                <div class="mosaic-tile t4" role="button" tabindex="0"
+                     data-title="Surface Study" data-year="2023" data-medium="Acrylic on Board"
+                     data-description="Texture and surface treated as the primary subject of composition.">
+                    <div class="mosaic-tile-overlay"><span class="mosaic-tile-name">Surface Study</span></div>
+                </div>
+                <div class="mosaic-tile t6" role="button" tabindex="0"
+                     data-title="Void" data-year="2022" data-medium="Charcoal"
+                     data-description="The tension between presence and absence; what remains when form is removed.">
+                    <div class="mosaic-tile-overlay"><span class="mosaic-tile-name">Void</span></div>
+                </div>
+                <div class="mosaic-tile t3" role="button" tabindex="0"
+                     data-title="Echo" data-year="2024" data-medium="Screen Print"
+                     data-description="Repetition as a visual language — how a motif transforms with each iteration.">
+                    <div class="mosaic-tile-overlay"><span class="mosaic-tile-name">Echo</span></div>
+                </div>
+                <div class="mosaic-tile tw3" role="button" tabindex="0"
+                     data-title="Variation 49" data-year="2024" data-medium="Mixed Media"
+                     data-description="One in a series of variations — incremental change as creative method.">
+                    <div class="mosaic-tile-overlay"><span class="mosaic-tile-name">Variation 49</span></div>
+                </div>
+                <div class="mosaic-tile tw1" role="button" tabindex="0"
+                     data-title="Untitled. Blue" data-year="2024" data-medium="Mixed Media"
+                     data-description="An exploration of blue as a spatial and emotional force.">
+                    <div class="mosaic-tile-overlay"><span class="mosaic-tile-name">Untitled. Blue</span></div>
+                </div>
+                <div class="mosaic-tile tw2" role="button" tabindex="0"
+                     data-title="Untitled. Silver" data-year="2024" data-medium="Mixed Media"
+                     data-description="Metallic surface as a mirror of light and perception.">
+                    <div class="mosaic-tile-overlay"><span class="mosaic-tile-name">Untitled. Silver</span></div>
+                </div>
+                <!-- duplicate set -->
+                <div class="mosaic-tile t7" aria-hidden="true"><div class="mosaic-tile-overlay"><span class="mosaic-tile-name">Grid Work</span></div></div>
+                <div class="mosaic-tile t2" aria-hidden="true"><div class="mosaic-tile-overlay"><span class="mosaic-tile-name">Fragment II</span></div></div>
+                <div class="mosaic-tile t5" aria-hidden="true"><div class="mosaic-tile-overlay"><span class="mosaic-tile-name">Sequence IV</span></div></div>
+                <div class="mosaic-tile t1" aria-hidden="true"><div class="mosaic-tile-overlay"><span class="mosaic-tile-name">Untitled I</span></div></div>
+                <div class="mosaic-tile t8" aria-hidden="true"><div class="mosaic-tile-overlay"><span class="mosaic-tile-name">Archive</span></div></div>
+                <div class="mosaic-tile t4" aria-hidden="true"><div class="mosaic-tile-overlay"><span class="mosaic-tile-name">Surface Study</span></div></div>
+                <div class="mosaic-tile t6" aria-hidden="true"><div class="mosaic-tile-overlay"><span class="mosaic-tile-name">Void</span></div></div>
+                <div class="mosaic-tile t3" aria-hidden="true"><div class="mosaic-tile-overlay"><span class="mosaic-tile-name">Echo</span></div></div>
+                <div class="mosaic-tile tw3" aria-hidden="true"><div class="mosaic-tile-overlay"><span class="mosaic-tile-name">Variation 49</span></div></div>
+                <div class="mosaic-tile tw1" aria-hidden="true"><div class="mosaic-tile-overlay"><span class="mosaic-tile-name">Untitled. Blue</span></div></div>
+                <div class="mosaic-tile tw2" aria-hidden="true"><div class="mosaic-tile-overlay"><span class="mosaic-tile-name">Untitled. Silver</span></div></div>
+            </div>
+
+            <!-- Row 4 – fast-right -->
+            <div class="mosaic-row mosaic-row--right mosaic-row--fast2">
+                <div class="mosaic-tile t6" role="button" tabindex="0"
+                     data-title="Void" data-year="2022" data-medium="Charcoal"
+                     data-description="The tension between presence and absence; what remains when form is removed.">
+                    <div class="mosaic-tile-overlay"><span class="mosaic-tile-name">Void</span></div>
+                </div>
+                <div class="mosaic-tile t2" role="button" tabindex="0"
+                     data-title="Fragment II" data-year="2022" data-medium="Digital"
+                     data-description="Exploration of the boundary between digital and analogue processes.">
+                    <div class="mosaic-tile-overlay"><span class="mosaic-tile-name">Fragment II</span></div>
+                </div>
+                <div class="mosaic-tile t8" role="button" tabindex="0"
+                     data-title="Archive" data-year="2024" data-medium="Mixed Media"
+                     data-description="A meditation on personal memory, collected objects, and the passage of time.">
+                    <div class="mosaic-tile-overlay"><span class="mosaic-tile-name">Archive</span></div>
+                </div>
+                <div class="mosaic-tile t4" role="button" tabindex="0"
+                     data-title="Surface Study" data-year="2023" data-medium="Acrylic on Board"
+                     data-description="Texture and surface treated as the primary subject of composition.">
+                    <div class="mosaic-tile-overlay"><span class="mosaic-tile-name">Surface Study</span></div>
+                </div>
+                <div class="mosaic-tile t1" role="button" tabindex="0"
+                     data-title="Untitled I" data-year="2023" data-medium="Mixed Media"
+                     data-description="A study of form and negative space, exploring the tension between structure and dissolution.">
+                    <div class="mosaic-tile-overlay"><span class="mosaic-tile-name">Untitled I</span></div>
+                </div>
+                <div class="mosaic-tile t5" role="button" tabindex="0"
+                     data-title="Sequence IV" data-year="2024" data-medium="Photography"
+                     data-description="Serial documentation of urban structure and the rhythms it creates.">
+                    <div class="mosaic-tile-overlay"><span class="mosaic-tile-name">Sequence IV</span></div>
+                </div>
+                <div class="mosaic-tile t3" role="button" tabindex="0"
+                     data-title="Echo" data-year="2024" data-medium="Screen Print"
+                     data-description="Repetition as a visual language — how a motif transforms with each iteration.">
+                    <div class="mosaic-tile-overlay"><span class="mosaic-tile-name">Echo</span></div>
+                </div>
+                <div class="mosaic-tile t7" role="button" tabindex="0"
+                     data-title="Grid Work" data-year="2023" data-medium="Digital"
+                     data-description="Systems and self-imposed rules explored as generators of creative form.">
+                    <div class="mosaic-tile-overlay"><span class="mosaic-tile-name">Grid Work</span></div>
+                </div>
+                <div class="mosaic-tile tw1" role="button" tabindex="0"
+                     data-title="Untitled. Blue" data-year="2024" data-medium="Mixed Media"
+                     data-description="An exploration of blue as a spatial and emotional force.">
+                    <div class="mosaic-tile-overlay"><span class="mosaic-tile-name">Untitled. Blue</span></div>
+                </div>
+                <div class="mosaic-tile tw2" role="button" tabindex="0"
+                     data-title="Untitled. Silver" data-year="2024" data-medium="Mixed Media"
+                     data-description="Metallic surface as a mirror of light and perception.">
+                    <div class="mosaic-tile-overlay"><span class="mosaic-tile-name">Untitled. Silver</span></div>
+                </div>
+                <div class="mosaic-tile tw3" role="button" tabindex="0"
+                     data-title="Variation 49" data-year="2024" data-medium="Mixed Media"
+                     data-description="One in a series of variations — incremental change as creative method.">
+                    <div class="mosaic-tile-overlay"><span class="mosaic-tile-name">Variation 49</span></div>
+                </div>
+                <!-- duplicate set for seamless loop -->
+                <div class="mosaic-tile t6" aria-hidden="true"><div class="mosaic-tile-overlay"><span class="mosaic-tile-name">Void</span></div></div>
+                <div class="mosaic-tile t2" aria-hidden="true"><div class="mosaic-tile-overlay"><span class="mosaic-tile-name">Fragment II</span></div></div>
+                <div class="mosaic-tile t8" aria-hidden="true"><div class="mosaic-tile-overlay"><span class="mosaic-tile-name">Archive</span></div></div>
+                <div class="mosaic-tile t4" aria-hidden="true"><div class="mosaic-tile-overlay"><span class="mosaic-tile-name">Surface Study</span></div></div>
+                <div class="mosaic-tile t1" aria-hidden="true"><div class="mosaic-tile-overlay"><span class="mosaic-tile-name">Untitled I</span></div></div>
+                <div class="mosaic-tile t5" aria-hidden="true"><div class="mosaic-tile-overlay"><span class="mosaic-tile-name">Sequence IV</span></div></div>
+                <div class="mosaic-tile t3" aria-hidden="true"><div class="mosaic-tile-overlay"><span class="mosaic-tile-name">Echo</span></div></div>
+                <div class="mosaic-tile t7" aria-hidden="true"><div class="mosaic-tile-overlay"><span class="mosaic-tile-name">Grid Work</span></div></div>
+                <div class="mosaic-tile tw1" aria-hidden="true"><div class="mosaic-tile-overlay"><span class="mosaic-tile-name">Untitled. Blue</span></div></div>
+                <div class="mosaic-tile tw2" aria-hidden="true"><div class="mosaic-tile-overlay"><span class="mosaic-tile-name">Untitled. Silver</span></div></div>
+                <div class="mosaic-tile tw3" aria-hidden="true"><div class="mosaic-tile-overlay"><span class="mosaic-tile-name">Variation 49</span></div></div>
+            </div>
+
+            <!-- Row 5 – slowest-left -->
+            <div class="mosaic-row mosaic-row--left mosaic-row--slow2">
+                <div class="mosaic-tile t4" role="button" tabindex="0"
+                     data-title="Surface Study" data-year="2023" data-medium="Acrylic on Board"
+                     data-description="Texture and surface treated as the primary subject of composition.">
+                    <div class="mosaic-tile-overlay"><span class="mosaic-tile-name">Surface Study</span></div>
+                </div>
+                <div class="mosaic-tile t7" role="button" tabindex="0"
+                     data-title="Grid Work" data-year="2023" data-medium="Digital"
+                     data-description="Systems and self-imposed rules explored as generators of creative form.">
+                    <div class="mosaic-tile-overlay"><span class="mosaic-tile-name">Grid Work</span></div>
+                </div>
+                <div class="mosaic-tile t3" role="button" tabindex="0"
+                     data-title="Echo" data-year="2024" data-medium="Screen Print"
+                     data-description="Repetition as a visual language — how a motif transforms with each iteration.">
+                    <div class="mosaic-tile-overlay"><span class="mosaic-tile-name">Echo</span></div>
+                </div>
+                <div class="mosaic-tile t6" role="button" tabindex="0"
+                     data-title="Void" data-year="2022" data-medium="Charcoal"
+                     data-description="The tension between presence and absence; what remains when form is removed.">
+                    <div class="mosaic-tile-overlay"><span class="mosaic-tile-name">Void</span></div>
+                </div>
+                <div class="mosaic-tile t2" role="button" tabindex="0"
+                     data-title="Fragment II" data-year="2022" data-medium="Digital"
+                     data-description="Exploration of the boundary between digital and analogue processes.">
+                    <div class="mosaic-tile-overlay"><span class="mosaic-tile-name">Fragment II</span></div>
+                </div>
+                <div class="mosaic-tile t8" role="button" tabindex="0"
+                     data-title="Archive" data-year="2024" data-medium="Mixed Media"
+                     data-description="A meditation on personal memory, collected objects, and the passage of time.">
+                    <div class="mosaic-tile-overlay"><span class="mosaic-tile-name">Archive</span></div>
+                </div>
+                <div class="mosaic-tile t5" role="button" tabindex="0"
+                     data-title="Sequence IV" data-year="2024" data-medium="Photography"
+                     data-description="Serial documentation of urban structure and the rhythms it creates.">
+                    <div class="mosaic-tile-overlay"><span class="mosaic-tile-name">Sequence IV</span></div>
+                </div>
+                <div class="mosaic-tile t1" role="button" tabindex="0"
+                     data-title="Untitled I" data-year="2023" data-medium="Mixed Media"
+                     data-description="A study of form and negative space, exploring the tension between structure and dissolution.">
+                    <div class="mosaic-tile-overlay"><span class="mosaic-tile-name">Untitled I</span></div>
+                </div>
+                <div class="mosaic-tile tw1" role="button" tabindex="0"
+                     data-title="Untitled. Blue" data-year="2024" data-medium="Mixed Media"
+                     data-description="An exploration of blue as a spatial and emotional force.">
+                    <div class="mosaic-tile-overlay"><span class="mosaic-tile-name">Untitled. Blue</span></div>
+                </div>
+                <div class="mosaic-tile tw3" role="button" tabindex="0"
+                     data-title="Variation 49" data-year="2024" data-medium="Mixed Media"
+                     data-description="One in a series of variations — incremental change as creative method.">
+                    <div class="mosaic-tile-overlay"><span class="mosaic-tile-name">Variation 49</span></div>
+                </div>
+                <div class="mosaic-tile tw2" role="button" tabindex="0"
+                     data-title="Untitled. Silver" data-year="2024" data-medium="Mixed Media"
+                     data-description="Metallic surface as a mirror of light and perception.">
+                    <div class="mosaic-tile-overlay"><span class="mosaic-tile-name">Untitled. Silver</span></div>
+                </div>
+                <!-- duplicate set for seamless loop -->
+                <div class="mosaic-tile t4" aria-hidden="true"><div class="mosaic-tile-overlay"><span class="mosaic-tile-name">Surface Study</span></div></div>
+                <div class="mosaic-tile t7" aria-hidden="true"><div class="mosaic-tile-overlay"><span class="mosaic-tile-name">Grid Work</span></div></div>
+                <div class="mosaic-tile t3" aria-hidden="true"><div class="mosaic-tile-overlay"><span class="mosaic-tile-name">Echo</span></div></div>
+                <div class="mosaic-tile t6" aria-hidden="true"><div class="mosaic-tile-overlay"><span class="mosaic-tile-name">Void</span></div></div>
+                <div class="mosaic-tile t2" aria-hidden="true"><div class="mosaic-tile-overlay"><span class="mosaic-tile-name">Fragment II</span></div></div>
+                <div class="mosaic-tile t8" aria-hidden="true"><div class="mosaic-tile-overlay"><span class="mosaic-tile-name">Archive</span></div></div>
+                <div class="mosaic-tile t5" aria-hidden="true"><div class="mosaic-tile-overlay"><span class="mosaic-tile-name">Sequence IV</span></div></div>
+                <div class="mosaic-tile t1" aria-hidden="true"><div class="mosaic-tile-overlay"><span class="mosaic-tile-name">Untitled I</span></div></div>
+                <div class="mosaic-tile tw1" aria-hidden="true"><div class="mosaic-tile-overlay"><span class="mosaic-tile-name">Untitled. Blue</span></div></div>
+                <div class="mosaic-tile tw3" aria-hidden="true"><div class="mosaic-tile-overlay"><span class="mosaic-tile-name">Variation 49</span></div></div>
+                <div class="mosaic-tile tw2" aria-hidden="true"><div class="mosaic-tile-overlay"><span class="mosaic-tile-name">Untitled. Silver</span></div></div>
+            </div>
+
+        </section>
+
+        <!-- Piece info modal (terminal-window style) -->
+        <div class="modal-overlay" id="pieceModal" hidden>
+            <div class="terminal-window modal-window" role="dialog" aria-modal="true" aria-labelledby="modalTitleBar">
+                <div class="terminal-header">
+                    <button class="terminal-btn btn-red modal-close" id="modalClose" aria-label="Close"></button>
+                    <span class="terminal-btn btn-yellow"></span>
+                    <span class="terminal-btn btn-green"></span>
+                    <span class="terminal-title-bar" id="modalTitleBar">piece info</span>
+                </div>
+                <!-- Artwork preview: shows the tile's background image/gradient -->
+                <div class="modal-artwork" id="modalArtwork"></div>
+                <div class="terminal-body">
+                    <div class="content" id="modalContent"></div>
+                </div>
+            </div>
         </div>
 
-        <div class="content">
-            <p>
-                THIS PAGE WILL BE AVAILABLE SOON! :))
-                <br>
-                <br>
-                To contact me go to the <a href="about.html">about</a> page.
-                <br>
-                <br>
-                OR check my instagram <a href="https://www.instagram.com/____gusworks____" target="_blank">@____gusworks____</a> 
-            </p> 
+        <!-- Contact form modal -->
+        <div class="modal-overlay" id="contactModal" hidden>
+            <div class="terminal-window modal-window" role="dialog" aria-modal="true" aria-labelledby="contactTitleBar">
+                <div class="terminal-header">
+                    <button class="terminal-btn btn-red modal-close" id="contactClose" aria-label="Close"></button>
+                    <span class="terminal-btn btn-yellow"></span>
+                    <span class="terminal-btn btn-green"></span>
+                    <span class="terminal-title-bar" id="contactTitleBar">gustavoworks.com — contact</span>
+                </div>
+                <div class="terminal-body">
+                    <div class="content">
+                        <form class="contact-form" action="https://formsubmit.co/info@gustavoworks.com" method="POST">
+                            <div class="form-group">
+                                <input class="contact-input" type="text" name="name" placeholder="your name" autocomplete="name" required>
+                            </div>
+                            <div class="form-group">
+                                <input class="contact-input" type="email" name="email" placeholder="your email" autocomplete="email" required>
+                            </div>
+                            <div class="form-group">
+                                <textarea class="contact-textarea" name="message" placeholder="message" autocomplete="off" required></textarea>
+                            </div>
+                            <input type="hidden" name="_captcha" value="true">
+                            <button class="contact-button" type="submit">
+                                <span class="button-text">send_message</span>
+                                <span class="button-arrow">→</span>
+                            </button>
+                        </form>
+                    </div>
+                </div>
+            </div>
         </div>
-
 
         <footer class="footer">
             <div class="footer-content">
-              <div class="social-links">
-                <a href="https://www.instagram.com/____gusworks____" target="_blank" class="social-icon">
-                  <i class="fab fa-instagram"></i>
-                </a>
-                <a href="mailto:info@gustavoworks.com" class="social-icon">
-                  <i class="far fa-envelope"></i>
-                </a>
-              </div>
-              <p>© 2025, Gustavo Henrique Costa Araújo</p>
+                <p>© 2025, Gustavo Henrique Costa Araújo</p>
+                <div class="social-links">
+                    <button class="footer-contact-btn" id="contactBtn">contact</button>
+                    <a href="https://www.instagram.com/____gusworks____" target="_blank" class="social-icon">
+                        <i class="fab fa-instagram"></i>
+                    </a>
+                </div>
             </div>
-          </footer>
+        </footer>
+
+        <script>
+            (function () {
+                /* ── Piece modal ── */
+                var pieceModal  = document.getElementById('pieceModal');
+                var modalContent = document.getElementById('modalContent');
+                var modalTitleBar = document.getElementById('modalTitleBar');
+                var modalArtwork  = document.getElementById('modalArtwork');
+                var modalClose    = document.getElementById('modalClose');
+
+                /* ── Contact modal ── */
+                var contactModal = document.getElementById('contactModal');
+                var contactClose = document.getElementById('contactClose');
+                var contactBtn   = document.getElementById('contactBtn');
+
+                function openPieceModal(tile) {
+                    var title       = tile.dataset.title       || '';
+                    var year        = tile.dataset.year        || '';
+                    var medium      = tile.dataset.medium      || '';
+                    var description = tile.dataset.description || '';
+                    var slug        = title.toLowerCase().replace(/\s+/g, '-');
+
+                    /* Copy the tile's visual into the preview strip */
+                    var s = window.getComputedStyle(tile);
+                    modalArtwork.style.backgroundImage    = s.backgroundImage;
+                    modalArtwork.style.backgroundColor   = s.backgroundColor;
+
+                    modalTitleBar.textContent = title;
+                    modalContent.innerHTML =
+                        '<div class="prompt-line">' +
+                            '<span class="prompt" aria-hidden="true">$</span>' +
+                            '<span class="cmd">open ' + slug + '</span>' +
+                        '</div>' +
+                        '<p class="output">&gt; <strong>' + title + '</strong>, ' + year + '</p>' +
+                        '<p class="output">&gt; Medium: ' + medium + '</p>' +
+                        '<br>' +
+                        '<p class="output">' + description + '<span class="cursor" aria-hidden="true"></span></p>';
+
+                    pieceModal.hidden = false;
+                    modalClose.focus();
+                }
+
+                /*
+                 * For duplicate (aria-hidden) tiles that have no data-title,
+                 * find the matching original tile in the document by t-class.
+                 * All tiles sharing a class (t1–t8) carry the same artwork data.
+                 */
+                function sourceTile(tile) {
+                    if (tile.dataset.title) return tile;
+                    var cls = Array.from(tile.classList).find(function (c) { return /^t\d+$/.test(c); });
+                    return cls ? document.querySelector('.mosaic-tile.' + cls + '[data-title]') : null;
+                }
+
+                /*
+                 * Reliable tap handler for animated (moving) tiles.
+                 * Uses setPointerCapture so pointerup always fires on the tile
+                 * even if it has scrolled away by the time the finger lifts.
+                 * Cancels if the pointer moves > 12 px (the user is scrolling).
+                 */
+                function attachTileTap(tile) {
+                    var startX, startY, cancelled;
+
+                    tile.addEventListener('pointerdown', function (e) {
+                        startX    = e.clientX;
+                        startY    = e.clientY;
+                        cancelled = false;
+                        try { tile.setPointerCapture(e.pointerId); } catch (err) { /* ignore: pointerId may already be invalid */ }
+                        tile.classList.add('js-active');
+                    });
+
+                    tile.addEventListener('pointermove', function (e) {
+                        if (cancelled) return;
+                        if (Math.abs(e.clientX - startX) > 12 ||
+                            Math.abs(e.clientY - startY) > 12) {
+                            cancelled = true;
+                            tile.classList.remove('js-active');
+                            try { tile.releasePointerCapture(e.pointerId); } catch (err) { /* ignore: capture may have already been released */ }
+                        }
+                    });
+
+                    tile.addEventListener('pointerup', function (e) {
+                        tile.classList.remove('js-active');
+                        if (!cancelled) {
+                            var src = sourceTile(tile);
+                            if (src) openPieceModal(src);
+                        }
+                    });
+
+                    tile.addEventListener('pointercancel', function () {
+                        cancelled = true;
+                        tile.classList.remove('js-active');
+                    });
+
+                    tile.addEventListener('keydown', function (e) {
+                        if (e.key === 'Enter' || e.key === ' ') {
+                            e.preventDefault();
+                            var src = sourceTile(tile);
+                            if (src) openPieceModal(src);
+                        }
+                    });
+                }
+
+                document.querySelectorAll('.mosaic-tile').forEach(attachTileTap);
+
+                /* Close piece modal */
+                modalClose.addEventListener('click', function () { pieceModal.hidden = true; });
+                pieceModal.addEventListener('click', function (e) {
+                    if (e.target === pieceModal) pieceModal.hidden = true;
+                });
+
+                /* Open / close contact modal */
+                contactBtn.addEventListener('click', function () {
+                    contactModal.hidden = false;
+                    contactClose.focus();
+                });
+                contactClose.addEventListener('click', function () { contactModal.hidden = true; });
+                contactModal.addEventListener('click', function (e) {
+                    if (e.target === contactModal) contactModal.hidden = true;
+                });
+
+                /* Escape closes whichever modal is open */
+                document.addEventListener('keydown', function (e) {
+                    if (e.key === 'Escape') {
+                        pieceModal.hidden    = true;
+                        contactModal.hidden  = true;
+                    }
+                });
+            })();
+        </script>
 
     </body>
 </html>
