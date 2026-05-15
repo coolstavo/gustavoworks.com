@@ -220,6 +220,21 @@ body.home {
     background-image: radial-gradient(circle at 50% 50%, #1a1a2e 0%, #0c0c0c 70%);
 }
 
+/* "Coming soon" badge on placeholder (gradient) tiles */
+.mosaic-tile:not(.tw1):not(.tw2):not(.tw3)::after {
+    content: 'coming soon';
+    position: absolute;
+    bottom: 10px;
+    left: 10px;
+    font-size: 9px;
+    font-family: "Helvetica Neue", sans-serif;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: rgba(255, 255, 255, 0.45);
+    pointer-events: none;
+    z-index: 2;
+}
+
 /* Real artwork tiles */
 .mosaic-tile.tw1 {
     background-color: #0a0c1a;
