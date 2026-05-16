@@ -403,7 +403,10 @@
                 </div>
                 <div class="terminal-body">
                     <div class="content">
-                        <form class="contact-form" action="https://formsubmit.co/info@gustavoworks.com" method="POST">
+                        <form class="contact-form" action="https://api.web3forms.com/submit" method="POST">
+                            <input type="hidden" name="access_key" value="ddfe666a-04d1-4c99-91da-c4b33050136f">
+                            <input type="hidden" name="subject" value="New message from gustavoworks.com">
+                            <input type="hidden" name="redirect" value="false">
                             <div class="form-group">
                                 <input class="contact-input" type="text" name="name" placeholder="your name" autocomplete="name" required>
                             </div>
@@ -413,7 +416,6 @@
                             <div class="form-group">
                                 <textarea class="contact-textarea" name="message" placeholder="message" autocomplete="off" required></textarea>
                             </div>
-                            <input type="hidden" name="_captcha" value="true">
                             <button class="contact-button" type="submit">
                                 <span class="button-text">send_message</span>
                                 <span class="button-arrow">→</span>
