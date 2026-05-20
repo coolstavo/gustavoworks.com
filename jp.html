@@ -1,0 +1,495 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Japan Internship Timeline — Gustavo</title>
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=Syne:wght@400;600;700;800&family=DM+Mono:wght@300;400;500&display=swap');
+
+  :root {
+    --red: #E8002D;
+    --white: #F5F0E8;
+    --black: #0A0A0A;
+    --gray: #1A1A1A;
+    --muted: #444;
+    --accent: #FFD700;
+    --done: #2ECC71;
+    --urgent: #E8002D;
+    --normal: #3B8BEB;
+  }
+
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+
+  body {
+    background: var(--black);
+    color: var(--white);
+    font-family: 'DM Mono', monospace;
+    min-height: 100vh;
+    padding: 40px 20px 80px;
+  }
+
+  header {
+    max-width: 800px;
+    margin: 0 auto 60px;
+    border-bottom: 1px solid #222;
+    padding-bottom: 32px;
+  }
+
+  .flag-row {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    margin-bottom: 16px;
+  }
+
+  .flag {
+    width: 32px;
+    height: 22px;
+    border-radius: 3px;
+    overflow: hidden;
+    display: flex;
+    flex-direction: column;
+  }
+
+  .flag-nl { background: linear-gradient(to bottom, #AE1C28 33.3%, #fff 33.3% 66.6%, #21468B 66.6%); }
+  .flag-jp { background: white; position: relative; display: flex; align-items: center; justify-content: center; }
+  .flag-jp::after { content: ''; width: 10px; height: 10px; background: #BC002D; border-radius: 50%; }
+
+  .arrow { color: var(--muted); font-size: 18px; }
+
+  h1 {
+    font-family: 'Syne', sans-serif;
+    font-size: clamp(28px, 5vw, 48px);
+    font-weight: 800;
+    line-height: 1.1;
+    letter-spacing: -1px;
+  }
+
+  h1 span { color: var(--red); }
+
+  .subtitle {
+    margin-top: 10px;
+    color: var(--muted);
+    font-size: 13px;
+    letter-spacing: 0.05em;
+  }
+
+  .timeline {
+    max-width: 800px;
+    margin: 0 auto;
+    position: relative;
+  }
+
+  .month-group {
+    margin-bottom: 48px;
+  }
+
+  .month-label {
+    font-family: 'Syne', sans-serif;
+    font-size: 11px;
+    font-weight: 700;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    color: var(--muted);
+    margin-bottom: 16px;
+    display: flex;
+    align-items: center;
+    gap: 12px;
+  }
+
+  .month-label::after {
+    content: '';
+    flex: 1;
+    height: 1px;
+    background: #222;
+  }
+
+  .item {
+    display: grid;
+    grid-template-columns: 100px 1fr;
+    gap: 20px;
+    margin-bottom: 12px;
+    align-items: start;
+  }
+
+  .date-col {
+    text-align: right;
+    padding-top: 14px;
+  }
+
+  .date {
+    font-size: 11px;
+    color: var(--muted);
+    letter-spacing: 0.05em;
+    line-height: 1.4;
+  }
+
+  .card {
+    background: var(--gray);
+    border-radius: 8px;
+    padding: 14px 18px;
+    border-left: 3px solid transparent;
+    transition: transform 0.15s ease;
+    position: relative;
+  }
+
+  .card:hover { transform: translateX(4px); }
+
+  .card.urgent { border-left-color: var(--urgent); }
+  .card.normal { border-left-color: var(--normal); }
+  .card.financial { border-left-color: var(--accent); }
+  .card.milestone { border-left-color: var(--done); background: #0d1f14; }
+  .card.hanze { border-left-color: #9B59B6; }
+
+  .card-header {
+    display: flex;
+    align-items: flex-start;
+    justify-content: space-between;
+    gap: 12px;
+    margin-bottom: 4px;
+  }
+
+  .card-title {
+    font-family: 'Syne', sans-serif;
+    font-size: 14px;
+    font-weight: 600;
+    line-height: 1.3;
+  }
+
+  .tag {
+    font-size: 9px;
+    font-weight: 500;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    padding: 3px 8px;
+    border-radius: 3px;
+    white-space: nowrap;
+    flex-shrink: 0;
+  }
+
+  .tag-visa { background: #1a2a3a; color: var(--normal); }
+  .tag-hanze { background: #1e1228; color: #9B59B6; }
+  .tag-money { background: #1a1a00; color: var(--accent); }
+  .tag-duo { background: #1a1a00; color: var(--accent); }
+  .tag-deadline { background: #2a0a0a; color: var(--urgent); }
+  .tag-milestone { background: #0d1f14; color: var(--done); }
+  .tag-insurance { background: #1a1220; color: #e879f9; }
+
+  .card-desc {
+    font-size: 12px;
+    color: #777;
+    line-height: 1.6;
+    margin-top: 4px;
+  }
+
+  .card-desc strong { color: #aaa; }
+
+  .divider-milestone {
+    max-width: 800px;
+    margin: 0 auto 48px;
+    background: #0d1f14;
+    border: 1px solid #2ECC71;
+    border-radius: 8px;
+    padding: 20px 24px;
+    display: flex;
+    align-items: center;
+    gap: 16px;
+  }
+
+  .milestone-icon {
+    font-size: 28px;
+    flex-shrink: 0;
+  }
+
+  .milestone-text h3 {
+    font-family: 'Syne', sans-serif;
+    font-size: 16px;
+    font-weight: 700;
+    color: var(--done);
+  }
+
+  .milestone-text p {
+    font-size: 12px;
+    color: #5a8a6a;
+    margin-top: 2px;
+  }
+
+  .legend {
+    max-width: 800px;
+    margin: 48px auto 0;
+    display: flex;
+    flex-wrap: wrap;
+    gap: 16px;
+    padding-top: 24px;
+    border-top: 1px solid #222;
+  }
+
+  .legend-item {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    font-size: 11px;
+    color: var(--muted);
+  }
+
+  .legend-dot {
+    width: 10px;
+    height: 10px;
+    border-radius: 2px;
+    flex-shrink: 0;
+  }
+
+  @media (max-width: 500px) {
+    .item { grid-template-columns: 70px 1fr; gap: 12px; }
+    .date { font-size: 10px; }
+  }
+</style>
+</head>
+<body>
+
+<header>
+  <div class="flag-row">
+    <div class="flag flag-nl"></div>
+    <span class="arrow">→</span>
+    <div class="flag flag-jp"></div>
+  </div>
+  <h1>Japan Internship<br><span>Master Timeline</span></h1>
+  <p class="subtitle">Gustavo · HBO-ICT Software Engineering · Hanze · Target start: September 2026</p>
+</header>
+
+<div class="timeline">
+
+  <!-- MAY 2026 -->
+  <div class="month-group">
+    <div class="month-label">May 2026 — Right Now</div>
+
+    <div class="item">
+      <div class="date-col"><div class="date">This<br>week</div></div>
+      <div class="card urgent">
+        <div class="card-header">
+          <div class="card-title">Ask company why they won't sponsor</div>
+          <span class="tag tag-visa">Visa</span>
+        </div>
+        <div class="card-desc">Keep it casual. Their reason determines next steps — paperwork issue vs. company policy are very different problems.</div>
+      </div>
+    </div>
+
+    <div class="item">
+      <div class="date-col"><div class="date">This<br>week</div></div>
+      <div class="card hanze">
+        <div class="card-header">
+          <div class="card-title">Email graduation coordinator for official Hanze letter</div>
+          <span class="tag tag-hanze">Hanze</span>
+        </div>
+        <div class="card-desc">Request a letter on Hanze letterhead confirming your internship is a formal part of your HBO-ICT graduation programme. This letter unlocks the visa process.</div>
+      </div>
+    </div>
+
+    <div class="item">
+      <div class="date-col"><div class="date">17 May<br>23:59</div></div>
+      <div class="card hanze">
+        <div class="card-header">
+          <div class="card-title">⚠️ Deadline 1: Opdrachtomschrijving</div>
+          <span class="tag tag-deadline">Deadline</span>
+        </div>
+        <div class="card-desc">Submit via Brightspace. First review round by the Afstudeercommissie.</div>
+      </div>
+    </div>
+
+    <div class="item">
+      <div class="date-col"><div class="date">ASAP</div></div>
+      <div class="card normal">
+        <div class="card-header">
+          <div class="card-title">Call Dutch insurer — confirm DUO abroad policy</div>
+          <span class="tag tag-insurance">Insurance</span>
+        </div>
+        <div class="card-desc">Ask explicitly: <strong>"Does an unpaid graduation internship in Japan count as study abroad?"</strong> Get confirmation in writing. Do NOT cancel your zorgverzekering without this.</div>
+      </div>
+    </div>
+
+    <div class="item">
+      <div class="date-col"><div class="date">ASAP</div></div>
+      <div class="card financial">
+        <div class="card-header">
+          <div class="card-title">Start saving — target €4,000–5,000 by August</div>
+          <span class="tag tag-money">Finances</span>
+        </div>
+        <div class="card-desc">You currently have €2K. Japanese immigration wants to see savings. You need ~€500/month extra over the next 3 months.</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- JUNE 2026 -->
+  <div class="month-group">
+    <div class="month-label">June 2026</div>
+
+    <div class="item">
+      <div class="date-col"><div class="date">Early<br>June</div></div>
+      <div class="card urgent">
+        <div class="card-header">
+          <div class="card-title">Send Hanze letter to company → CoE application starts</div>
+          <span class="tag tag-visa">Visa</span>
+        </div>
+        <div class="card-desc">Once you have the Hanze letter, give it to the company. They submit the Certificate of Eligibility (CoE) application to their local Japanese immigration bureau. <strong>This is the longest step — 1–3 months.</strong></div>
+      </div>
+    </div>
+
+    <div class="item">
+      <div class="date-col"><div class="date">9 June<br>14:00</div></div>
+      <div class="card hanze">
+        <div class="card-header">
+          <div class="card-title">Coachingsbijeenkomst #2</div>
+          <span class="tag tag-hanze">Hanze</span>
+        </div>
+        <div class="card-desc">ZP11/A2.18, 14:00–15:30. Zoeken naar en omschrijven van afstudeeropdracht.</div>
+      </div>
+    </div>
+
+    <div class="item">
+      <div class="date-col"><div class="date">14 June<br>23:59</div></div>
+      <div class="card hanze">
+        <div class="card-header">
+          <div class="card-title">Deadline 2: Opdrachtomschrijving</div>
+          <span class="tag tag-deadline">Deadline</span>
+        </div>
+        <div class="card-desc">Second review round. Aim to get it approved here — don't rely on the August noodronde.</div>
+      </div>
+    </div>
+
+    <div class="item">
+      <div class="date-col"><div class="date">Before<br>end June</div></div>
+      <div class="card normal">
+        <div class="card-header">
+          <div class="card-title">Register in Osiris for abroad track (ITVB18ASOB)</div>
+          <span class="tag tag-hanze">Hanze</span>
+        </div>
+        <div class="card-desc">Make sure you register for the <strong>buitenland</strong> variant, not the standard one. Open from 4 May.</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- JULY 2026 -->
+  <div class="month-group">
+    <div class="month-label">July 2026</div>
+
+    <div class="item">
+      <div class="date-col"><div class="date">Early<br>July</div></div>
+      <div class="card financial">
+        <div class="card-header">
+          <div class="card-title">Switch OV to OV-vergoeding buitenland via Mijn DUO</div>
+          <span class="tag tag-duo">DUO</span>
+        </div>
+        <div class="card-desc">Adds <strong>€110.95/month</strong> to your income. Must request before end of July for September activation — goes live the month after you request.</div>
+      </div>
+    </div>
+
+    <div class="item">
+      <div class="date-col"><div class="date">July</div></div>
+      <div class="card normal">
+        <div class="card-header">
+          <div class="card-title">Download & prepare visa application form</div>
+          <span class="tag tag-visa">Visa</span>
+        </div>
+        <div class="card-desc">Download from mofa.go.jp. Get passport photos ready. Prepare bank statements showing savings. Don't wait for the CoE to do this prep.</div>
+      </div>
+    </div>
+
+    <div class="item">
+      <div class="date-col"><div class="date">July</div></div>
+      <div class="card normal">
+        <div class="card-header">
+          <div class="card-title">Arrange supplementary travel insurance</div>
+          <span class="tag tag-insurance">Insurance</span>
+        </div>
+        <div class="card-desc">AON Student Insurance or Allianz Care. ~€20–50/month. Covers the gap between Dutch reimbursement rates and actual Japanese healthcare costs.</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- AUGUST 2026 -->
+  <div class="month-group">
+    <div class="month-label">August 2026 — Critical Month</div>
+
+    <div class="item">
+      <div class="date-col"><div class="date">When<br>CoE arrives</div></div>
+      <div class="card urgent">
+        <div class="card-header">
+          <div class="card-title">Apply at Japanese Embassy in The Hague</div>
+          <span class="tag tag-visa">Visa</span>
+        </div>
+        <div class="card-desc">Walk in Mon–Fri 9:00–11:30, no appointment needed. Bring: passport, visa application form, passport photo, CoE + copy, Hanze letter. Processing: ~5–10 working days. Cost: ¥3,000 (~€18).</div>
+      </div>
+    </div>
+
+    <div class="item">
+      <div class="date-col"><div class="date">23 Aug<br>23:59</div></div>
+      <div class="card hanze">
+        <div class="card-header">
+          <div class="card-title">⚠️ Deadline 3 (noodronde): Opdrachtomschrijving</div>
+          <span class="tag tag-deadline">Deadline</span>
+        </div>
+        <div class="card-desc">Last chance. No approval by 31 August = cannot start graduation. Don't let it get to this round.</div>
+      </div>
+    </div>
+
+    <div class="item">
+      <div class="date-col"><div class="date">Week of<br>24–28 Aug</div></div>
+      <div class="card hanze">
+        <div class="card-header">
+          <div class="card-title">Sign afstudeerovereenkomst with company + Hanze</div>
+          <span class="tag tag-hanze">Hanze</span>
+        </div>
+        <div class="card-desc">Hanze countersigns once opdrachtomschrijving is approved and OER conditions are met. You get a docentbegeleider and OnStage dossier.</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- SEPTEMBER 2026 -->
+  <div class="divider-milestone">
+    <div class="milestone-icon">🇯🇵</div>
+    <div class="milestone-text">
+      <h3>1 September 2026 — Departure &amp; Start</h3>
+      <p>Arrive in Japan · Register address at Ward Office within 14 days · Afstuderen officially begins (ends 31 January 2027)</p>
+    </div>
+  </div>
+
+  <div class="month-group">
+    <div class="month-label">On Arrival in Japan</div>
+
+    <div class="item">
+      <div class="date-col"><div class="date">Within<br>14 days</div></div>
+      <div class="card normal">
+        <div class="card-header">
+          <div class="card-title">Register address at Ward Office (区役所)</div>
+          <span class="tag tag-visa">Admin</span>
+        </div>
+        <div class="card-desc">Bring passport + residence card. Required by law. You'll receive your residence card at the airport (Narita/Haneda).</div>
+      </div>
+    </div>
+
+    <div class="item">
+      <div class="date-col"><div class="date">After<br>registration</div></div>
+      <div class="card financial">
+        <div class="card-header">
+          <div class="card-title">Confirm DUO payments are arriving in Japan</div>
+          <span class="tag tag-duo">DUO</span>
+        </div>
+        <div class="card-desc">Make sure your Dutch bank account still works internationally. ~€1,211/month (basisbeurs + OV-vergoeding buitenland).</div>
+      </div>
+    </div>
+  </div>
+
+</div>
+
+<div class="legend">
+  <div class="legend-item"><div class="legend-dot" style="background: var(--urgent)"></div>Visa / Urgent</div>
+  <div class="legend-item"><div class="legend-dot" style="background: #9B59B6"></div>Hanze / Graduation</div>
+  <div class="legend-item"><div class="legend-dot" style="background: var(--normal)"></div>Admin / Setup</div>
+  <div class="legend-item"><div class="legend-dot" style="background: var(--accent)"></div>Finances / DUO</div>
+  <div class="legend-item"><div class="legend-dot" style="background: #e879f9"></div>Insurance</div>
+  <div class="legend-item"><div class="legend-dot" style="background: var(--done)"></div>Milestone</div>
+</div>
+
+</body>
+</html>
